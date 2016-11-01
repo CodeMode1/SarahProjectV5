@@ -96,6 +96,7 @@ clientSchema.pre('save', function (next) {
     });
 });
 
+/*
 clientSchema.pre('remove', function (next) {
     var doc = this;
     Evenement.remove({
@@ -103,6 +104,7 @@ clientSchema.pre('remove', function (next) {
     }).exec();
     next();
 });
+*/
 
 clientSchema.plugin(mongooseUniqueValidator);
 

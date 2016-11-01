@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ClientService } from './client.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -211,7 +211,6 @@ export class EditClientComponent implements OnInit, OnDestroy {
             creePar: [creePar],
             cree: [cree]    
         });
-
     }
 
     ngOnDestroy(){

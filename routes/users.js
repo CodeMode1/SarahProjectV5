@@ -67,7 +67,8 @@ router.post('/signin', function (req, res, next) {
         res.status(200).json({
             message: 'Success',
             token: token,
-            userId: doc._id
+            userId: doc._id,
+            userName: doc.prenom + " " + doc.nom
         });
     });
 });

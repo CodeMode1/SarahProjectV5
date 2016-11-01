@@ -251,8 +251,9 @@ export class EvenementListComponent implements OnInit {
         this.confirmImp = false;
         this.evenementSelected = evenement;
         console.log(this.evenementSelected);
-        //console.log(this.evenementSelected.noEvenement);
-        //this.noEvenement = this.evenementSelected.noEvenement;
+        console.log('no evenement : ');
+        console.log(this.evenementSelected.noEvenement);
+        this.noEvenement = this.evenementSelected.noEvenement;
     }
 
     onSearchNoContrat(){

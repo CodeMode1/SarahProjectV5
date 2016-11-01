@@ -5,15 +5,11 @@ import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class EvenementService implements OnInit {
+export class EvenementService{
     evenements: Evenement[] = [];
-    nomUsageLogue: string;
 
     constructor( private _http: Http) { }
     
-    ngOnInit(){
-
-    }
     
     //data[i].client_FK._id pour modifier un evenement pour actualiser la selection par rapport au client.
     getEvenements(): Observable<Evenement[]>{
@@ -37,6 +33,60 @@ export class EvenementService implements OnInit {
                 console.log("array du service: " + this.evenements);
                 return objs;
             })
-            .catch(error => Observable.throw(error.json() || 'erreur servuer'));
+            .catch(error => Observable.throw(error.json() || 'erreur serveur'));
     }
+    
+    getEvenement(noEvenement: number): Observable<Evenement>{
+        return this._http.get('http://localhost:3000/evenement/' + noEvenement)
+            .map((response: Response) => {
+                const data = response.json().obj;
+                let evenement = new Evenement(data._id, data.noEvenement, data.nom,
+                        data.dateEvenement, data.contact, data.client,
+                        data.selectEtat, data.dateSoumission, data.dateConfirmation, data.dateFacturation,
+                        data.dateNonRetenu, data.dateAnnulation, data.notes, data.validationTache,
+                        data.creerPar, data.dateCree, data.modifPar, data.modif, data.client_FK);
+                return evenement;
+            })
+            .catch(error => Observable.throw(error.json() ||  'erreur serveur'));
+    }
+
+    creerEvenement(evenement: Evenement){
+        const body = JSON.stringify(evenement);
+        const header = new Headers({'Content-Type': 'application/json'});
+        const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+        return this._http.post('http://localhost:3000/evenement' + token, body, {headers:header})
+            .map((response: Response) => {
+                const data = response.json().obj;
+                let evenement = new Evenement(data._id, data.noEvenement, data.nom,
+                        data.dateEvenement, data.contact, data.client,
+                        data.selectEtat, data.dateSoumission, data.dateConfirmation, data.dateFacturation,
+                        data.dateNonRetenu, data.dateAnnulation, data.notes, data.validationTache,
+                        data.creerPar, data.dateCree, data.modifPar, data.modif);
+                return evenement;
+            })
+            .catch(error => Observable.throw(error.json() || 'erreur serveur'));
+    }
+
+    updateEvenement(evenement: Evenement){
+        const body = JSON.stringify(evenement);
+        const header = new Headers({'Content-Type' : 'application/json'});
+        const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+        return this._http.put('http://localhost:3000/evenement/' + evenement.evenementId + token, body, {headers:header})
+            .map((response : Response) => response.json())
+            .catch(error => Observable.throw(error.json()))
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+

@@ -216,7 +216,7 @@ router.put('/:id', function (req, res, next) {
             Client.findByIdAndUpdate(req.params.id, update, function (err, result) {
                 if (err) {
                     return res.status(404).json({
-                        title: 'An error occured',
+                        title: 'erreur produite',
                         error: err
                     });
                 }

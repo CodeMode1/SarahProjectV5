@@ -41,7 +41,8 @@ var evenementSchema = new Schema({
         type: String
     },
     validationTache: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     creerPar: {
         type: String
@@ -55,10 +56,6 @@ var evenementSchema = new Schema({
     },
     modif: {
         type: Date
-    },
-    client_FK: {
-        type: Schema.Types.ObjectId,
-        ref: 'Client'
     }
 });
 
@@ -66,7 +63,17 @@ evenementSchema.pre('save', function (next) {
     var doc = this;
     genSequence.next(function (nextSeq) {
         doc.noEvenement = nextSeq;
+        next();
     });
 });
+
+
+/* foreign key
+        client_FK: {
+        type: Schema.Types.ObjectId,
+        ref: 'Client'
+    }
+*/
+
 
 module.exports = mongoose.model('Evenement', evenementSchema);
