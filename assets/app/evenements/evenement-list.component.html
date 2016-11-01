@@ -53,7 +53,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" [disabled]="!this.evenementSelected || this.confirmImp" (click)="onDelete()"
                                 id="modalOuvert">OK</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>NO ÉVÈNEMENT</th>
+                        <th>NO CONTRAT</th>
                         <th>NOM</th>
                         <th>DATE ÉVÈNEMENT</th>
                         <th>CONTACT</th>
@@ -82,7 +82,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let evenement of evenements; let i=index" (click)="evenementSelect(evenement)" [class.estSelectRange]="this.noEvenement == evenement.noEvenement">
+                    <tr *ngFor="let evenement of evenements |noClientPipe:noContratFiltreList; let i=index" (click)="evenementSelect(evenement)"
+                        [class.estSelectRange]="this.noEvenement == evenement.noEvenement">
                         <td>{{evenement?.noEvenement}}</td>
                         <td>{{evenement?.nom}}</td>
                         <td>{{evenement?.dateEvenement | date:'yyyy-MM-dd'}}</td>

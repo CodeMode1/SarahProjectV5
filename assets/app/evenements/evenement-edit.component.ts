@@ -59,6 +59,8 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
     modeSoumission: boolean;
     sauvegardeEvenement: boolean;
     myEvenement: Evenement;
+    formActualiser: boolean;
+    formCopie: boolean;
     // id de mongo du client sélect.
     clientId: string;
     subscription: Subscription;
@@ -73,6 +75,8 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
         private _erreurService: ErreurService, private _activatedRoute: ActivatedRoute) { 
             this.myEvenement = new Evenement();
             this.modeSoumission = true;
+            this.formActualiser = false;
+            this.formCopie = false;
             this.hiddenFK = true;
             this.userLogue();
         }
@@ -174,8 +178,8 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
     onSubmit(){
         //change mode modification, enable bouton Actualiser et copier
         this.modeSoumission = false;
-        //this.formActualiser = true;
-        //this.formCopie = true;
+        this.formActualiser = true;
+        this.formCopie = true;
         console.log("valeurs du form evx créé: " );
         console.log(this.editEvenementForm.value);
         // if nouveau, appel créé, sinon appel update
@@ -186,6 +190,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
                         console.log('data du serveur : ');
                         console.log(data);
                         this.myEvenement = data;
+                        console.log(this.myEvenement.dateEvenement);
                         // message succes creation evx
                         this.sauvegardeEvenement = true;
                     },

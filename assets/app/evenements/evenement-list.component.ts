@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Evenement } from './evenement';
 import { ErreurService } from '../erreurs/erreur.service';
 import { EvenementService } from './evenement.service';
+import { NoClientPipe } from '../pipes/noClient.pipe';
 
 
 @Component({
@@ -208,6 +209,7 @@ export class EvenementListComponent implements OnInit {
     // search No Contrat
     boolSearchContrat: boolean;
     noContratTextSearch: string;
+    noContratFiltreList: string;
     erreurNoContrat: string;
     // search Full Text
     boolFullSearch: boolean;
@@ -218,7 +220,8 @@ export class EvenementListComponent implements OnInit {
     titreModal: string;
     constructor( private _erreurService: ErreurService, private _evenementService: EvenementService) {
         this.titre = "Liste des Évènements";
-        this.noContratTextSearch = ""; 
+        this.noContratTextSearch = "";
+        this.noContratFiltreList = ""; 
         this.boolSearchContrat = false; 
         this.erreurNoContrat = "";
         this.specialTextSearch = "";
@@ -257,7 +260,23 @@ export class EvenementListComponent implements OnInit {
     }
 
     onSearchNoContrat(){
-
+        this.boolSearchContrat = false;
+        if(this.noContratTextSearch === null || (this.noContratTextSearch).toString() === ""){
+            this.noContratFiltreList = "";
+            this.boolSearchContrat = true;
+            return;
+        }
+        else if(isNaN(Number(this.noContratTextSearch))){
+            this.erreurNoContrat = "Invalide. No Contrat doit être un nombre.";
+            this.boolSearchContrat = true;
+            return;
+        }
+        else if(this.noContratTextSearch.toString().length > 10){
+            this.erreurNoContrat = "Invalide. No Contrat dépasse la longueur acceptée.";
+            this.boolSearchContrat = true;
+            return;
+        }
+        
     }
 
     logInput(value){
@@ -277,7 +296,14 @@ export class EvenementListComponent implements OnInit {
     }
 
     onDelete(){
-
+        if(this.evenementSelected !== null){
+            this._evenementService.deleteEvenement(this.evenementSelected)
+                .subscribe(
+                    data => console.log(data),
+                    error => this._erreurService.handleErreur(error)
+                );
+        }
+        this.confirmImp = true;
     }
 }
 

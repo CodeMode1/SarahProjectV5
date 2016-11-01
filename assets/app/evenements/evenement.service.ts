@@ -73,7 +73,15 @@ export class EvenementService{
         const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
         return this._http.put('http://localhost:3000/evenement/' + evenement.evenementId + token, body, {headers:header})
             .map((response : Response) => response.json())
-            .catch(error => Observable.throw(error.json()))
+            .catch(error => Observable.throw(error.json() || 'erreur serveur'));
+    }
+
+    deleteEvenement(evenement: Evenement){
+        this.evenements.splice(this.evenements.indexOf(evenement), 1);
+        const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+        return this._http.delete('http://localhost:3000/evenement/' + evenement.evenementId + token)
+            .map((response: Response) => response.json())
+            .catch(error => Observable.throw(error.jsons() || 'erreur serveur'));
     }
 
 

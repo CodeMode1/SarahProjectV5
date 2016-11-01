@@ -177,4 +177,35 @@ router.put('/:id', function (req, res, next) {
     });
 });
 
+router.delete('/:id', function (req, res, next) {
+    Evenement.findById(req.params.id, function (err, doc) {
+        if (err) {
+            return res.status(404).json({
+                title: 'erreur produite',
+                error: err
+            });
+        }
+        if (!doc) {
+            return res.status(404).json({
+                title: 'aucun evenement trouvé',
+                error: {
+                    message: 'evenement introuvable'
+                }
+            });
+        }
+        doc.remove(function (err, result) {
+            if (err) {
+                return res.status(404).json({
+                    title: 'erreur produite',
+                    error: err
+                });
+            }
+            res.status(201).json({
+                message: 'succès',
+                obj: result
+            });
+        });
+    });
+});
+
 module.exports = router;

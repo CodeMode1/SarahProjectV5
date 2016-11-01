@@ -11,7 +11,7 @@ var evenementSchema = new Schema({
         type: String
     },
     dateEvenement: {
-        type: Date
+        type: String
     },
     contact: {
         type: String
@@ -23,19 +23,19 @@ var evenementSchema = new Schema({
         type: String
     },
     dateSoumission: {
-        type: Date
+        type: String
     },
     dateConfirmation: {
-        type: Date
+        type: String
     },
     dateFacturation: {
-        type: Date
+        type: String
     },
     dateNonRetenu: {
-        type: Date
+        type: String
     },
     dateAnnulation: {
-        type: Date
+        type: String
     },
     notes: {
         type: String
