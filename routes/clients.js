@@ -58,6 +58,7 @@ router.get('/:noClient', function (req, res, next) {
 
 router.get('/search/:specialSearch', function (req, res, next) {
     var specialSearch = req.params.specialSearch;
+
     Client.find({
         $text: {
             $search: specialSearch,
@@ -97,6 +98,7 @@ router.get('/search/:specialSearch', function (req, res, next) {
 /* middleware : requêtes voyagent de haut en bas. ( defensive programming)
    seulement un User loggué peut créer, modifier et supprimer des clients
 */
+
 router.use('/', function (req, res, next) {
     jwt.verify(req.query.token, 'secret', function (err, jwtDecode) {
         if (err) {

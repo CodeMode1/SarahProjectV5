@@ -276,7 +276,17 @@ export class EvenementListComponent implements OnInit {
             this.boolSearchContrat = true;
             return;
         }
-        
+        this._evenementService.getEvenement(Number(this.noContratTextSearch))
+            .subscribe(
+                data => {
+                    this.noContratFiltreList = (data.noEvenement).toString();
+                    console.log(this.noContratFiltreList);
+                },
+                error => {
+                    this.boolSearchContrat = true;
+                    this._erreurService.handleErreur(error)
+                }
+            );
     }
 
     logInput(value){
@@ -288,11 +298,47 @@ export class EvenementListComponent implements OnInit {
     }
 
     onSpecialSearch(){
-
+        this.boolFullSearch = false;
+        if(this.specialTextSearch === null || (this.specialTextSearch).toString() === ""){
+            this.getEvenements();
+            return;
+        }
+        else if(this.specialTextSearch.toString().length > 150){
+            this.erreurSpecialSearch = "Invalide. Ne pas dépasser 150 caractères.";
+            return;
+        }
+        this._evenementService.getEvenementsSpecialSearch(this.specialTextSearch)
+            .subscribe(
+                data => {
+                    this.evenements = data;
+                    console.log('evx affiche table : ');
+                    console.log(this.evenements);
+                },
+                error =>{
+                    this._erreurService.handleErreur(error)
+                }
+            );   
     }
 
     actualiser(){
-
+        if(this.noContratTextSearch !== null && (this.noContratTextSearch).toString() !== ""){
+            this._evenementService.getEvenement(Number(this.noContratTextSearch))
+                .subscribe(
+                    data => {
+                        this.noContratFiltreList = (data.noEvenement).toString();
+                        console.log('filtre table no contrat');
+                        console.log(this.noContratFiltreList);
+                    },
+                    error => {
+                        this.boolSearchContrat = true;
+                        this._erreurService.handleErreur(error)
+                    }
+                );
+                return;
+        } else{
+            this.noContratFiltreList = "";
+            this.getEvenements();
+        }
     }
 
     onDelete(){

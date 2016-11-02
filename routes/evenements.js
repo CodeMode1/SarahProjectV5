@@ -56,8 +56,49 @@ router.get('/:noEvenement', function (req, res, next) {
     });
 });
 
+/* wildcard : "joker" créer un index Text sur tous les champs d'un document de la collection evenement:
+    db.evenements.createIndex({"$**":"text"}) dans le mongo shell. (un index Text par collection) */
+
+router.get('/search/:specialSearch', function (req, res, next) {
+    var specialSearch = req.params.specialSearch;
+
+    Evenement.find({
+        $text: {
+            $search: specialSearch,
+            $caseSensitive: false
+        }
+    }, {
+        score: {
+            $meta: "textScore"
+        }
+    }).sort({
+        score: {
+            $meta: "textScore"
+        }
+    }).limit(10).exec(function (err, results) {
+        if (err) {
+            return res.status(404).json({
+                title: 'erreur produite',
+                error: err
+            });
+        }
+        if (!results || !results.length) {
+            return res.status(404).json({
+                title: 'Evenements Introuvables',
+                error: {
+                    message: 'Ancuns evenements avec ces informations'
+                }
+            });
+        }
+        res.status(200).json({
+            message: 'succès',
+            obj: results
+        });
+    })
+});
+
 /* middleware : requêtes voyagent de haut en bas. ( defensive programming)
-   seulement un User loggué peut créer, modifier et supprimer des clients
+   seulement un User loggué peut créer, modifier et supprimer des evenements
 */
 
 router.use('/', function (req, res, next) {
@@ -176,6 +217,9 @@ router.put('/:id', function (req, res, next) {
         });
     });
 });
+
+/*  Supprimer un évènement
+ */
 
 router.delete('/:id', function (req, res, next) {
     Evenement.findById(req.params.id, function (err, doc) {

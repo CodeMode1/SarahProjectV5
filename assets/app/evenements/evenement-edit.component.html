@@ -37,38 +37,43 @@
                             <option>Facturation</option>
                         </select>
                 </div>
-                <div class="col-md-6 form-group clearPadding">
+                <div class="col-md-6 floatLeftDate">
                     <label for="dateSoumission">Date Soumission</label>
                     <input type="date" id="dateSoumission" class="form-control" formControlName="dateSoumission" placeholder="submission date"
                         [(ngModel)]="this.myEvenement.dateSoumission">
                 </div>
-                <div class="col-md-6 form-group clearPadding">
+                <div class="col-md-6 floatLeftDate">
                     <label for="dateConfirmation">Date Confirmation</label>
                     <input type="date" id="dateConfirmation" class="form-control" formControlName="dateConfirmation" placeholder="confirmation date"
                         [(ngModel)]="this.myEvenement.dateConfirmation">
                 </div>
+                <div class="col-md-6 clearDate">
+                    <label for="dateFacturation">Date Facturation</label>
+                    <input type="date" id="dateFacturation" class="form-control" formControlName="dateFacturation" placeholder="facturation date"
+                        [(ngModel)]="this.myEvenement.dateFacturation">
+                </div>
+                <div class="col-md-6 floatLeftDate">
+                    <label for="dateNonRetenu">Date Non Retenu</label>
+                    <input type="date" id="dateNonRetenu" class="form-control" formControlName="dateNonRetenu" placeholder="unkept date" [(ngModel)]="this.myEvenement.dateNonRetenu">
+                </div>
+                <div class="col-md-12 clearDate">
+                    <label for="dateAnnulation">Date Annulation</label>
+                    <input type="date" id="dateAnnulation" class="form-control" formControlName="dateAnnulation" placeholder="annulation date"
+                        [(ngModel)]="this.myEvenement.dateAnnulation">
+                </div>
             </div>
             <div class="col-md-6 form-group">
-                <div class="col-md-6 form-group">
+                <div class="col-md-6">
                     <div class="col-md-12" class="notes">
                         <label for="notes">Notes</label>
-                        <textarea id="notes" class="form-control" rows="7" formControlName="notes" [(ngModel)]="this.myEvenement.notes"></textarea>
-                    </div>
-                    <div class="col-md-6 clearDate">
-                        <label for="dateFacturation">Date Facturation</label>
-                        <input type="date" id="dateFacturation" class="form-control" formControlName="dateFacturation" placeholder="facturation date"
-                            [(ngModel)]="this.myEvenement.dateFacturation">
-                    </div>
-                    <div class="col-md-6 form-group clearPadding">
-                        <label for="dateNonRetenu">Date Non Retenu</label>
-                        <input type="date" id="dateNonRetenu" class="form-control" formControlName="dateNonRetenu" placeholder="unkept date" [(ngModel)]="this.myEvenement.dateNonRetenu">
+                        <textarea id="notes" class="form-control" rows="10" formControlName="notes" [(ngModel)]="this.myEvenement.notes"></textarea>
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
-                    <div class="col-md-6 form-group">
-                        <label><input class="form-check-input" id="validationTache" class="form-control" formControlName="validationTache" type="checkbox" value="">Validation Tâche</label>
+                    <div class="col-md-6 checkbox">
+                        <label><input type="checkbox" id="validationTache" formControlName="validationTache">Validation Tâche</label>
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-6">
                         <label>Numéro</label>
                         <input type="text" id="noEvenement" class="form-control" formControlName="noEvenement" [(ngModel)]="this.myEvenement.noEvenement"
                             readonly>
@@ -79,18 +84,13 @@
                         <label>Créé</label>
                         <input type="text" id="cree" class="form-control" formControlName="dateCree" readonly [(ngModel)]="this.myEvenement.dateCree">
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-6">
                         <label>Modifié par</label>
                         <input type="text" id="modifPar" class="form-control" formControlName="modifPar" readonly [(ngModel)]="this.myEvenement.modifPar">
                         <label>Modifié</label>
                         <input type="text" id="modifPar" class="form-control" formControlName="modif" readonly [(ngModel)]="this.myEvenement.modif">
                     </div>
-                    <div class="col-md-6 outer">
-                        <label for="dateAnnulation">Date Annulation</label>
-                        <input type="date" id="dateAnnulation" class="form-control" formControlName="dateAnnulation" placeholder="annulation date"
-                            [(ngModel)]="this.myEvenement.dateAnnulation">
-                        <input type="text" id="client_FK" formControlName="client_FK" [(ngModel)]="this.myEvenement.client_FK" [hidden]="hiddenFK">
-                    </div>
+                    <input type="text" id="client_FK" formControlName="client_FK" [(ngModel)]="this.myEvenement.client_FK" [hidden]="hiddenFK">
                 </div>
             </div>
         </section>

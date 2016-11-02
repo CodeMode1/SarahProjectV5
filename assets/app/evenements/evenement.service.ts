@@ -23,14 +23,12 @@ export class EvenementService{
                         data[i].selectEtat, data[i].dateSoumission, data[i].dateConfirmation, data[i].dateFacturation,
                         data[i].dateNonRetenu, data[i].dateAnnulation, data[i].notes, data[i].validationTache,
                         data[i].creerPar, data[i].dateCree, data[i].modifPar, data[i].modif);
-                        objs.push(evenement);
-                        console.log('les evx construit dans le service: ' + JSON.stringify(evenement));
-                        console.log('client retourné : ')    
-                        console.log(data[i].client_FK);
+                        objs.push(evenement);  
+                        //console.log(data[i].client_FK);
                 };
                 // mettre a jour le array d'evx du service
                 this.evenements = objs;
-                console.log("array du service: " + this.evenements);
+                console.log("array du service: " + JSON.stringify(this.evenements));
                 return objs;
             })
             .catch(error => Observable.throw(error.json() || 'erreur serveur'));
@@ -82,6 +80,28 @@ export class EvenementService{
         return this._http.delete('http://localhost:3000/evenement/' + evenement.evenementId + token)
             .map((response: Response) => response.json())
             .catch(error => Observable.throw(error.jsons() || 'erreur serveur'));
+    }
+
+    getEvenementsSpecialSearch(textSearch: string): Observable<Evenement[]>{
+        return this._http.get('http://localhost:3000/evenement/search/' + textSearch)
+            .map((response: Response) => {
+                const data = response.json().obj;
+                let objs: any[] = [];
+                for(let i=0; i < data.length; i++){
+                    let evenement = new Evenement(data[i]._id, data[i].noEvenement, data[i].nom,
+                        data[i].dateEvenement, data[i].contact, data[i].client,
+                        data[i].selectEtat, data[i].dateSoumission, data[i].dateConfirmation, data[i].dateFacturation,
+                        data[i].dateNonRetenu, data[i].dateAnnulation, data[i].notes, data[i].validationTache,
+                        data[i].creerPar, data[i].dateCree, data[i].modifPar, data[i].modif);
+                        objs.push(evenement);
+                        console.log('les evx filtrés: ' + JSON.stringify(evenement));
+                };
+                this.evenements = objs;
+                console.log('array filtrer : ');
+                console.log(this.evenements);
+                return objs;
+            })
+            .catch(error => Observable.throw(error.json() || 'erreur serveur'));
     }
 
 

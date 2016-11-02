@@ -18,13 +18,16 @@ import { ErreurService } from '../erreurs/erreur.service';
         }
 
         .clearDate{
-            float:left;
             clear:both;
+            float:left;
             padding: 0;
+            margin: 0;
         }
 
-        .clearPadding{
+        .floatLeftDate{
+            float: left;
             padding: 0;
+            margin: 0;
         }
 
         .divFooter{
