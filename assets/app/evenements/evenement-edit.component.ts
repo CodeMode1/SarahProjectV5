@@ -5,12 +5,18 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/RX';
 import { Evenement } from './evenement';
 import { ErreurService } from '../erreurs/erreur.service';
+import { ClientService } from '../clients/client.service';
+import { Client } from '../clients/client';
 
 @Component({
     moduleId: module.id,
     selector: 'my-evenement-edit',
     templateUrl: 'evenement-edit.component.html',
     styles: [ `
+        #boutonModalOk{
+            float: left;
+            margin: 0 1% 0 0;
+        }
          .outer{
             float:left;
             clear:both;
@@ -54,6 +60,19 @@ import { ErreurService } from '../erreurs/erreur.service';
         .alert-success{
             text-align:center;
         }
+
+        .estSelectRange{
+             background-color: #519BDB;
+         }
+
+         thead > tr{
+            background-color: #fafafa;
+            border-bottom: 0.25em solid #1565c0;
+        }
+
+         tbody > tr:hover{
+            background-color: #a9d4f9;
+        }
         
     `]
 })
@@ -73,14 +92,21 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
     hiddenFK: boolean;
     //user logue par défaut
     userLoggue: string;
+    //client array pour choix client
+    clients: Client[];
+    clientSelectedList: Client;
+    noClientSelectedList: number;
+    clientSelectedSave: Client;
+    aucunPrenomClientSelected: boolean;
 
     constructor( private _formBuilder: FormBuilder, private _evenementService: EvenementService,
-        private _erreurService: ErreurService, private _activatedRoute: ActivatedRoute) { 
+        private _erreurService: ErreurService, private _activatedRoute: ActivatedRoute, private _clientService: ClientService) { 
             this.myEvenement = new Evenement();
             this.modeSoumission = true;
             this.formActualiser = false;
             this.formCopie = false;
             this.hiddenFK = true;
+            this.aucunPrenomClientSelected = false;
             this.userLogue();
         }
 
@@ -214,6 +240,64 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
         console.log(localStorage.getItem('userName'));
         this.userLoggue = localStorage.getItem('userName');
         this.myEvenement.contact = this.userLoggue;
+    }
+
+    getClients(){
+        this._clientService.getClients()
+            .subscribe(
+                data => {
+                    this.clients = data;
+                    console.log(this.clients);
+                },
+                error => this._erreurService.handleErreur(error)
+            );
+    }
+
+    clientSelect(client: Client){
+        this.clientSelectedList = client;
+        console.log('client selected List : ');
+        console.log(this.clientSelectedList);
+        this.noClientSelectedList = client.noClient;
+        console.log('no client selected List: ');
+        console.log(this.noClientSelectedList);
+        //affichage client sélectionné dans la boite modale. (prenom est null sur l'objet et undefined en affichage)
+        if(this.clientSelectedList.prenom === null || this.clientSelectedList.prenom === "" || this.clientSelectedList.prenom === undefined){
+            this.aucunPrenomClientSelected = true;
+        }else{
+            this.aucunPrenomClientSelected = false;
+        }
+        console.log(this.aucunPrenomClientSelected);
+    }
+
+    saveClientSelected(){
+        // save client
+        console.log('client a saver : ');
+        this.clientSelectedSave = this.clientSelectedList;
+        // id mongo du client selected :
+        this.clientId = this.clientSelectedSave.clientId;
+        console.log(this.clientSelectedSave.prenom);
+        console.log('id mongo client selected : ');
+        console.log(this.clientId);
+        if(this.clientSelectedSave.prenom === null || this.clientSelectedSave.prenom === "" || this.clientSelectedSave.prenom === undefined){
+            this.myEvenement.client = this.clientSelectedSave.nom;
+            return;
+        }
+        // sauver le client selectionné dans le input client du form.
+        this.myEvenement.client = this.clientSelectedSave.nom + ', ' + this.clientSelectedSave.prenom;    
+    }
+
+    deleteClientSelected(){
+        console.log('client selected delete: ');
+        console.log(this.clientSelectedList);
+        console.log(this.noClientSelectedList);
+        console.log('id mongo client selected (meme que dans save): 5816566bd84fe82f14afb388 5816566bd84fe82f14afb388');
+        console.log(this.clientId);
+        console.log('client save : (meme que dans save)');
+        console.log(this.clientSelectedSave);
+        //this.clientSelected = null;
+        //this.noClientSelected = null;
+        //this.clientId = null;
+        //le nom dans le input this.myEvenement.client est l'ancien
     }
 
  
