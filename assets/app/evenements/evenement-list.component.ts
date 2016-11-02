@@ -3,8 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Evenement } from './evenement';
 import { ErreurService } from '../erreurs/erreur.service';
 import { EvenementService } from './evenement.service';
-import { NoClientPipe } from '../pipes/noClient.pipe';
-
+import { NoEvenementPipe } from '../pipes/noEvenement.pipe';
 
 @Component({
     moduleId: module.id,
@@ -263,7 +262,6 @@ export class EvenementListComponent implements OnInit {
         this.boolSearchContrat = false;
         if(this.noContratTextSearch === null || (this.noContratTextSearch).toString() === ""){
             this.noContratFiltreList = "";
-            this.boolSearchContrat = true;
             return;
         }
         else if(isNaN(Number(this.noContratTextSearch))){
