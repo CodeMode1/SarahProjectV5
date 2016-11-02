@@ -73,6 +73,10 @@ import { Client } from '../clients/client';
          tbody > tr:hover{
             background-color: #a9d4f9;
         }
+
+        .styleClientSelected{
+            border: 1px solid #ddd;
+        }
         
     `]
 })
@@ -106,7 +110,6 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
             this.formActualiser = false;
             this.formCopie = false;
             this.hiddenFK = true;
-            this.aucunPrenomClientSelected = false;
             this.userLogue();
         }
 
@@ -275,6 +278,8 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
         this.clientSelectedSave = this.clientSelectedList;
         // id mongo du client selected :
         this.clientId = this.clientSelectedSave.clientId;
+        //sauver dans le form control hidden du form envoyé au serveur.
+        this.myEvenement.client_FK = this.clientId;
         console.log(this.clientSelectedSave.prenom);
         console.log('id mongo client selected : ');
         console.log(this.clientId);

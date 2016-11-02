@@ -72,7 +72,7 @@
                 </div>
                 <div class="col-md-6 form-group">
                     <div class="col-md-6 checkbox">
-                        <label><input type="checkbox" id="validationTache" formControlName="validationTache">Validation Tâche</label>
+                        <label><input type="checkbox" value="" id="validationTache" formControlName="validationTache" [(ngModel)]="this.myEvenement.validationTache">Validation Tâche</label>
                     </div>
                     <div class="col-md-6">
                         <label>Numéro</label>
@@ -149,9 +149,10 @@
                         </table>
                     </div>
                     <div>
+                        <p *ngIf="!clientSelectedList" class="styleClientSelected">Sélectionné : </p>
                         <div [ngSwitch]="aucunPrenomClientSelected">
-                            <p *ngSwitchCase="true">Sélectionné : {{clientSelectedList?.nom}}</p>
-                            <p *ngSwitchCase="false">Sélectionné : {{clientSelectedList?.nom}}, {{clientSelectedList?.prenom}}</p>
+                            <p *ngSwitchCase="true" class="styleClientSelected">Sélectionné : {{clientSelectedList?.nom}}</p>
+                            <p *ngSwitchCase="false" class="styleClientSelected">Sélectionné : {{clientSelectedList?.nom}}, {{clientSelectedList?.prenom}}</p>
                         </div>
                     </div>
                 </div>
