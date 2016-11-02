@@ -56,6 +56,10 @@ var evenementSchema = new Schema({
     },
     modif: {
         type: Date
+    },
+    client_FK: {
+        type: Schema.Types.ObjectId,
+        ref: 'Client'
     }
 });
 
@@ -66,14 +70,6 @@ evenementSchema.pre('save', function (next) {
         next();
     });
 });
-
-
-/* foreign key
-        client_FK: {
-        type: Schema.Types.ObjectId,
-        ref: 'Client'
-    }
-*/
 
 
 module.exports = mongoose.model('Evenement', evenementSchema);

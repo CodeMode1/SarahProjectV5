@@ -10,8 +10,6 @@ export class EvenementService{
 
     constructor( private _http: Http) { }
     
-    
-    //data[i].client_FK._id pour modifier un evenement pour actualiser la selection par rapport au client.
     getEvenements(): Observable<Evenement[]>{
         return this._http.get('http://localhost:3000/evenement')
             .map((response: Response) => {
@@ -22,9 +20,9 @@ export class EvenementService{
                         data[i].dateEvenement, data[i].contact, data[i].client,
                         data[i].selectEtat, data[i].dateSoumission, data[i].dateConfirmation, data[i].dateFacturation,
                         data[i].dateNonRetenu, data[i].dateAnnulation, data[i].notes, data[i].validationTache,
-                        data[i].creerPar, data[i].dateCree, data[i].modifPar, data[i].modif);
+                        data[i].creerPar, data[i].dateCree, data[i].modifPar, data[i].modif, data[i].client_FK);
                         objs.push(evenement);  
-                        //console.log(data[i].client_FK);
+                        console.log(data[i].client_FK);
                 };
                 // mettre a jour le array d'evx du service
                 this.evenements = objs;
@@ -59,7 +57,7 @@ export class EvenementService{
                         data.dateEvenement, data.contact, data.client,
                         data.selectEtat, data.dateSoumission, data.dateConfirmation, data.dateFacturation,
                         data.dateNonRetenu, data.dateAnnulation, data.notes, data.validationTache,
-                        data.creerPar, data.dateCree, data.modifPar, data.modif);
+                        data.creerPar, data.dateCree, data.modifPar, data.modif, data.client_FK);
                 return evenement;
             })
             .catch(error => Observable.throw(error.json() || 'erreur serveur'));

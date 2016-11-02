@@ -215,7 +215,6 @@ export class EvenementListComponent implements OnInit {
     specialTextSearch: string;
     erreurSpecialSearch: string;
     // fenêtre modal
-    confirmImp: boolean;
     titreModal: string;
     constructor( private _erreurService: ErreurService, private _evenementService: EvenementService) {
         this.titre = "Liste des Évènements";
@@ -250,7 +249,6 @@ export class EvenementListComponent implements OnInit {
     }
 
     evenementSelect(evenement: Evenement){
-        this.confirmImp = false;
         this.evenementSelected = evenement;
         console.log(this.evenementSelected);
         console.log('no evenement : ');
@@ -347,7 +345,6 @@ export class EvenementListComponent implements OnInit {
                     error => this._erreurService.handleErreur(error)
                 );
         }
-        this.confirmImp = true;
     }
 }
 

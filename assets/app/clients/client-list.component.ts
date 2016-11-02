@@ -211,7 +211,6 @@ export class ClientListComponent implements OnInit {
     clientSelected: Client;
     noClient: number;
     titreModal: string;
-    confirmImp: boolean;
     // no client
     noClientTextSearch: string;
     noClientFiltreList: string;
@@ -256,7 +255,6 @@ export class ClientListComponent implements OnInit {
     }
 
     clientSelect(client: Client){
-        this.confirmImp = false;
         this.clientSelected = client;
         console.log(this.clientSelected);
         console.log(this.clientSelected.noClient);
@@ -272,7 +270,6 @@ export class ClientListComponent implements OnInit {
                     error => this._erreurService.handleErreur(error)
                 );
         }
-        this.confirmImp = true;
     }
 
     onSearchNoClient(){

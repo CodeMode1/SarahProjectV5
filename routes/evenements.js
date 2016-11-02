@@ -15,6 +15,7 @@ router.get('/', function (req, res, next) {
     getEvenements.sort({
             dateCree: 'desc'
         })
+        .populate('client_FK')
         .limit(10)
         .exec(function (err, results) {
             if (err) {
@@ -115,7 +116,6 @@ router.use('/', function (req, res, next) {
 });
 
 /* créer un évènement
-    evenement.client_Fk = req.body.client_FK;
  */
 
 router.post('/', function (req, res, next) {
@@ -143,7 +143,8 @@ router.post('/', function (req, res, next) {
             validationTache: req.body.validationTache,
             creerPar: doc.prenom + " " + doc.nom,
             modifPar: req.body.modifPar,
-            modif: req.body.modif
+            modif: req.body.modif,
+            client_FK: req.body.client_FK
         });
         evenement.save(function (err, result) {
             if (err) {
