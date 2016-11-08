@@ -157,7 +157,7 @@ router.post('/', function (req, res, next) {
         client.save(function (err, result) {
             if (err) {
                 return res.status(404).json({
-                    title: 'erreur produite',
+                    title: 'impossible de sauvegarder le client',
                     error: err
                 });
             }
@@ -238,55 +238,39 @@ router.put('/:id', function (req, res, next) {
 
 router.delete('/:id', function (req, res, next) {
     var id = req.params.id;
-    //chercher tous les FK des evenements reliés à un client, donc qui on un field non null et unique sur client_FK
-    Evenement.findOne({
-            client_FK: {
-                $eq: id
-            }
-        },
-        function (err, doc) {
-            console.log(doc);
+    //chercher FK evenement relie à un client(son id)
+    Client.findById(req.params.id, function (err, doc) {
+        if (err) {
+            return res.status(404).json({
+                title: 'erreur produite',
+                error: err
+            });
+        }
+        if (!doc) {
+            return res.status(404).json({
+                title: 'aucun client trouvé',
+                error: {
+                    message: 'client introuvable'
+                }
+            });
+        }
+        doc.remove(function (err, result) {
             if (err) {
                 return res.status(404).json({
                     title: 'erreur produite',
                     error: err
                 });
             }
-            Client.findOne()
-                .where('_id', id)
-                .where('_id').ne(doc.client_FK)
-                .exec(function (err, doc) {
-                    if (err) {
-                        return res.status(404).json({
-                            title: 'erreur produite',
-                            error: err
-                        });
-                    }
-                    if (!doc) {
-                        return res.status(404).json({
-                            title: 'impossible de supprimer',
-                            error: {
-                                message: 'impossible de supprimer un client avec des evenements'
-                            }
-                        });
-                    }
-                    doc.remove(function (err, result) {
-                        if (err) {
-                            return res.status(404).json({
-                                title: 'erreur produite',
-                                error: err
-                            });
-                        }
-                        res.status(201).json({
-                            message: 'succès',
-                            obj: result
-                        });
-                    });
-                });
+            res.status(201).json({
+                message: 'succès',
+                obj: result
+            });
         });
+    });
 });
 
 /*
+-----------------------------------------------------
  Client.findById(req.params.id, function (err, doc) {
             if (err) {
                 return res.status(404).json({
@@ -314,6 +298,145 @@ router.delete('/:id', function (req, res, next) {
                     obj: result
                 });
             });
+        });
+--------------------------------------------------
+        Client.findByIdAndRemove({
+                    _id: id
+                });
+                return res.status(201).json({
+                    message: 'succès'
+                });
+
+
+                Evenement.findOne({
+            client_FK: {
+                $eq: id
+            }
+        },
+        function (err, result) {
+            console.log(result);
+            if (err) {
+                return res.status(404).json({
+                    title: 'aucun evenement associe a un client',
+                    error: {
+                        message: 'aucun evenement associe a ce client'
+                    }
+                });
+            }
+            if (!result) {
+                //aucun client lié à l'evenement, delete client
+                Client.findById(req.params.id, function (err, doc) {
+                    if (err) {
+                        return res.status(404).json({
+                            title: 'erreur produite',
+                            error: err
+                        });
+                    }
+                    if (!doc) {
+                        return res.status(404).json({
+                            title: 'aucun client trouvé',
+                            error: {
+                                message: 'client introuvable'
+                            }
+                        });
+                    }
+                    doc.remove(function (err, result) {
+                        if (err) {
+                            return res.status(404).json({
+                                title: 'erreur produite',
+                                error: err
+                            });
+                        }
+                        res.status(201).json({
+                            message: 'succès',
+                            obj: result
+                        });
+                    });
+                });
+            }
+            Client.findOne()
+                .where('_id', id)
+                .where('_id').ne(result.client_FK)
+                .exec(function (err, doc) {
+                    if (err) {
+                        return res.status(404).json({
+                            title: 'erreur produite',
+                            error: err
+                        });
+                    }
+                    if (!doc) {
+                        return res.status(404).json({
+                            title: 'impossible de supprimer client',
+                            error: {
+                                message: 'impossible de supprimer un client avec des evenements'
+                            }
+                        });
+                    }
+                    doc.remove(function (err, result) {
+                        if (err) {
+                            return res.status(404).json({
+                                title: 'erreur produite',
+                                error: err
+                            });
+                        }
+                        res.status(201).json({
+                            message: 'succès',
+                            obj: result
+                        });
+                    });
+                });
+        });
+
+---------------------------------------------
+         Evenement.findOne({
+            client_FK: {
+                $ne: id
+            }
+        },
+        function (err, doc) {
+            console.log(doc);
+            if (doc) {
+                //pas d'evenement associe client, remove client
+                Client.find({
+                    _id: id
+                }).remove().exec(function (err, result1) {
+                    if (err) {
+                        return res.status(404).json({
+                            title: 'erreur produite',
+                            error: err
+                        });
+                    }
+                    if (result1) {
+                        return res.status(404).json({
+                            title: 'client supprimer',
+                            error: {
+                                message: 'supprimer un client non lie a un evenement'
+                            }
+                        });
+                    }
+                });
+            }
+            if (!doc) {
+                Client.findOne()
+                    .where('_id', id)
+                    .where('_id').eq(doc.client_FK)
+                    .exec(function (err, result) {
+                        if (err) {
+                            return res.status(404).json({
+                                title: 'erreur produite',
+                                error: err
+                            });
+                        }
+                        if (result) {
+                            return res.status(404).json({
+                                title: 'impossible de supprimer',
+                                error: {
+                                    message: 'impossible de supprimer un client avec des evenements'
+                                }
+                            });
+                        }
+                    });
+            }
         });
 */
 

@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var mongooseUniqueValidator = require('mongoose-unique-validator');
 var Sequence = require('../models/sequence');
 var genSequence = Sequence.generateurSequence('client');
 var Evenement = require('./evenement');
@@ -106,6 +105,5 @@ clientSchema.pre('remove', function (next) {
 });
 */
 
-clientSchema.plugin(mongooseUniqueValidator);
 
 module.exports = mongoose.model('Client', clientSchema);

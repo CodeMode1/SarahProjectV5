@@ -266,7 +266,15 @@ export class ClientListComponent implements OnInit {
         if(this.clientSelected !== null){
             this._clientService.deleteClient(this.clientSelected)
                 .subscribe(
-                    data => console.log(data),
+                    data => {
+                        console.log(data);
+                        //this.clients.splice(this.clients.indexOf(this.clientSelected), 1);
+                        //console.log('array des clients : ');
+                        //console.log(this.clients);
+                        //this._clientService.clients = this.clients;
+                        //console.log('array du service client : ');
+                        //console.log(this._clientService.clients);
+                    },
                     error => this._erreurService.handleErreur(error)
                 );
         }

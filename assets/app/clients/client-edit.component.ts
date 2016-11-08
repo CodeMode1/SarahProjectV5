@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ClientService } from './client.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/RX';
 import { Client } from './client';
 import { ErreurService } from '../erreurs/erreur.service';
@@ -88,13 +88,15 @@ export class EditClientComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     estNouveau: boolean;
     codeClient: number;
+    urlCopie: string;
 
     constructor(private _formBuilder: FormBuilder, private _clientService: ClientService, private _erreurService: ErreurService,
-        private _activatedRoute: ActivatedRoute) {
+        private _activatedRoute: ActivatedRoute, private _router: Router) {
         this.identification = "Identification";
         this.gestion = "Gestion";
         this.myClient = new Client();
         this.modeSoumission = true;
+        this.urlCopie = this._router.url;
      }
 
     ngOnInit() { 
@@ -109,12 +111,25 @@ export class EditClientComponent implements OnInit, OnDestroy {
                                 this.myClient = data;
                                 console.log("client a modif: ");
                                 console.log(this.myClient);
+                                //Si URL contient "copie", alors vide les champs du client copié.
+                                if(this.urlCopie.includes("copie")){
+                                    this.copierClient();
+                                }
+                                console.log("client à copier vierge : ");
+                                console.log(this.myClient);
                             },
                             error => this._erreurService.handleErreur(error)
                         );
+                        console.log('url : ');
+                        console.log(this._router.url);
+                        if(this.urlCopie.includes("copie")){
+                            console.log("set mode copie");                       
+                            this.estNouveau = true; 
+                        }
                 } else{
                     this.estNouveau = true;
                 }
+                console.log("est ce que nouveau : ");
                 console.log(this.estNouveau);
                 //init form
                 this.creerForm();
@@ -211,6 +226,16 @@ export class EditClientComponent implements OnInit, OnDestroy {
             creePar: [creePar],
             cree: [cree]    
         });
+    }
+
+    copierClient(){
+        this.myClient.clientId = null;
+        this.myClient.noClient = null;
+        this.myClient.modifPar = null;
+        this.myClient.modif = null;
+        this.myClient.dateDernEv = null;
+        this.myClient.creerPar = null;
+        this.myClient.dateCree = null;
     }
 
     ngOnDestroy(){
