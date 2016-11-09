@@ -1,0 +1,95 @@
+<div class="col-md-4 form-group">
+    <div class="col-md-12">
+        <h2>{{titre}}</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>NOM</th>
+                        <th>DÉBUT</th>
+                        <th>FIN</th>
+                        <th>ÉTAT</th>
+                        <button type="button" class="btn btn-primary space" (click)="ajouteActivite()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-primary space" (click)="supprimeActivite()"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let activite of activites; let i=index" (click)="selectActivite(activite)" [class.estSelectRange]="this.nom === activite.nom">
+                        <td>{{activite?.nom}}</td>
+                        <td>{{activite?.debut }}</td>
+                        <td>{{activite?.fin}}</td>
+                        <td>{{activite?.etat}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-2 form-group">
+    <div class="col-md-12 outer">
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" class="form-control" placeholder="name" [(ngModel)]="this.selectedActivite.nom">
+    </div>
+    <div class="col-md-12 outer">
+        <label for="debut">Début</label>
+        <input type="date" id="debut" class="form-control" placeholder="activity start" [(ngModel)]="this.selectedActivite.debut">
+    </div>
+    <div class="col-md-12 outer">
+        <label for="fin">Fin</label>
+        <input type="date" id="fin" class="form-control" placeholder="activity end" [(ngModel)]="this.selectedActivite.fin">
+    </div>
+    <div class="col-md-12 outer">
+        <label for="etat">État: Confirmation</label>
+        <select class="form-control" id="etat" [(ngModel)]="this.selectedActivite.etat">
+            <option>Soumission</option>
+            <option>Non Retenu</option>
+            <option>Confirmation</option>
+            <option>Annulation</option>
+            <option>Facturation</option>
+            <option>Non Facturable</option>
+        </select>
+    </div>
+</div>
+<div class="col-md-6 form-group">
+    <div class="col-md-4">
+        <div class="col-md-12 outer">
+            <label for="nbPersonnes">Nb Personnes</label>
+            <input type="text" id="nbPersonnes" class="form-control" placeholder="# persons" [(ngModel)]="this.selectedActivite.nbPersonnes">
+        </div>
+        <div class="col-md-12 outer">
+            <label for="serviceTotal">Service Total</label>
+            <input type="text" id="serviceTotal" class="form-control" placeholder="total service" [(ngModel)]="this.selectedActivite.serviceTotal">
+        </div>
+        <div class="col-md-12 outer">
+            <label for="fraisServiceTotal">Frais Service Total</label>
+            <input type="text" id="fraisServiceTotal" class="form-control" placeholder="fee total service" [(ngModel)]="this.selectedActivite.fraisServiceTotal">
+        </div>
+        <div class="col-md-12 outer">
+            <label for="noFacture">No Facture</label>
+            <input type="text" id="noFacture" class="form-control" placeholder="# receipt" [(ngModel)]="this.selectedActivite.noFacture">
+        </div>
+    </div>
+    <div class="col-md-4 form-group">
+        <div class="col-md-12 checkbox outer">
+            <label><input type="checkbox" value="" id="surreservation" [(ngModel)]="this.selectedActivite.surreservation">Surréservation</label>
+        </div>
+        <div class="col-md-12 outer">
+            <label for="raisonNonRetenu">Raison Non Retenu</label>
+            <input type="text" id="raisonNonRetenu" class="form-control" placeholder="unkept reason" [(ngModel)]="this.selectedActivite.raisonNonRetenu">
+        </div>
+        <div class="col-md-12 outer">
+            <label for="modifiePar">Modifié Par</label>
+            <input type="text" id="modifiePar" class="form-control" [(ngModel)]="this.selectedActivite.modifiePar" readonly>
+        </div>
+        <div class="col-md-12 outer">
+            <label for="modifie">Modifié</label>
+            <input type="text" id="modifie" class="form-control" [(ngModel)]="this.selectedActivite.modifie" readonly>
+        </div>
+    </div>
+    <div class="col-md-8 form-group outer">
+        <div class="col-md-12">
+            <label for="ressources">Ressources</label>
+            <input type="text" id="ressources" class="form-control" placeholder="ressources" [(ngModel)]="this.selectedActivite.ressources">
+        </div>
+    </div>
+</div>

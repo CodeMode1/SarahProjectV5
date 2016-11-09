@@ -29,13 +29,14 @@
             </div>
             <div class="col-md-2 form-group">
                 <div class="col-md-12 outer">
-                    <label for="selectEtat">État: Confirmation</label>
+                    <label for="selectEtat">État</label>
                     <select class="form-control" id="selectEtat" formControlName="selectEtat" [(ngModel)]="this.myEvenement.selectEtat">
                             <option>Soumission</option>
                             <option>Non Retenu</option>
                             <option>Confirmation</option>
                             <option>Annulation</option>
                             <option>Facturation</option>
+                            <option>Non Facturable</option>
                         </select>
                 </div>
                 <div class="col-md-6 floatLeftDate">
@@ -95,6 +96,7 @@
                 </div>
             </div>
         </section>
+        <my-activite-list></my-activite-list>
         <div class="col-md-12 footer space">
             <div class="col-md-4 divFooter">
                 <button type="button" class="btn btn-primary" [disabled]="!formActualiser">

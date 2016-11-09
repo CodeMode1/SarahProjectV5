@@ -7,6 +7,7 @@ import { Evenement } from './evenement';
 import { ErreurService } from '../erreurs/erreur.service';
 import { ClientService } from '../clients/client.service';
 import { Client } from '../clients/client';
+import { ActiviteListComponent } from '../activites/activite-list.component';
 
 @Component({
     moduleId: module.id,

@@ -30,6 +30,7 @@ import { NoEvenementPipe } from '../pipes/noEvenement.pipe';
 
         tbody > tr{
             border-bottom: 0.2em solid #ddd;
+            cursor: pointer;
         }
 
         .estSelectRange{

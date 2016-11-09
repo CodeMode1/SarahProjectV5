@@ -44,10 +44,13 @@ import { EvenementListComponent } from './evenements/evenement-list.component';
 import { EvenementEditComponent } from './evenements/evenement-edit.component';
 import { EvenementService } from './evenements/evenement.service';
 
+//activites
+import { ActiviteListComponent } from './activites/activite-list.component';
+
 @NgModule({
 declarations: [AppComponent, HeaderComponent, LogoComponent, LoginComponent, HomeComponent, SigninComponent, LogoutComponent, 
     SignupComponent, AuthComponent, ErreurComponent, ClientsComponent, EditClientComponent, ClientListComponent, NouvellesComponent,
-    CapitalizePipe, NoClientPipe, EvenementsComponent, EvenementListComponent, EvenementEditComponent, NoEvenementPipe], 
+    CapitalizePipe, NoClientPipe, EvenementsComponent, EvenementListComponent, EvenementEditComponent, NoEvenementPipe, ActiviteListComponent], 
 imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, routing],
 bootstrap: [AppComponent],
 providers: [provide(LocationStrategy, {useClass: HashLocationStrategy}), AuthService, ErreurService, ClientService, EvenementService]
