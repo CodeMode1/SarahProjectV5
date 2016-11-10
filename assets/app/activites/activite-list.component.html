@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let activite of activites; let i=index" (click)="selectActivite(activite)" [class.estSelectRange]="this.selectedActivite.nom === activite.nom">
+                    <tr *ngFor="let activite of activites | orderByPipe: 'debut'; let i=index" (click)="selectActivite(activite)" [class.estSelectRange]="this.selectedActivite.nom === activite.nom">
                         <td>{{ activite?.nom }}</td>
                         <td>{{ activite?.debut }}</td>
                         <td>{{ activite?.fin }}</td>
@@ -92,3 +92,4 @@
         </div>
     </div>
 </div>
+<div><strong>{{getDateModif()}}</strong></div>

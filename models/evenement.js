@@ -40,7 +40,7 @@ var activiteSchema = new Schema({
         type: String
     },
     modifie: {
-        type: Date
+        type: String
     }
 });
 

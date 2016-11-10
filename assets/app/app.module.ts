@@ -34,6 +34,7 @@ import { ClientService } from './clients/client.service';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { NoClientPipe } from './pipes/noClient.pipe';
 import { NoEvenementPipe } from './pipes/noEvenement.pipe';
+import { OrderByPipe } from './pipes/orderBy.pipe';
 
 //nouvelles
 import { NouvellesComponent } from './login/nouvelles.component';
@@ -50,7 +51,8 @@ import { ActiviteListComponent } from './activites/activite-list.component';
 @NgModule({
 declarations: [AppComponent, HeaderComponent, LogoComponent, LoginComponent, HomeComponent, SigninComponent, LogoutComponent, 
     SignupComponent, AuthComponent, ErreurComponent, ClientsComponent, EditClientComponent, ClientListComponent, NouvellesComponent,
-    CapitalizePipe, NoClientPipe, EvenementsComponent, EvenementListComponent, EvenementEditComponent, NoEvenementPipe, ActiviteListComponent], 
+    CapitalizePipe, NoClientPipe, EvenementsComponent, EvenementListComponent, EvenementEditComponent, NoEvenementPipe, ActiviteListComponent,
+    OrderByPipe], 
 imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, routing],
 bootstrap: [AppComponent],
 providers: [provide(LocationStrategy, {useClass: HashLocationStrategy}), AuthService, ErreurService, ClientService, EvenementService]

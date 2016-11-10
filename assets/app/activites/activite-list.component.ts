@@ -1,10 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, AfterViewChecked } from '@angular/core';
 import { Activite } from './activite';
+import { OrderByPipe } from '../pipes/orderBy.pipe';
 
 @Component({
     moduleId: module.id,
     selector: 'my-activite-list',
     templateUrl: 'activite-list.component.html',
+    changeDetection:ChangeDetectionStrategy.OnPush,
     styles: [ `
         .header{
             padding-left: 30px;
@@ -54,7 +56,7 @@ import { Activite } from './activite';
     `
     ]
 })
-export class ActiviteListComponent implements OnInit {
+export class ActiviteListComponent implements OnInit, AfterViewChecked {
     @Input() activites: Activite[];
     titre: string; 
     selectedActivite: Activite;
@@ -64,9 +66,17 @@ export class ActiviteListComponent implements OnInit {
         this.titre = "Activités";
         this.activites = [];
         this.selectedActivite = new Activite();
+        this.selectedActivite.modifie = "";
+        this.selectedActivite.modifiePar = "";
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+     }
+
+    ngAfterViewChecked(){
+        this.selectedActivite.modifie = this.getDateModif();
+        this.selectedActivite.modifiePar = localStorage.getItem('userName');
+    }  
 
     ajouteActivite(){
         var nouvelleActivite: Activite;
@@ -95,5 +105,17 @@ export class ActiviteListComponent implements OnInit {
        var mm = date.substring(3,5);
        var dd = date.substring(0,2);
        return (yyyy + "-" + mm + "-" + dd);     
-    }        
+    }
+
+    getDateModif(){
+       var date = new Date().toLocaleString();
+       var yyyy = date.substring(6,10);
+       var mm = date.substring(3,5);
+       var dd = date.substring(0,2);
+       var hh = date.substring(12,14);
+       var mm = date.substring(15,17);
+       var ss = date.substring(18,20);
+       return (yyyy + "-" + mm + "-" + dd + " " + hh + ":" + mm + ":" + ss);
+    }
+        
 }

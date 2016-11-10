@@ -10,11 +10,11 @@ export class Activite{
     surreservation: boolean;
     raisonNonRetenu: string;
     modifiePar: string;
-    modifie: Date;
+    modifie: string;
 
     constructor(nom?: string, debut?: string, fin?: string, etat?: string, nbPersonnes?: string, serviceTotal?: string,
         fraisServiceTotal?: string, noFacture?: string, surreservation?: boolean, raisonNonRetenu?: string, modifiePar?: string,
-        modifie?: Date){
+        modifie?: string){
         this.nom = nom;
         this.debut = debut;
         this.fin = fin;
