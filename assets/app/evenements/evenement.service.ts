@@ -40,7 +40,7 @@ export class EvenementService{
                         data.dateEvenement, data.contact, data.client,
                         data.selectEtat, data.dateSoumission, data.dateConfirmation, data.dateFacturation,
                         data.dateNonRetenu, data.dateAnnulation, data.notes, data.validationTache,
-                        data.creerPar, data.dateCree, data.modifPar, data.modif, data.client_FK);
+                        data.creerPar, data.dateCree, data.modifPar, data.modif, data.client_FK, data.activites);
                 return evenement;
             })
             .catch(error => Observable.throw(error.json() ||  'erreur serveur'));

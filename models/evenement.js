@@ -2,6 +2,47 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Sequence = require('../models/sequence');
 var genSequence = Sequence.generateurSequence('evenement');
+//var schemaActivite = require('mongoose').model('Activite').schema;
+
+var activiteSchema = new Schema({
+    nom: {
+        type: String
+    },
+    debut: {
+        type: String
+    },
+    fin: {
+        type: String
+    },
+    etat: {
+        type: String
+    },
+    nbPersonnes: {
+        type: String
+    },
+    serviceTotal: {
+        type: String
+    },
+    fraisServiceTotal: {
+        type: String
+    },
+    noFacture: {
+        type: String
+    },
+    surreservation: {
+        type: Boolean,
+        default: false
+    },
+    raisonNonRetenu: {
+        type: String
+    },
+    modifiePar: {
+        type: String
+    },
+    modifie: {
+        type: Date
+    }
+});
 
 var evenementSchema = new Schema({
     noEvenement: {
@@ -60,7 +101,8 @@ var evenementSchema = new Schema({
     client_FK: {
         type: Schema.Types.ObjectId,
         ref: 'Client'
-    }
+    },
+    activites: [activiteSchema]
 });
 
 evenementSchema.pre('save', function (next) {

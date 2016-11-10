@@ -144,7 +144,8 @@ router.post('/', function (req, res, next) {
             creerPar: doc.prenom + " " + doc.nom,
             modifPar: req.body.modifPar,
             modif: req.body.modif,
-            client_FK: req.body.client_FK
+            client_FK: req.body.client_FK,
+            activites: req.body.activites
         });
         evenement.save(function (err, result) {
             if (err) {
@@ -201,7 +202,8 @@ router.put('/:id', function (req, res, next) {
                 dateCree: req.body.dateCree,
                 modifPar: user.prenom + " " + user.nom,
                 modif: new Date(),
-                client_FK: req.body.client_FK
+                client_FK: req.body.client_FK,
+                activites: req.body.activites
             };
             Evenement.findByIdAndUpdate(req.params.id, update, function (err, result) {
                 if (err) {
