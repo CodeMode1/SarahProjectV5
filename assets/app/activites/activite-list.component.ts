@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Activite } from './activite';
 
 @Component({
@@ -6,6 +6,10 @@ import { Activite } from './activite';
     selector: 'my-activite-list',
     templateUrl: 'activite-list.component.html',
     styles: [ `
+        .header{
+            padding-left: 30px;
+        }
+
         .outer{
             float:left;
             clear:both;
@@ -51,11 +55,9 @@ import { Activite } from './activite';
     ]
 })
 export class ActiviteListComponent implements OnInit {
-    titre: string;
-    activites: Activite[];
-    nouvelleActivite: Activite;
+    @Input() activites: Activite[];
+    titre: string; 
     selectedActivite: Activite;
-    nom: string;
     indexNom: number = 0;
 
     constructor() { 
@@ -67,13 +69,14 @@ export class ActiviteListComponent implements OnInit {
     ngOnInit() { }
 
     ajouteActivite(){
+        var nouvelleActivite: Activite;
         this.indexNom += 1;
-        this.nouvelleActivite = new Activite();
-        this.nouvelleActivite.nom = "nouveau" + this.indexNom;
+        nouvelleActivite = new Activite();
+        nouvelleActivite.nom = "Nouveau" + this.indexNom;
         //this.nouvelleActivite.debut = new Date().toLocaleString().substring(0,10);
-        this.nouvelleActivite.debut = this.getDateActuelle();
-        this.nouvelleActivite.etat = "Soumission";
-        this.activites.push(this.nouvelleActivite);
+        nouvelleActivite.debut = this.getDateActuelle();
+        nouvelleActivite.etat = "Soumission";
+        this.activites.push(nouvelleActivite);
     }
 
     supprimeActivite(){
@@ -84,7 +87,6 @@ export class ActiviteListComponent implements OnInit {
 
     selectActivite(activite: Activite){
         this.selectedActivite = activite;
-        this.nom = activite.nom;
     }
 
     getDateActuelle(){

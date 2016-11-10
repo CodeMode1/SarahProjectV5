@@ -48,6 +48,8 @@ export class EvenementService{
 
     creerEvenement(evenement: Evenement){
         const body = JSON.stringify(evenement);
+        console.log("body de l'evenement : ");
+        console.log(body);
         const header = new Headers({'Content-Type': 'application/json'});
         const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
         return this._http.post('http://localhost:3000/evenement' + token, body, {headers:header})
@@ -57,7 +59,7 @@ export class EvenementService{
                         data.dateEvenement, data.contact, data.client,
                         data.selectEtat, data.dateSoumission, data.dateConfirmation, data.dateFacturation,
                         data.dateNonRetenu, data.dateAnnulation, data.notes, data.validationTache,
-                        data.creerPar, data.dateCree, data.modifPar, data.modif, data.client_FK);
+                        data.creerPar, data.dateCree, data.modifPar, data.modif, data.client_FK, data.activites);
                 return evenement;
             })
             .catch(error => Observable.throw(error.json() || 'erreur serveur'));

@@ -1,6 +1,8 @@
+<div class="col-md-12 header">
+    <h2>{{titre}}</h2>
+</div>
 <div class="col-md-4 form-group">
     <div class="col-md-12">
-        <h2>{{titre}}</h2>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -14,11 +16,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let activite of activites; let i=index" (click)="selectActivite(activite)" [class.estSelectRange]="this.nom === activite.nom">
-                        <td>{{activite?.nom}}</td>
-                        <td>{{activite?.debut }}</td>
-                        <td>{{activite?.fin}}</td>
-                        <td>{{activite?.etat}}</td>
+                    <tr *ngFor="let activite of activites; let i=index" (click)="selectActivite(activite)" [class.estSelectRange]="this.selectedActivite.nom === activite.nom">
+                        <td>{{ activite?.nom }}</td>
+                        <td>{{ activite?.debut }}</td>
+                        <td>{{ activite?.fin }}</td>
+                        <td>{{ activite?.etat }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -58,15 +60,18 @@
         </div>
         <div class="col-md-12 outer">
             <label for="serviceTotal">Service Total</label>
-            <input type="text" id="serviceTotal" class="form-control" placeholder="total service" [(ngModel)]="this.selectedActivite.serviceTotal">
+            <input type="text" id="serviceTotal" class="form-control" placeholder="total service" [(ngModel)]="this.selectedActivite.serviceTotal"
+                readonly>
         </div>
         <div class="col-md-12 outer">
             <label for="fraisServiceTotal">Frais Service Total</label>
-            <input type="text" id="fraisServiceTotal" class="form-control" placeholder="fee total service" [(ngModel)]="this.selectedActivite.fraisServiceTotal">
+            <input type="text" id="fraisServiceTotal" class="form-control" placeholder="fee total service" [(ngModel)]="this.selectedActivite.fraisServiceTotal"
+                readonly>
         </div>
         <div class="col-md-12 outer">
             <label for="noFacture">No Facture</label>
-            <input type="text" id="noFacture" class="form-control" placeholder="# receipt" [(ngModel)]="this.selectedActivite.noFacture">
+            <input type="text" id="noFacture" class="form-control" placeholder="# receipt" [(ngModel)]="this.selectedActivite.noFacture"
+                readonly>
         </div>
     </div>
     <div class="col-md-4 form-group">
@@ -84,12 +89,6 @@
         <div class="col-md-12 outer">
             <label for="modifie">Modifié</label>
             <input type="text" id="modifie" class="form-control" [(ngModel)]="this.selectedActivite.modifie" readonly>
-        </div>
-    </div>
-    <div class="col-md-8 form-group outer">
-        <div class="col-md-12">
-            <label for="ressources">Ressources</label>
-            <input type="text" id="ressources" class="form-control" placeholder="ressources" [(ngModel)]="this.selectedActivite.ressources">
         </div>
     </div>
 </div>

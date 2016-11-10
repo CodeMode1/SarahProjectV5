@@ -1,3 +1,5 @@
+import { Activite } from '../activites/activite';
+
 export class Evenement{
     evenementId: string;
     noEvenement: number;
@@ -18,12 +20,13 @@ export class Evenement{
     modifPar: string;
     modif: Date;
     client_FK: string;
+    activites: Activite[];
 
     constructor( evenementId?: string, noEvenement?: number, nom?: string, dateEvenement?: string,
     contact?: string, client?: string, selectEtat?: string, dateSoumission?: string,
     dateConfirmation?: string, dateFacturation?: string, dateNonRetenu?: string, 
     dateAnnulation?: string, notes?: string, validationTache?: boolean, creerPar?: string,
-    dateCree?: Date, modifPar?: string, modif?: Date, client_FK?: string){
+    dateCree?: Date, modifPar?: string, modif?: Date, client_FK?: string, activites?: Activite[]){
         this.evenementId = evenementId;
         this.noEvenement = noEvenement;
         this.nom = nom;
@@ -43,5 +46,11 @@ export class Evenement{
         this.modifPar = modifPar;
         this.modif = modif;
         this.client_FK = client_FK;
+        if(activites == null || activites == undefined){
+            this.activites = [];
+        }else{
+            this.activites = activites;
+        }
+        //test : this.activites.push(new Activite("TestPat", "2016-11-09", "2016-11-10", "Soumission"));
     }
 }
