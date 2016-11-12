@@ -48,6 +48,8 @@ import { EvenementService } from './evenements/evenement.service';
 //activites
 import { ActiviteListComponent } from './activites/activite-list.component';
 
+
+
 @NgModule({
 declarations: [AppComponent, HeaderComponent, LogoComponent, LoginComponent, HomeComponent, SigninComponent, LogoutComponent, 
     SignupComponent, AuthComponent, ErreurComponent, ClientsComponent, EditClientComponent, ClientListComponent, NouvellesComponent,

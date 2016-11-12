@@ -58,6 +58,7 @@ import { OrderByPipe } from '../pipes/orderBy.pipe';
 })
 export class ActiviteListComponent implements OnInit, AfterViewChecked {
     @Input() activites: Activite[];
+    @Input() estNouveau: boolean;
     titre: string; 
     selectedActivite: Activite;
     indexNom: number = 0;
@@ -71,11 +72,15 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-     }
+
+    }
 
     ngAfterViewChecked(){
-        this.selectedActivite.modifie = this.getDateModif();
-        this.selectedActivite.modifiePar = localStorage.getItem('userName');
+        //modifier la date et modifié par seulement lorsqu'on est en mode edition.
+        if(!this.estNouveau){
+            this.selectedActivite.modifie = this.getDateModif();
+            this.selectedActivite.modifiePar = localStorage.getItem('userName');
+        }
     }  
 
     ajouteActivite(){
@@ -116,6 +121,5 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked {
        var mm = date.substring(15,17);
        var ss = date.substring(18,20);
        return (yyyy + "-" + mm + "-" + dd + " " + hh + ":" + mm + ":" + ss);
-    }
-        
+    }      
 }

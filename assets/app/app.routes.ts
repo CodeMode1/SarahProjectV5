@@ -11,6 +11,7 @@ import { EvenementsComponent } from './evenements/evenements.component';
 import { EVENEMENT_ROUTES } from './evenements/evenement.routes';
 
 
+
 const routes: RouterConfig = ([
     { path: '', component: HomeComponent},
     { path: 'auth', component: AuthComponent, children: USER_ROUTES },

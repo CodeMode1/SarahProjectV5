@@ -30,7 +30,7 @@ app.use(logger('dev'));
 //parser le body de la requête. Extract Json data ou url-encoded data.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+    extended: false
 }));
 app.use(cookieParser());
 //exposer le dossier public au browser.
@@ -38,9 +38,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //si client, serveur ne sont pas servis sur le même port.
 app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE');
-  next();
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE');
+    next();
 });
 
 //Routing: diriger les requêtes au bon routeur.
@@ -51,31 +51,31 @@ app.use('/', appRoutes);
 
 //catch 404 et passe au error handler.
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 //error handlers.
 
 //error handler développement.
 if (app.get('env') === 'development') {
-  app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.json({
-      message: err.message,
-      error: err
+    app.use(function (err, req, res, next) {
+        res.status(err.status || 500);
+        res.json({
+            message: err.message,
+            error: err
+        });
     });
-  });
 }
 
 //error handler production.
 app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('erreur', {
-    message: err.message,
-    error: {}
-  });
+    res.status(err.status || 500);
+    res.render('erreur', {
+        message: err.message,
+        error: {}
+    });
 });
 
 module.exports = app;
