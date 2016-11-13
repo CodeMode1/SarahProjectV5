@@ -1,0 +1,27 @@
+<div class="col-md-12">
+    <div class="col-md-12">
+        <h2>Liste des Ressources</h2>
+    </div>
+    <div class="col-md-12">
+        <my-ressource-edit [myRessource]="selectedRessource" (vider)="clear($event)"></my-ressource-edit>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>NOM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ressource of ressources" (click)="selectRessource(ressource)" [class.estSelectRange]="this.selectedRessource.nom === ressource.nom">
+                        <td>{{ressource?.nom}}</td>
+                    </tr>
+                    <tr *ngIf="!ressources || !ressources.length">
+                        <td class="bg-danger" colspan="14">Aucunes ressources</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

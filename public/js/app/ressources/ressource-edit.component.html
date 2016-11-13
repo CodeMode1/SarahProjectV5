@@ -1,0 +1,19 @@
+<div class="alert alert-success col-md-12" role="alert" *ngIf="this.sauvegardeRessource">
+    <p>Ressource Sauvegardée: {{this.myRessource.nom}}</p>
+</div>
+<section class="col-md-12">
+    <form id="ressource-edit" (ngSubmit)="onSubmit(f.value)" #f="ngForm" *ngIf="myRessource">
+        <div class="col-md-4 form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" class="form-control" name="nom" value="myRessource.value" placeholder="name" [(ngModel)]="myRessource.nom">
+        </div>
+        <div class="col-md-12 form-group">
+            <!-- Ajout mode -->
+            <button class="btn btn-success" type="submit" *ngIf="estAjout" [disabled]="!f.valid">Créer</button>
+            <!-- Edit mode -->
+            <button class="btn btn-success" type="submit" *ngIf="!estAjout" [disabled]="!f.valid">Editer</button>
+            <button class="btn btn-danger" type="button" *ngIf="!estAjout" (click)="supprimerRessource()">Supprimer</button>
+            <button class="btn btn-primary" type="button" *ngIf="!estAjout" (click)="viderRessource()">Vider</button>
+        </div>
+    </form>
+</section>

@@ -13,7 +13,7 @@ import { AuthService } from '../auth/auth.service';
                     <li><a>Agenda</a></li>
                     <li><a [routerLink]="['/clients']" routerLinkActive="router-link-active">Clients</a></li>
                     <li><a [routerLink]="['/evenements']" routerLinkActive="router-link-active">Évènements</a></li>
-                    <li><a>Ressources</a></li>
+                    <li><a [routerLink]="['/ressources']" routerLinkActive="router-link-active">Ressources</a></li>
                 </ul>
             </nav>
         </header>

@@ -48,15 +48,18 @@ import { EvenementService } from './evenements/evenement.service';
 //activites
 import { ActiviteListComponent } from './activites/activite-list.component';
 
-
+//ressources
+import { RessourceEditComponent } from './ressources/ressource-edit.component';
+import { RessourceListComponent } from './ressources/ressource-list.component';
+import { RessourceService } from './ressources/ressource.service';
 
 @NgModule({
 declarations: [AppComponent, HeaderComponent, LogoComponent, LoginComponent, HomeComponent, SigninComponent, LogoutComponent, 
     SignupComponent, AuthComponent, ErreurComponent, ClientsComponent, EditClientComponent, ClientListComponent, NouvellesComponent,
     CapitalizePipe, NoClientPipe, EvenementsComponent, EvenementListComponent, EvenementEditComponent, NoEvenementPipe, ActiviteListComponent,
-    OrderByPipe], 
+    OrderByPipe, RessourceEditComponent, RessourceListComponent], 
 imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, routing],
 bootstrap: [AppComponent],
-providers: [provide(LocationStrategy, {useClass: HashLocationStrategy}), AuthService, ErreurService, ClientService, EvenementService]
+providers: [provide(LocationStrategy, {useClass: HashLocationStrategy}), AuthService, ErreurService, ClientService, EvenementService, RessourceService]
 })
 export class AppModule {}
