@@ -14,7 +14,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let ressource of ressources" (click)="selectRessource(ressource)" [class.estSelectRange]="this.selectedRessource.nom === ressource.nom">
+                    <tr *ngFor="let ressource of ressources" (click)="selectRessource(ressource)" [class.estSelectRange]="this.nomSelected === ressource.nom">
                         <td>{{ressource?.nom}}</td>
                     </tr>
                     <tr *ngIf="!ressources || !ressources.length">

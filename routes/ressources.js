@@ -6,7 +6,9 @@ var Ressource = require('../models/ressource');
 
 router.get('/', function (req, res, next) {
 
-    Ressource.find(function (err, results) {
+    var getRessources = Ressource.find();
+
+    getRessources.limit(10).exec(function (err, results) {
         if (err) {
             return res.status(404).json({
                 title: 'erreur produite',
