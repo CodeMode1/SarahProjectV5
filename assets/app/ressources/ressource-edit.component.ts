@@ -6,16 +6,22 @@ import { ErreurService } from '../erreurs/erreur.service';
 @Component({
     moduleId: module.id,
     selector: 'my-ressource-edit',
-    templateUrl: 'ressource-edit.component.html'
+    templateUrl: 'ressource-edit.component.html',
+    styles: [`
+        .boutonsRessources{
+            padding: 1% 0 1% 0;
+        }
+    `]
 })
 export class RessourceEditComponent implements OnInit, OnChanges {
     estAjout: boolean;
     @Input() myRessource: Ressource;
     @Output() vider = new EventEmitter<any>();
-    sauvegardeRessource: boolean;
+    etatUserMessage: boolean;
+    userMessage: string;
 
     constructor(private _ressourceService: RessourceService, private _erreurService: ErreurService) { 
-            this.sauvegardeRessource = false;
+            this.etatUserMessage = false;
             this.estAjout = true;
         }
 
@@ -29,6 +35,7 @@ export class RessourceEditComponent implements OnInit, OnChanges {
         }else{
             console.log(this.myRessource);
             this.estAjout = false;
+            this.etatUserMessage = false;
         }
     }
 
@@ -37,6 +44,8 @@ export class RessourceEditComponent implements OnInit, OnChanges {
             this._ressourceService.deleteRessource(this.myRessource)
                 .subscribe(
                     data => {
+                        this.etatUserMessage = true;
+                        this.userMessage = "Ressource Supprimée: " + this.myRessource.nom;
                         console.log(data);
                     },
                     error => this._erreurService.handleErreur(error)
@@ -59,8 +68,10 @@ export class RessourceEditComponent implements OnInit, OnChanges {
                 .subscribe(
                     data => {
                         this._ressourceService.ressources.push(data);
-                        // message succes creation evx
-                        this.sauvegardeRessource = true;
+                        // message succes creation ressource
+                        this.etatUserMessage = true;
+                        this.userMessage = "Ressource Crée: " + this.myRessource.nom;
+                        this.myRessource.nom = "";
                     },
                     error => this._erreurService.handleErreur(error)
                 );
@@ -70,6 +81,9 @@ export class RessourceEditComponent implements OnInit, OnChanges {
                     data => {
                         console.log("edit SUCCES : ");
                         console.log(data);
+                        this.etatUserMessage = true;
+                        this.userMessage = "Ressource Sauvegardée: " + this.myRessource.nom;
+                        this.viderRessource();
                     },
                     error => this._erreurService.handleErreur(error)
                 );

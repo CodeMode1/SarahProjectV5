@@ -40,7 +40,7 @@ import { ErreurService } from '../erreurs/erreur.service';
 export class RessourceListComponent implements OnInit {
     ressources: Ressource[];
     selectedRessource: Ressource = null;
-    nomSelected: string;
+    idSelected: string;
 
     constructor( private _ressourceService: RessourceService, private _erreurService: ErreurService) { 
     }
@@ -67,7 +67,7 @@ export class RessourceListComponent implements OnInit {
     selectRessource(ressource: Ressource){
         this.selectedRessource = ressource;
         console.log(this.selectedRessource);
-        this.nomSelected = this.selectedRessource.nom;
+        this.idSelected = this.selectedRessource.ressourceId;
     }
 
     clear($event: any){
