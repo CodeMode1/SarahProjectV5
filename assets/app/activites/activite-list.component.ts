@@ -69,10 +69,37 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked {
         this.selectedActivite = new Activite();
         this.selectedActivite.modifie = "";
         this.selectedActivite.modifiePar = "";
+        this.selectedActivite.serviceTotal = 0;
+        this.selectedActivite.fraisServiceTotal = 0;
+    }
+
+    calculServiceTotal(){
+        var total = 0;
+        for(var i = 0; i < this.selectedActivite.services.length; i++){
+            if(!isNaN(this.selectedActivite.services[i].sousTotal)){
+                total += this.selectedActivite.services[i].sousTotal;
+            }     
+        }
+        return Number(total.toFixed(2));
+    }
+
+    calculFraisServiceTotal(){
+        var total = 0;
+        for(var i = 0; i < this.selectedActivite.services.length; i++){
+            if(!isNaN(this.selectedActivite.services[i].fraisServiceTotal)){
+            total += this.selectedActivite.services[i].fraisServiceTotal;
+            }
+        }
+        return Number(total.toFixed(2));
+    }
+
+    setTotauxActivite(){
+        this.selectedActivite.serviceTotal = this.calculServiceTotal();
+        this.selectedActivite.fraisServiceTotal = this.calculFraisServiceTotal();
     }
 
     ngOnInit() {
-
+        
     }
 
     ngAfterViewChecked(){
@@ -81,6 +108,9 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked {
             this.selectedActivite.modifie = this.getDateModif();
             this.selectedActivite.modifiePar = localStorage.getItem('userName');
         }
+        if(this.selectedActivite.services !== null || this.selectedActivite.services.length > 0){
+            this.setTotauxActivite();
+        }   
     }  
 
     ajouteActivite(){

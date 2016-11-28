@@ -71,7 +71,7 @@ export class ServiceListComponent implements OnInit, AfterViewChecked {
         this.selectedService = new Service();
         this.selectedService.modifie = "";
         this.selectedService.modifiePar = "";
-        this.selectedService.total = Number((this.selectedService.sousTotal + this.selectedService.fraisServiceTotal).toFixed(2));
+        this.selectedService.total = 0;
     }
 
     ngOnInit() {
@@ -129,6 +129,11 @@ export class ServiceListComponent implements OnInit, AfterViewChecked {
     calculServices(){
         this.selectedService.sousTotal = Number(((this.selectedService.quantite * this.selectedService.prixUnitaire) * (1- (this.selectedService.escompte/100))).toFixed(2));
         this.selectedService.fraisServiceTotal = Number((this.selectedService.sousTotal * (this.selectedService.fraisService/100)).toFixed(2));
-        this.selectedService.total = Number((this.selectedService.sousTotal + this.selectedService.fraisServiceTotal).toFixed(2));
+        if(!isNaN(this.selectedService.sousTotal) && !isNaN(this.selectedService.fraisServiceTotal)){
+            this.selectedService.total = Number((this.selectedService.sousTotal + this.selectedService.fraisServiceTotal).toFixed(2));
+        } else{
+            this.selectedService.total = 0;
+        }
+        
     }  
 }

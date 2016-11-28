@@ -60,10 +60,10 @@ var activiteSchema = new Schema({
         type: String
     },
     serviceTotal: {
-        type: String
+        type: Number
     },
     fraisServiceTotal: {
-        type: String
+        type: Number
     },
     noFacture: {
         type: String

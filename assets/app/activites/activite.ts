@@ -6,8 +6,8 @@ export class Activite{
     fin: string;
     etat: string;
     nbPersonnes: string;
-    serviceTotal: string;
-    fraisServiceTotal: string;
+    serviceTotal: number;
+    fraisServiceTotal: number;
     noFacture: string;
     surreservation: boolean;
     raisonNonRetenu: string;
@@ -15,8 +15,8 @@ export class Activite{
     modifie: string;
     services: Service[];
 
-    constructor(nom?: string, debut?: string, fin?: string, etat?: string, nbPersonnes?: string, serviceTotal?: string,
-        fraisServiceTotal?: string, noFacture?: string, surreservation?: boolean, raisonNonRetenu?: string, modifiePar?: string,
+    constructor(nom?: string, debut?: string, fin?: string, etat?: string, nbPersonnes?: string, serviceTotal?: number,
+        fraisServiceTotal?: number, noFacture?: string, surreservation?: boolean, raisonNonRetenu?: string, modifiePar?: string,
         modifie?: string, services?: Service[]){
         this.nom = nom;
         this.debut = debut;
