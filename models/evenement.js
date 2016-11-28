@@ -4,6 +4,45 @@ var Sequence = require('../models/sequence');
 var genSequence = Sequence.generateurSequence('evenement');
 //var schemaActivite = require('mongoose').model('Activite').schema;
 
+var serviceSchema = new Schema({
+    temps: {
+        type: String
+    },
+    nom: {
+        type: String
+    },
+    categorie: {
+        type: String
+    },
+    quantite: {
+        type: Number
+    },
+    prixUnitaire: {
+        type: Number
+    },
+    escompte: {
+        type: Number
+    },
+    fraisService: {
+        type: Number
+    },
+    fraisServiceTotal: {
+        type: Number
+    },
+    sousTotal: {
+        type: Number
+    },
+    modifiePar: {
+        type: String
+    },
+    modifie: {
+        type: String
+    },
+    total: {
+        type: Number
+    }
+});
+
 var activiteSchema = new Schema({
     nom: {
         type: String
@@ -41,7 +80,8 @@ var activiteSchema = new Schema({
     },
     modifie: {
         type: String
-    }
+    },
+    services: [serviceSchema]
 });
 
 var evenementSchema = new Schema({

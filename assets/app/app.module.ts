@@ -53,11 +53,14 @@ import { RessourceEditComponent } from './ressources/ressource-edit.component';
 import { RessourceListComponent } from './ressources/ressource-list.component';
 import { RessourceService } from './ressources/ressource.service';
 
+//services
+import { ServiceListComponent } from './services/service-list.component';
+
 @NgModule({
 declarations: [AppComponent, HeaderComponent, LogoComponent, LoginComponent, HomeComponent, SigninComponent, LogoutComponent, 
     SignupComponent, AuthComponent, ErreurComponent, ClientsComponent, EditClientComponent, ClientListComponent, NouvellesComponent,
     CapitalizePipe, NoClientPipe, EvenementsComponent, EvenementListComponent, EvenementEditComponent, NoEvenementPipe, ActiviteListComponent,
-    OrderByPipe, RessourceEditComponent, RessourceListComponent], 
+    OrderByPipe, RessourceEditComponent, RessourceListComponent, ServiceListComponent], 
 imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, routing],
 bootstrap: [AppComponent],
 providers: [provide(LocationStrategy, {useClass: HashLocationStrategy}), AuthService, ErreurService, ClientService, EvenementService, RessourceService]
