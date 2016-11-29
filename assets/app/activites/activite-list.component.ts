@@ -71,6 +71,7 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked {
         this.selectedActivite.modifiePar = "";
         this.selectedActivite.serviceTotal = 0;
         this.selectedActivite.fraisServiceTotal = 0;
+
     }
 
     calculServiceTotal(){
@@ -99,18 +100,18 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-        
+        //this.selectedActivite.nom = this.activites[0].nom;
     }
 
     ngAfterViewChecked(){
         //modifier la date et modifié par seulement lorsqu'on est en mode edition.
-        if(!this.estNouveau){
+        if(!this.estNouveau && this.selectedActivite.modifiePar != ""){
             this.selectedActivite.modifie = this.getDateModif();
             this.selectedActivite.modifiePar = localStorage.getItem('userName');
         }
         if(this.selectedActivite.services !== null || this.selectedActivite.services.length > 0){
             this.setTotauxActivite();
-        }   
+        }
     }  
 
     ajouteActivite(){

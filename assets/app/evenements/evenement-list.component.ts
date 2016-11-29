@@ -14,9 +14,17 @@ import { NoEvenementPipe } from '../pipes/noEvenement.pipe';
             padding: 2% 0 0 0;
         }
 
-        td, th{
-            text-align: center;
-            font-size: 1vw;
+        td{
+            text-align: left;
+            padding-bottom: 0;
+            font-size: 0.8vw;
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+
+        th{
+            font-size: 0.7vw;
+            white-space: pre; 
         }
 
         thead > tr{

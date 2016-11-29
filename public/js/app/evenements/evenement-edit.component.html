@@ -68,7 +68,7 @@
                 <div class="col-md-6">
                     <div class="col-md-12" class="notes">
                         <label for="notes">Notes</label>
-                        <textarea id="notes" class="form-control" rows="10" formControlName="notes" [(ngModel)]="this.myEvenement.notes"></textarea>
+                        <textarea maxlength="140" id="notes" class="form-control" rows="10" formControlName="notes" [(ngModel)]="this.myEvenement.notes"></textarea>
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
@@ -99,7 +99,7 @@
         <my-activite-list [activites]="this.myEvenement.activites" [estNouveau]="this.estNouveau"></my-activite-list>
         <div class="col-md-12 footer space">
             <div class="col-md-4 divFooter">
-                <button type="button" class="btn btn-primary" [disabled]="!formActualiser">
+                <button type="button" class="btn btn-primary" [disabled]="!formActualiser" (click)="actualiserEvx()">
                         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                         Actualiser
                     </button>

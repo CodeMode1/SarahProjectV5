@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EvenementService } from './evenement.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/RX';
 import { Evenement } from './evenement';
 import { ErreurService } from '../erreurs/erreur.service';
@@ -104,15 +104,18 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
     noClientSelectedList: number;
     clientSelectedSave: Client;
     aucunPrenomClientSelected: boolean;
+    urlCopie: string;
 
     constructor( private _formBuilder: FormBuilder, private _evenementService: EvenementService,
-        private _erreurService: ErreurService, private _activatedRoute: ActivatedRoute, private _clientService: ClientService) { 
+        private _erreurService: ErreurService, private _activatedRoute: ActivatedRoute, private _clientService: ClientService,
+        private _router: Router) { 
             this.myEvenement = new Evenement();
             this.modeSoumission = true;
-            this.formActualiser = false;
-            this.formCopie = false;
+            this.formActualiser = true;
+            this.formCopie = true;
             this.hiddenFK = true;
             this.userLogue();
+            this.urlCopie = this._router.url;
         }
 
     ngOnInit() { 
@@ -127,9 +130,20 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
                                 this.myEvenement = data;
                                 console.log("evx a modifié : ");
                                 console.log(this.myEvenement);
+                                //Si URL contient "copie", alors vide les champs du evx copié.
+                                if(this.urlCopie.includes("copie")){
+                                    this.formActualiser = false;
+                                    this.copierEvx();
+                                }
                             },
                             error => this._erreurService.handleErreur(error)
                         );
+                        console.log('url : ');
+                        console.log(this._router.url);
+                        if(this.urlCopie.includes("copie")){
+                            console.log("set mode copie");                       
+                            this.estNouveau = true; 
+                        }
                 } else{
                     this.estNouveau = true;
                 }
@@ -205,15 +219,25 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
         });
     }
 
+    copierEvx(){
+        this.myEvenement.evenementId = null;
+        this.myEvenement.noEvenement = null;
+        this.myEvenement.dateConfirmation = null;
+        this.myEvenement.dateFacturation = null;
+        this.myEvenement.dateNonRetenu = null;
+        this.myEvenement.dateAnnulation = null;
+        this.myEvenement.dateSoumission = this.getDateActuelle();
+    }
+
     ngOnDestroy(){
         this.subscription.unsubscribe();
     }
 
     onSubmit(){
         //change mode modification, enable bouton Actualiser et copier
-        this.modeSoumission = false;
-        this.formActualiser = true;
-        this.formCopie = true;
+        //this.modeSoumission = false;
+        //this.formActualiser = false;
+        //this.formCopie = false;
         console.log("valeurs du form evx créé: " );
         console.log(this.editEvenementForm.value);
         // if nouveau, appel créé, sinon appel update
@@ -305,6 +329,31 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
         //this.noClientSelected = null;
         //this.clientId = null;
         //le nom dans le input this.myEvenement.client est l'ancien
+    }
+
+    actualiserEvx(){
+        if(this.myEvenement.noEvenement != null && (this.myEvenement.noEvenement).toString() != ""){
+            this._evenementService.getEvenement(Number(this.myEvenement.noEvenement))
+            .subscribe(
+                data => {
+                    console.log(this.myEvenement.noEvenement);
+                    this.myEvenement = data;
+                    this.myEvenement.activites = data.activites;
+                    console.log(this.myEvenement);
+                },
+                error =>{
+                    this._erreurService.handleErreur(error)
+                }
+            );
+        }
+    }
+
+    getDateActuelle(){
+       var date = new Date().toLocaleDateString();
+       var yyyy = date.substring(6,10);
+       var mm = date.substring(3,5);
+       var dd = date.substring(0,2);
+       return (yyyy + "-" + mm + "-" + dd);     
     }
 
  
