@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, OnChanges, AfterViewChecked } from '@angular/core';
 import { Service } from './service';
 
 @Component({
@@ -58,9 +58,10 @@ import { Service } from './service';
     `
     ]
 })
-export class ServiceListComponent implements OnInit, AfterViewChecked {
+export class ServiceListComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() services: Service[];
     @Input() estNouveau: boolean;
+    @Input() compteurChanges: number;
     selectedService: Service;
     indexNom: number = 0;
     titre: string;
@@ -75,6 +76,20 @@ export class ServiceListComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
+        console.log("nb changes service init : ");
+        if(this.compteurChanges == 2){
+            this.selectedService = null;
+        }
+    }
+
+    ngOnChanges(changes: any){
+        if(changes.compteurChanges != null){
+            console.log("nb changes services onchanges : ");
+            console.log(this.compteurChanges);
+            if(this.compteurChanges > 2){
+                this.selectedService = this.services[0];
+            }
+        }
     }
 
     ngAfterViewChecked(){

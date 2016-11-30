@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy, AfterViewChecked, On
 import { Activite } from './activite';
 import { OrderByPipe } from '../pipes/orderBy.pipe';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/RX';
 
 @Component({
     moduleId: module.id,
@@ -64,7 +65,8 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked, OnChange
     selectedActivite: Activite;
     indexNom: number = 0;
     defaultActivite: Observable<Activite>;
-    nbChanges: number;
+    subscription: Subscription;
+    compteurChanges: number;
 
     constructor(private cd: ChangeDetectorRef) { 
         this.titre = "Activités";
@@ -74,7 +76,7 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked, OnChange
         this.selectedActivite.modifiePar = "";
         this.selectedActivite.serviceTotal = 0;
         this.selectedActivite.fraisServiceTotal = 0;
-        this.nbChanges = 0;
+        this.compteurChanges = 0;
     }
 
     calculServiceTotal(){
@@ -102,33 +104,30 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked, OnChange
         this.selectedActivite.fraisServiceTotal = this.calculFraisServiceTotal();
     }
 
-    ngOnInit() {  
-        console.log(this.nbChanges);
-        if(this.nbChanges == 2){
-            alert("change ready");
-            this.defaultActivite.subscribe( () => {
-                // application state changed    
+    ngOnInit() { 
+        console.log("nb changes dans OnInit :"); 
+        console.log(this.compteurChanges);
+        if(this.compteurChanges == 2){
+            this.subscription = this.defaultActivite.subscribe( () => {
+                //état application change. 
                 this.selectedActivite = null;  
-                // marks path,  the following is required, otherwise the view will not be updated
+                //marque chemin, est nécessaire pour que la vue soit updatée.
                 this.cd.markForCheck();         
             })    
         }    
     }
 
-
     // run avant OnInit dans le life cycle 
      ngOnChanges(changes: any){
         if(changes.activites != null && changes.activites != undefined){
-            this.nbChanges++;
+            this.compteurChanges++;
             alert("on change");
-            console.log(this.nbChanges);
-            console.log(changes.activites.currentValue);
+            console.log("nb changes dans ngOnChanges :");
+            console.log(this.compteurChanges);
             this.defaultActivite = Observable.of(changes.activites.currentValue[0]);
-            console.log("default ac :");
-            console.log(this.defaultActivite);
         }
 
-        if(this.nbChanges > 2){
+        if(this.compteurChanges > 2){
             this.selectedActivite = this.activites[0];
         }
      }
@@ -147,7 +146,8 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked, OnChange
     }
 
     ngOnDestroy(){
-        this.nbChanges = 0;
+        this.compteurChanges = 0;
+        this.subscription.unsubscribe();
     }  
 
     ajouteActivite(){
