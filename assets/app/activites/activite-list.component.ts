@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, AfterViewChecked, OnChanges, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Activite } from './activite';
 import { OrderByPipe } from '../pipes/orderBy.pipe';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     moduleId: module.id,
@@ -56,14 +57,16 @@ import { OrderByPipe } from '../pipes/orderBy.pipe';
     `
     ]
 })
-export class ActiviteListComponent implements OnInit, AfterViewChecked {
+export class ActiviteListComponent implements OnInit, AfterViewChecked, OnChanges, OnDestroy {
     @Input() activites: Activite[];
     @Input() estNouveau: boolean;
     titre: string; 
     selectedActivite: Activite;
     indexNom: number = 0;
+    defaultActivite: Observable<Activite>;
+    nbChanges: number;
 
-    constructor() { 
+    constructor(private cd: ChangeDetectorRef) { 
         this.titre = "Activités";
         this.activites = [];
         this.selectedActivite = new Activite();
@@ -71,7 +74,7 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked {
         this.selectedActivite.modifiePar = "";
         this.selectedActivite.serviceTotal = 0;
         this.selectedActivite.fraisServiceTotal = 0;
-
+        this.nbChanges = 0;
     }
 
     calculServiceTotal(){
@@ -99,9 +102,37 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked {
         this.selectedActivite.fraisServiceTotal = this.calculFraisServiceTotal();
     }
 
-    ngOnInit() {
-        //this.selectedActivite.nom = this.activites[0].nom;
+    ngOnInit() {  
+        console.log(this.nbChanges);
+        if(this.nbChanges == 2){
+            alert("change ready");
+            this.defaultActivite.subscribe( () => {
+                // application state changed    
+                this.selectedActivite = null;  
+                // marks path,  the following is required, otherwise the view will not be updated
+                this.cd.markForCheck();         
+            })    
+        }    
     }
+
+
+    // run avant OnInit dans le life cycle 
+     ngOnChanges(changes: any){
+        if(changes.activites != null && changes.activites != undefined){
+            this.nbChanges++;
+            alert("on change");
+            console.log(this.nbChanges);
+            console.log(changes.activites.currentValue);
+            this.defaultActivite = Observable.of(changes.activites.currentValue[0]);
+            console.log("default ac :");
+            console.log(this.defaultActivite);
+        }
+
+        if(this.nbChanges > 2){
+            this.selectedActivite = this.activites[0];
+        }
+     }
+
 
     ngAfterViewChecked(){
         //modifier la date et modifié par seulement lorsqu'on est en mode edition.
@@ -112,6 +143,11 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked {
         if(this.selectedActivite.services !== null || this.selectedActivite.services.length > 0){
             this.setTotauxActivite();
         }
+
+    }
+
+    ngOnDestroy(){
+        this.nbChanges = 0;
     }  
 
     ajouteActivite(){
