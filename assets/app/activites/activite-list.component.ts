@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Activite } from './activite';
 import { OrderByPipe } from '../pipes/orderBy.pipe';
 import { Observable } from 'rxjs/Observable';
@@ -57,15 +57,13 @@ import { Subscription } from 'rxjs/RX';
     `
     ]
 })
-export class ActiviteListComponent  {
+export class ActiviteListComponent implements OnChanges {
     @Input() activites: Activite[];
     @Input() estNouveau: boolean;
     @Output() boutonChanges: EventEmitter<boolean> = new EventEmitter<boolean>();
     titre: string; 
     selectedActivite: Activite;
     indexNom: number = 0;
-    //defaultActivite: Observable<Activite>;
-    //subscription: Subscription;
 
     constructor() { 
         this.titre = "Activités";
@@ -75,6 +73,15 @@ export class ActiviteListComponent  {
         this.selectedActivite.modifiePar = "";
         this.selectedActivite.serviceTotal = 0;
         this.selectedActivite.fraisServiceTotal = 0;
+    }
+
+    /* Select la 1er activite à chaque fois que le Input d'activite change.
+       Le 1er OnChanges est execute avant le 1er OnInit.
+            Est-ce que ça marche après actualiser ? : oui */ 
+    ngOnChanges(){
+        if(this.activites[0] != null && this.activites[0] != undefined){
+            this.selectedActivite = this.activites[0];
+        }  
     }
 
     calculServiceTotal(){
@@ -103,32 +110,25 @@ export class ActiviteListComponent  {
             this.selectedActivite.fraisServiceTotal = this.calculFraisServiceTotal();
         }
     }
-
-    /* infos : service injection pour detect change : 
-        http://blog.thoughtram.io/angular/2016/02/22/angular-2-change-detection-explained.html
-        https://angular.io/docs/js/latest/api/core/index/ChangeDetectorRef-class.html
-    */
-
-     // React to user change, this event must be applied to all input fields of the form
-     //     using this syntax: (ngModelChange)="onUserChange($event)"
+    
+     /* Réagir au changement usager, cet evenement est applique sur tous les inputs du form.
+         selon la syntax: (ngModelChange)="onUserChange($event)" */
      onUserChange($event){
          console.log("ACT-onUserChange: " + $event);
 
-         // Enable Enregistrer buttons.
+         //Enable Enregistrer bouton.
          this.boutonChanges.emit(true);
 
-         // Tag the Activite with the user and timestamp of the change.
+         //Tag Activites avec le user et le timestamp du changement.
          if(!this.estNouveau){
              this.selectedActivite.modifie = this.getDateModif();
              this.selectedActivite.modifiePar = localStorage.getItem('userName');
          }
      }
 
-     // TODO Select first activité after view displays. 
-     //      Does it work after Actualiser?
-     todoDelete(changes: any){
-        alert("ngOnChanges");
-        this.selectedActivite = this.activites[0];
+     enableSave($event){
+         //Activite emit au Evx le changement dans Service.
+         this.boutonChanges.emit($event);
      }
 
     ajouteActivite(){
@@ -142,8 +142,7 @@ export class ActiviteListComponent  {
     }
 
     supprimeActivite(){
-        // supprime le dernier activiter de la liste
-        //this.activites.pop();
+        //supprime le dernier activiter de la liste.
         this.activites.splice(this.activites.indexOf(this.selectedActivite), 1);
     }
 

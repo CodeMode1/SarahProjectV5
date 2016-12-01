@@ -7,15 +7,18 @@
             <div class="col-md-4 form-group">
                 <div class="col-md-12 outer">
                     <label for="nom">Nom</label>
-                    <input type="text" id="nom" class="form-control" formControlName="nom" placeholder="name" [(ngModel)]="this.myEvenement.nom">
+                    <input type="text" id="nom" class="form-control" formControlName="nom" placeholder="name" [(ngModel)]="this.myEvenement.nom"
+                        (ngModelChange)="onUserChange($event)">
                 </div>
                 <div class="col-md-12 outer">
                     <label for="dateEvenement">Date Évènement</label>
-                    <input type="date" id="dateEvenement" class="form-control" formControlName="dateEvenement" placeholder="event date" [(ngModel)]="this.myEvenement.dateEvenement">
+                    <input type="date" id="dateEvenement" class="form-control" formControlName="dateEvenement" placeholder="event date" [(ngModel)]="this.myEvenement.dateEvenement"
+                        (ngModelChange)="onUserChange($event)">
                 </div>
                 <div class="col-md-12 outer">
                     <label for="contact">Contact</label>
-                    <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="contact" [(ngModel)]="this.myEvenement.contact">
+                    <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="contact" [(ngModel)]="this.myEvenement.contact"
+                        (ngModelChange)="onUserChange($event)">
                 </div>
                 <div class="col-md-12 outer">
                     <label for="client">Client</label>
@@ -23,14 +26,14 @@
                         <span class="input-group-addon" aria-hidden="true" id="searchClient"><a (click)="getClients()" data-toggle="modal" data-target="#modalClient" data-backdrop="static" data-keyboard="false" id="boutonSearchNoContrat" class="glyphicon glyphicon-search"></a>
                         </span>
                         <input type="text" id="client" class="form-control" formControlName="client" placeholder="client" [(ngModel)]="this.myEvenement.client"
-                            readonly>
+                            (ngModelChange)="onUserChange($event)" readonly>
                     </div>
                 </div>
             </div>
             <div class="col-md-2 form-group">
                 <div class="col-md-12 outer">
                     <label for="selectEtat">État</label>
-                    <select class="form-control" id="selectEtat" formControlName="selectEtat" [(ngModel)]="this.myEvenement.selectEtat">
+                    <select class="form-control" id="selectEtat" formControlName="selectEtat" [(ngModel)]="this.myEvenement.selectEtat" (ngModelChange)="onUserChange($event)">
                             <option>Soumission</option>
                             <option>Non Retenu</option>
                             <option>Confirmation</option>
@@ -42,38 +45,40 @@
                 <div class="col-md-6 floatLeftDate">
                     <label for="dateSoumission">Date Soumission</label>
                     <input type="date" id="dateSoumission" class="form-control" formControlName="dateSoumission" placeholder="submission date"
-                        [(ngModel)]="this.myEvenement.dateSoumission">
+                        [(ngModel)]="this.myEvenement.dateSoumission" (ngModelChange)="onUserChange($event)">
                 </div>
                 <div class="col-md-6 floatLeftDate">
                     <label for="dateConfirmation">Date Confirmation</label>
                     <input type="date" id="dateConfirmation" class="form-control" formControlName="dateConfirmation" placeholder="confirmation date"
-                        [(ngModel)]="this.myEvenement.dateConfirmation">
+                        [(ngModel)]="this.myEvenement.dateConfirmation" (ngModelChange)="onUserChange($event)">
                 </div>
                 <div class="col-md-6 clearDate">
                     <label for="dateFacturation">Date Facturation</label>
                     <input type="date" id="dateFacturation" class="form-control" formControlName="dateFacturation" placeholder="facturation date"
-                        [(ngModel)]="this.myEvenement.dateFacturation">
+                        [(ngModel)]="this.myEvenement.dateFacturation" (ngModelChange)="onUserChange($event)">
                 </div>
                 <div class="col-md-6 floatLeftDate">
                     <label for="dateNonRetenu">Date Non Retenu</label>
-                    <input type="date" id="dateNonRetenu" class="form-control" formControlName="dateNonRetenu" placeholder="unkept date" [(ngModel)]="this.myEvenement.dateNonRetenu">
+                    <input type="date" id="dateNonRetenu" class="form-control" formControlName="dateNonRetenu" placeholder="unkept date" [(ngModel)]="this.myEvenement.dateNonRetenu"
+                        (ngModelChange)="onUserChange($event)">
                 </div>
                 <div class="col-md-12 clearDate">
                     <label for="dateAnnulation">Date Annulation</label>
                     <input type="date" id="dateAnnulation" class="form-control" formControlName="dateAnnulation" placeholder="annulation date"
-                        [(ngModel)]="this.myEvenement.dateAnnulation">
+                        [(ngModel)]="this.myEvenement.dateAnnulation" (ngModelChange)="onUserChange($event)">
                 </div>
             </div>
             <div class="col-md-6 form-group">
                 <div class="col-md-6">
                     <div class="col-md-12" class="notes">
                         <label for="notes">Notes</label>
-                        <textarea maxlength="140" id="notes" class="form-control" rows="10" formControlName="notes" [(ngModel)]="this.myEvenement.notes"></textarea>
+                        <textarea maxlength="140" id="notes" class="form-control" rows="10" formControlName="notes" [(ngModel)]="this.myEvenement.notes"
+                            (ngModelChange)="onUserChange($event)"></textarea>
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
                     <div class="col-md-6 checkbox">
-                        <label><input type="checkbox" value="" id="validationTache" formControlName="validationTache" [(ngModel)]="this.myEvenement.validationTache">Validation Tâche</label>
+                        <label><input type="checkbox" value="" id="validationTache" formControlName="validationTache" [(ngModel)]="this.myEvenement.validationTache" (ngModelChange)="onUserChange($event)">Validation Tâche</label>
                     </div>
                     <div class="col-md-6">
                         <label>Numéro</label>

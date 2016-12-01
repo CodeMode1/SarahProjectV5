@@ -95,4 +95,5 @@
         </div>
     </div>
 </div>
-<my-service-list [services]="this.selectedActivite.services" [estNouveau]="this.estNouveau" (recalcTrigger)="this.setTotauxActivite($event)"></my-service-list>
+<my-service-list [services]="this.selectedActivite.services" [estNouveau]="this.estNouveau" (recalcTrigger)="this.setTotauxActivite($event)"
+    (enableSave)="this.enableSave($event)"></my-service-list>

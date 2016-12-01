@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Service } from './service';
 
 @Component({
@@ -57,11 +57,12 @@ import { Service } from './service';
     `
     ]
 })
-export class ServiceListComponent {
+export class ServiceListComponent implements OnChanges {
     @Input() services: Service[];
     @Input() estNouveau: boolean;
     @Input() compteurChanges: number;
     @Output() recalcTrigger: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() enableSave: EventEmitter<boolean> = new EventEmitter<boolean>();
     selectedService: Service;
     indexNom: number = 0;
     titre: string;
@@ -75,28 +76,34 @@ export class ServiceListComponent {
         this.selectedService.total = 0;
     }
 
-     // React to user change, this event must be applied to all input fields of the form
-     //     using this syntax: (ngModelChange)="onUserChange($event)"
+    ngOnChanges(){
+        if(this.services[0] != null && this.services[0] != undefined){
+            this.selectedService = this.services[0];
+        }
+    }
+
+     /* Réagir au changement usager, cet evenement est applique sur tous les inputs du form.
+         selon la syntax: (ngModelChange)="onUserChange($event)" */
      onUserChange($event){
          console.log("ACT-onUserChange: " + $event);
 
-         // Enable Enregistrer buttons.
-         // TODO this.boutonChanges.emit(true);
+         //Enable Enregistrer bouton.
+         this.enableSave.emit(true);
 
-         // Tag the Activite with the user and timestamp of the change.
+         //Tag Activites avec le user et le timestamp du changement.
          if(!this.estNouveau){
              this.selectedService.modifie = this.getDateModif();
              this.selectedService.modifiePar = localStorage.getItem('userName');
          }
      }
 
-     // Change event on all fields that affect to total.
+     //Change event sur tous les inputs qui affectent le total.
      onCalcChange($event){
          this.calculServices();
 
          this.onUserChange($event);
 
-         // Fire event emitter to trigger recalculate in parent Activity.
+         //Fire event emitter pour trigger la recalculation dans Activite parent.
          this.recalcTrigger.emit(true);
      }
 
