@@ -96,7 +96,7 @@
                 </div>
             </div>
         </section>
-        <my-activite-list [activites]="this.myEvenement.activites" [estNouveau]="this.estNouveau"></my-activite-list>
+        <my-activite-list [activites]="this.myEvenement.activites" [estNouveau]="this.estNouveau" (boutonChanges)="boutonSwitch($event)"></my-activite-list>
         <div class="col-md-12 footer space">
             <div class="col-md-4 divFooter">
                 <button type="button" class="btn btn-primary" [disabled]="!formActualiser" (click)="actualiserEvx()">
@@ -111,7 +111,7 @@
                     </button>
             </div>
             <div class="col-md-4 divFooter">
-                <button type="button" class="btn btn-primary" [disabled]="!formCopie">
+                <button type="button" class="btn btn-primary" [disabled]="!formCopie" (click)="copieCetEvx()">
                         <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
                         Copie Client
                     </button>

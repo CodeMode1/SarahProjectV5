@@ -30,15 +30,15 @@
 <div class="col-md-2 form-group">
     <div class="col-md-12 outer">
         <label for="temps">Temps</label>
-        <input type="date" id="temps" class="form-control" placeholder="time" [(ngModel)]="this.selectedService.temps">
+        <input type="date" id="temps" class="form-control" placeholder="time" [(ngModel)]="this.selectedService.temps" (ngModelChange)="onUserChange($event)">
     </div>
     <div class="col-md-12 outer">
         <label for="nom">Nom</label>
-        <input type="text" id="nom" class="form-control" placeholder="name" [(ngModel)]="this.selectedService.nom">
+        <input type="text" id="nom" class="form-control" placeholder="name" [(ngModel)]="this.selectedService.nom" (ngModelChange)="onUserChange($event)">
     </div>
     <div class="col-md-12 outer">
         <label for="categorie">Catégorie</label>
-        <input list="categorie" class="form-control" placeholder="category" [(ngModel)]="this.selectedService.categorie">
+        <input list="categorie" class="form-control" placeholder="category" [(ngModel)]="this.selectedService.categorie" (ngModelChange)="onUserChange($event)">
         <datalist id="categorie">
             <option value="Nourriture">
                 <option value="Boisson">
@@ -51,15 +51,18 @@
 <div class="col-md-3 form-group">
     <div class="col-md-12 outer">
         <label for="quantite">Quantité</label>
-        <input type="number" step="0.01" class="form-control" id="quantite" placeholder="quantity" [(ngModel)]="this.selectedService.quantite">
+        <input type="number" step="0.01" class="form-control" id="quantite" placeholder="quantity" [(ngModel)]="this.selectedService.quantite"
+            (ngModelChange)="onCalcChange($event)">
     </div>
     <div class="col-md-12 outer">
         <label for="prixUnitaire">Prix Unitaire($)</label>
-        <input type="number" step="0.01" min="0" id="prixUnitaire" class="form-control" placeholder="unit price" [(ngModel)]="this.selectedService.prixUnitaire">
+        <input type="number" step="0.01" min="0" id="prixUnitaire" class="form-control" placeholder="unit price" [(ngModel)]="this.selectedService.prixUnitaire"
+            (ngModelChange)="onCalcChange($event)">
     </div>
     <div class="col-md-12 outer">
         <label for="escompte">Escompte(%)</label>
-        <input type="number" step="0.01" min="0" id="escompte" class="form-control" placeholder="% off" [(ngModel)]="this.selectedService.escompte">
+        <input type="number" step="0.01" min="0" id="escompte" class="form-control" placeholder="% off" [(ngModel)]="this.selectedService.escompte"
+            (ngModelChange)="onCalcChange($event)">
     </div>
     <div class="col-md-12 outer">
         <label for="sousTotal">Sous-Total($)</label>
@@ -70,7 +73,8 @@
 <div class="col-md-3 form-group">
     <div class="col-md-12 outer">
         <label for="fraisService">Frais Service(%)</label>
-        <input type="number" step="0.01" min="0" id="fraisService" class="form-control" placeholder="fee service" [(ngModel)]="this.selectedService.fraisService">
+        <input type="number" step="0.01" min="0" id="fraisService" class="form-control" placeholder="fee service" [(ngModel)]="this.selectedService.fraisService"
+            (ngModelChange)="onCalcChange($event)">
     </div>
     <div class="col-md-12 outer">
         <label for="fraisServiceTotal">Frais Service Total</label>

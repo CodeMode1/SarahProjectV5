@@ -1,11 +1,10 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, OnChanges, AfterViewChecked } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Service } from './service';
 
 @Component({
     moduleId: module.id,
     selector: 'my-service-list',
     templateUrl: 'service-list.component.html',
-    changeDetection:ChangeDetectionStrategy.OnPush,
     styles: [ `
         .header{
             padding-left: 30px;
@@ -58,10 +57,11 @@ import { Service } from './service';
     `
     ]
 })
-export class ServiceListComponent implements OnInit, OnChanges, AfterViewChecked {
+export class ServiceListComponent {
     @Input() services: Service[];
     @Input() estNouveau: boolean;
     @Input() compteurChanges: number;
+    @Output() recalcTrigger: EventEmitter<boolean> = new EventEmitter<boolean>();
     selectedService: Service;
     indexNom: number = 0;
     titre: string;
@@ -75,35 +75,30 @@ export class ServiceListComponent implements OnInit, OnChanges, AfterViewChecked
         this.selectedService.total = 0;
     }
 
-    ngOnInit() {
-        console.log("nb changes service init : ");
-        if(this.compteurChanges == 2){
-            this.selectedService = null;
-        }
-    }
+     // React to user change, this event must be applied to all input fields of the form
+     //     using this syntax: (ngModelChange)="onUserChange($event)"
+     onUserChange($event){
+         console.log("ACT-onUserChange: " + $event);
 
-    ngOnChanges(changes: any){
-        if(changes.compteurChanges != null){
-            console.log("nb changes services onchanges : ");
-            console.log(this.compteurChanges);
-            if(this.compteurChanges > 2){
-                this.selectedService = this.services[0];
-            }
-        }
-    }
+         // Enable Enregistrer buttons.
+         // TODO this.boutonChanges.emit(true);
 
-    ngAfterViewChecked(){
-        //modifier la date et modifié par seulement lorsqu'on est en mode edition.
-        if(!this.estNouveau){
-            this.selectedService.modifie = this.getDateModif();
-            this.selectedService.modifiePar = localStorage.getItem('userName');
-        }
-        if(this.services == null || this.services.length < 1){
-            this.selectedService.modifie = null;
-            this.selectedService.modifiePar = "";
-        }
-        this.calculServices();
-    }
+         // Tag the Activite with the user and timestamp of the change.
+         if(!this.estNouveau){
+             this.selectedService.modifie = this.getDateModif();
+             this.selectedService.modifiePar = localStorage.getItem('userName');
+         }
+     }
+
+     // Change event on all fields that affect to total.
+     onCalcChange($event){
+         this.calculServices();
+
+         this.onUserChange($event);
+
+         // Fire event emitter to trigger recalculate in parent Activity.
+         this.recalcTrigger.emit(true);
+     }
 
     ajouteService(){
         var nouveauService: Service;

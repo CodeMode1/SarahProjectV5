@@ -234,14 +234,10 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(){
-        //change mode modification, enable bouton Actualiser et copier
-        //this.modeSoumission = false;
-        //this.formActualiser = false;
-        //this.formCopie = false;
         console.log("valeurs du form evx créé: " );
         console.log(this.editEvenementForm.value);
         // if nouveau, appel créé, sinon appel update
-        if(this.estNouveau){
+        if(this.estNouveau || !this.formCopie){
             this._evenementService.creerEvenement(this.myEvenement)
                 .subscribe(
                     data => {
@@ -254,14 +250,20 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
                     },
                     error => this._erreurService.handleErreur(error)
                 );
+                 this.formCopie = true;
         } else{
             this._evenementService.updateEvenement(this.myEvenement)
                 .subscribe(
                     data => console.log(data),
                     error => this._erreurService.handleErreur(error)
                 );
+                
         }
-        
+        this.modeSoumission = false; 
+    }
+
+    boutonSwitch($event){
+        this.modeSoumission = $event;
     }
 
     userLogue(){
@@ -325,10 +327,6 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
         console.log(this.clientId);
         console.log('client save : (meme que dans save)');
         console.log(this.clientSelectedSave);
-        //this.clientSelected = null;
-        //this.noClientSelected = null;
-        //this.clientId = null;
-        //le nom dans le input this.myEvenement.client est l'ancien
     }
 
     actualiserEvx(){
@@ -346,6 +344,12 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
                 }
             );
         }
+    }
+
+    copieCetEvx(){
+            this.copierEvx();
+            this.formCopie = false;
+            this.modeSoumission = true;
     }
 
     getDateActuelle(){

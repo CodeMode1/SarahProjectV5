@@ -30,19 +30,20 @@
 <div class="col-md-2 form-group">
     <div class="col-md-12 outer">
         <label for="nom">Nom</label>
-        <input type="text" id="nom" class="form-control" placeholder="name" [(ngModel)]="this.selectedActivite.nom">
+        <input type="text" id="nom" class="form-control" placeholder="name" [(ngModel)]="this.selectedActivite.nom" (ngModelChange)="onUserChange($event)">
     </div>
     <div class="col-md-12 outer">
         <label for="debut">Début</label>
-        <input type="date" id="debut" class="form-control" placeholder="activity start" [(ngModel)]="this.selectedActivite.debut">
+        <input type="date" id="debut" class="form-control" placeholder="activity start" [(ngModel)]="this.selectedActivite.debut"
+            (ngModelChange)="onUserChange($event)">
     </div>
     <div class="col-md-12 outer">
         <label for="fin">Fin</label>
-        <input type="date" id="fin" class="form-control" placeholder="activity end" [(ngModel)]="this.selectedActivite.fin">
+        <input type="date" id="fin" class="form-control" placeholder="activity end" [(ngModel)]="this.selectedActivite.fin" (ngModelChange)="onUserChange($event)">
     </div>
     <div class="col-md-12 outer">
         <label for="etat">État: Confirmation</label>
-        <select class="form-control" id="etat" [(ngModel)]="this.selectedActivite.etat">
+        <select class="form-control" id="etat" [(ngModel)]="this.selectedActivite.etat" (ngModelChange)="onUserChange($event)">
             <option>Soumission</option>
             <option>Non Retenu</option>
             <option>Confirmation</option>
@@ -56,7 +57,8 @@
     <div class="col-md-4">
         <div class="col-md-12 outer">
             <label for="nbPersonnes">Nb Personnes</label>
-            <input type="text" id="nbPersonnes" class="form-control" placeholder="# persons" [(ngModel)]="this.selectedActivite.nbPersonnes">
+            <input type="text" id="nbPersonnes" class="form-control" placeholder="# persons" [(ngModel)]="this.selectedActivite.nbPersonnes"
+                (ngModelChange)="onUserChange($event)">
         </div>
         <div class="col-md-12 outer">
             <label for="serviceTotal">Service Total</label>
@@ -76,11 +78,12 @@
     </div>
     <div class="col-md-4 form-group">
         <div class="col-md-12 checkbox outer">
-            <label><input type="checkbox" value="" id="surreservation" [(ngModel)]="this.selectedActivite.surreservation">Surréservation</label>
+            <label><input type="checkbox" value="" id="surreservation" [(ngModel)]="this.selectedActivite.surreservation" (ngModelChange)="onUserChange($event)">Surréservation</label>
         </div>
         <div class="col-md-12 outer">
             <label for="raisonNonRetenu">Raison Non Retenu</label>
-            <input type="text" id="raisonNonRetenu" class="form-control" placeholder="unkept reason" [(ngModel)]="this.selectedActivite.raisonNonRetenu">
+            <input type="text" id="raisonNonRetenu" class="form-control" placeholder="unkept reason" [(ngModel)]="this.selectedActivite.raisonNonRetenu"
+                (ngModelChange)="onUserChange($event)">
         </div>
         <div class="col-md-12 outer">
             <label for="modifiePar">Modifié Par</label>
@@ -92,4 +95,4 @@
         </div>
     </div>
 </div>
-<my-service-list [services]="this.selectedActivite.services" [estNouveau]="this.estNouveau" [compteurChanges]="this.compteurChanges"></my-service-list>
+<my-service-list [services]="this.selectedActivite.services" [estNouveau]="this.estNouveau" (recalcTrigger)="this.setTotauxActivite($event)"></my-service-list>

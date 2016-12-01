@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, AfterViewChecked, OnChanges, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Activite } from './activite';
 import { OrderByPipe } from '../pipes/orderBy.pipe';
 import { Observable } from 'rxjs/Observable';
@@ -8,7 +8,6 @@ import { Subscription } from 'rxjs/RX';
     moduleId: module.id,
     selector: 'my-activite-list',
     templateUrl: 'activite-list.component.html',
-    changeDetection:ChangeDetectionStrategy.OnPush,
     styles: [ `
         .header{
             padding-left: 30px;
@@ -58,17 +57,17 @@ import { Subscription } from 'rxjs/RX';
     `
     ]
 })
-export class ActiviteListComponent implements OnInit, AfterViewChecked, OnChanges, OnDestroy {
+export class ActiviteListComponent  {
     @Input() activites: Activite[];
     @Input() estNouveau: boolean;
+    @Output() boutonChanges: EventEmitter<boolean> = new EventEmitter<boolean>();
     titre: string; 
     selectedActivite: Activite;
     indexNom: number = 0;
-    defaultActivite: Observable<Activite>;
-    subscription: Subscription;
-    compteurChanges: number;
+    //defaultActivite: Observable<Activite>;
+    //subscription: Subscription;
 
-    constructor(private cd: ChangeDetectorRef) { 
+    constructor() { 
         this.titre = "Activités";
         this.activites = [];
         this.selectedActivite = new Activite();
@@ -76,7 +75,6 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked, OnChange
         this.selectedActivite.modifiePar = "";
         this.selectedActivite.serviceTotal = 0;
         this.selectedActivite.fraisServiceTotal = 0;
-        this.compteurChanges = 0;
     }
 
     calculServiceTotal(){
@@ -99,63 +97,45 @@ export class ActiviteListComponent implements OnInit, AfterViewChecked, OnChange
         return Number(total.toFixed(2));
     }
 
-    setTotauxActivite(){
-        this.selectedActivite.serviceTotal = this.calculServiceTotal();
-        this.selectedActivite.fraisServiceTotal = this.calculFraisServiceTotal();
+    setTotauxActivite($event){
+        if(this.selectedActivite.services !== null || this.selectedActivite.services.length > 0){
+            this.selectedActivite.serviceTotal = this.calculServiceTotal();
+            this.selectedActivite.fraisServiceTotal = this.calculFraisServiceTotal();
+        }
     }
 
-    ngOnInit() { 
-        console.log("nb changes dans OnInit :"); 
-        console.log(this.compteurChanges);
-        if(this.compteurChanges == 2){
-            this.subscription = this.defaultActivite.subscribe( () => {
-                //état application change. 
-                this.selectedActivite = null;  
-                //marque chemin, est nécessaire pour que la vue soit updatée.
-                this.cd.markForCheck();         
-            })    
-        }    
-    }
+    /* infos : service injection pour detect change : 
+        http://blog.thoughtram.io/angular/2016/02/22/angular-2-change-detection-explained.html
+        https://angular.io/docs/js/latest/api/core/index/ChangeDetectorRef-class.html
+    */
 
-    // run avant OnInit dans le life cycle 
-     ngOnChanges(changes: any){
-        if(changes.activites != null && changes.activites != undefined){
-            this.compteurChanges++;
-            alert("on change");
-            console.log("nb changes dans ngOnChanges :");
-            console.log(this.compteurChanges);
-            this.defaultActivite = Observable.of(changes.activites.currentValue[0]);
-        }
+     // React to user change, this event must be applied to all input fields of the form
+     //     using this syntax: (ngModelChange)="onUserChange($event)"
+     onUserChange($event){
+         console.log("ACT-onUserChange: " + $event);
 
-        if(this.compteurChanges > 2){
-            this.selectedActivite = this.activites[0];
-        }
+         // Enable Enregistrer buttons.
+         this.boutonChanges.emit(true);
+
+         // Tag the Activite with the user and timestamp of the change.
+         if(!this.estNouveau){
+             this.selectedActivite.modifie = this.getDateModif();
+             this.selectedActivite.modifiePar = localStorage.getItem('userName');
+         }
      }
 
-
-    ngAfterViewChecked(){
-        //modifier la date et modifié par seulement lorsqu'on est en mode edition.
-        if(!this.estNouveau && this.selectedActivite.modifiePar != ""){
-            this.selectedActivite.modifie = this.getDateModif();
-            this.selectedActivite.modifiePar = localStorage.getItem('userName');
-        }
-        if(this.selectedActivite.services !== null || this.selectedActivite.services.length > 0){
-            this.setTotauxActivite();
-        }
-
-    }
-
-    ngOnDestroy(){
-        this.compteurChanges = 0;
-        this.subscription.unsubscribe();
-    }  
+     // TODO Select first activité after view displays. 
+     //      Does it work after Actualiser?
+     todoDelete(changes: any){
+        alert("ngOnChanges");
+        this.selectedActivite = this.activites[0];
+     }
 
     ajouteActivite(){
         var nouvelleActivite: Activite;
         this.indexNom += 1;
         nouvelleActivite = new Activite();
         nouvelleActivite.nom = "Nouveau" + this.indexNom;
-        //this.nouvelleActivite.debut = new Date().toLocaleString().substring(0,10);
         nouvelleActivite.debut = this.getDateActuelle();
         nouvelleActivite.etat = "Soumission";
         this.activites.push(nouvelleActivite);
