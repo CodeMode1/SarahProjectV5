@@ -8,6 +8,8 @@ import { ErreurService } from '../erreurs/erreur.service';
 import { ClientService } from '../clients/client.service';
 import { Client } from '../clients/client';
 import { ActiviteListComponent } from '../activites/activite-list.component';
+import { RessourceService } from '../ressources/ressource.service';
+import { Ressource } from '../ressources/ressource';
 
 
 @Component({
@@ -105,10 +107,11 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
     clientSelectedSave: Client;
     aucunPrenomClientSelected: boolean;
     urlCopie: string;
+    ressources: Ressource[];
 
     constructor( private _formBuilder: FormBuilder, private _evenementService: EvenementService,
         private _erreurService: ErreurService, private _activatedRoute: ActivatedRoute, private _clientService: ClientService,
-        private _router: Router) { 
+        private _router: Router, private _ressourceService: RessourceService) { 
             this.myEvenement = new Evenement();
             this.modeSoumission = true;
             this.formActualiser = true;
@@ -116,6 +119,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
             this.hiddenFK = true;
             this.userLogue();
             this.urlCopie = this._router.url;
+            this.ressources = [];
         }
 
     ngOnInit() { 
@@ -150,6 +154,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
                 console.log(this.estNouveau);
                 // init le form
                 this.creerForm();
+                this.getRessources();
             }
         );
     }
@@ -293,6 +298,22 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
                 },
                 error => this._erreurService.handleErreur(error)
             );
+    }
+
+    getRessources(){
+        this._ressourceService.getRessources().subscribe(
+            data => {
+                this.ressources = data;
+                //print données pour chaque ressource
+                console.log("ressource du serveur pour afficher dans la liste : ");
+                for(let i=0; i < this.ressources.length; i++){
+                    console.log(this.ressources[i]);
+                    console.log(this.ressources[i].nom);
+                }
+            },
+            error => this._erreurService.handleErreur(error)
+        );
+
     }
 
     clientSelect(client: Client){

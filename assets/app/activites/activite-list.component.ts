@@ -1,8 +1,10 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
 import { Activite } from './activite';
 import { OrderByPipe } from '../pipes/orderBy.pipe';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/RX';
+import { Ressource } from '../ressources/ressource';
+
 
 @Component({
     moduleId: module.id,
@@ -57,14 +59,15 @@ import { Subscription } from 'rxjs/RX';
     `
     ]
 })
-export class ActiviteListComponent implements OnChanges {
+export class ActiviteListComponent implements OnChanges, OnInit {
     @Input() activites: Activite[];
     @Input() estNouveau: boolean;
+    @Input() ressources: Ressource[];
     @Output() boutonChanges: EventEmitter<boolean> = new EventEmitter<boolean>();
     titre: string; 
     selectedActivite: Activite;
     indexNom: number = 0;
-
+    
     constructor() { 
         this.titre = "Activités";
         this.activites = [];
@@ -73,6 +76,7 @@ export class ActiviteListComponent implements OnChanges {
         this.selectedActivite.modifiePar = "";
         this.selectedActivite.serviceTotal = 0;
         this.selectedActivite.fraisServiceTotal = 0;
+        this.ressources = [];
     }
 
     /* Select la 1er activite à chaque fois que le Input d'activite change.
@@ -80,8 +84,42 @@ export class ActiviteListComponent implements OnChanges {
             Est-ce que ça marche après actualiser ? : oui */ 
     ngOnChanges(){
         if(this.activites[0] != null && this.activites[0] != undefined){
-            this.selectedActivite = this.activites[0];
+            //this.selectedActivite = this.activites[0];
+            this.selectActivite(this.activites[0]);
         }  
+    }
+
+    ngOnInit(){
+    }
+
+    estClicke(inputRessource){
+        var indexRessource = this.selectedActivite.ressourcesCheck.indexOf(inputRessource.id);
+        console.log(indexRessource);
+        if(indexRessource < 0){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    ressourceClick(inputRessource){
+        var indexRessource = this.selectedActivite.ressourcesCheck.indexOf(inputRessource.id);
+        console.log(indexRessource);
+        if(inputRessource.checked == true){
+            console.log("Mongo id ressource clicker : ");
+            console.log(inputRessource.id);
+            //checker que la valeur nest pas deja dans le array  
+            if(indexRessource < 0){
+                this.selectedActivite.ressourcesCheck.push(inputRessource.id);
+            } 
+        } else{
+            console.log("not checked");
+            if (indexRessource >= 0){
+                this.selectedActivite.ressourcesCheck.splice(indexRessource, 1);
+            }
+        }
+        console.log("ressources pour l'act : " + this.selectedActivite.ressourcesCheck);
     }
 
     calculServiceTotal(){
@@ -148,6 +186,19 @@ export class ActiviteListComponent implements OnChanges {
 
     selectActivite(activite: Activite){
         this.selectedActivite = activite;
+        console.log("selectActivite");
+        for (let i=0; i < this.ressources.length; i++){
+            var indexRessourceAssigne = this.selectedActivite.ressourcesCheck.indexOf(this.ressources[i].ressourceId);
+            console.log("index resID: " + this.ressources[i].ressourceId + " --> " + indexRessourceAssigne);
+            if(indexRessourceAssigne < 0){
+                this.ressources[i].checked = false;
+            }
+            else {
+                this.ressources[i].checked = true;
+            }
+        }
+        console.log(this.ressources);
+        // TODO force refresh de l'affichage !!
     }
 
     getDateActuelle(){

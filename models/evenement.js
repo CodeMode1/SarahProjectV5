@@ -81,7 +81,12 @@ var activiteSchema = new Schema({
     modifie: {
         type: String
     },
-    services: [serviceSchema]
+    services: [serviceSchema],
+    ressourcesCheck: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Ressource'
+    }]
+
 });
 
 var evenementSchema = new Schema({

@@ -94,6 +94,11 @@
             <input type="text" id="modifie" class="form-control" [(ngModel)]="this.selectedActivite.modifie" readonly>
         </div>
     </div>
+    <div class="col-md-4 form-group">
+        <div *ngFor="let ressource of ressources; let i = index" class="col-md-12 checkbox outer">
+            <label><input #inputRessource type="checkbox" [ngModel]="ressource.checked" id="{{ressource.ressourceId}}" (click)="ressourceClick(inputRessource)">{{ressource.nom}}</label>
+        </div>
+    </div>
 </div>
 <my-service-list [services]="this.selectedActivite.services" [estNouveau]="this.estNouveau" (recalcTrigger)="this.setTotauxActivite($event)"
     (enableSave)="this.enableSave($event)"></my-service-list>
