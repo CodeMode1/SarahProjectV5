@@ -84,23 +84,11 @@ export class ActiviteListComponent implements OnChanges, OnInit {
             Est-ce que ça marche après actualiser ? : oui */ 
     ngOnChanges(){
         if(this.activites[0] != null && this.activites[0] != undefined){
-            //this.selectedActivite = this.activites[0];
             this.selectActivite(this.activites[0]);
         }  
     }
 
     ngOnInit(){
-    }
-
-    estClicke(inputRessource){
-        var indexRessource = this.selectedActivite.ressourcesCheck.indexOf(inputRessource.id);
-        console.log(indexRessource);
-        if(indexRessource < 0){
-            return false;
-        }
-        else {
-            return true;
-        }
     }
 
     ressourceClick(inputRessource){
@@ -109,7 +97,7 @@ export class ActiviteListComponent implements OnChanges, OnInit {
         if(inputRessource.checked == true){
             console.log("Mongo id ressource clicker : ");
             console.log(inputRessource.id);
-            //checker que la valeur nest pas deja dans le array  
+            //checker que la valeur nest pas deja dans le array.   
             if(indexRessource < 0){
                 this.selectedActivite.ressourcesCheck.push(inputRessource.id);
             } 
@@ -198,7 +186,6 @@ export class ActiviteListComponent implements OnChanges, OnInit {
             }
         }
         console.log(this.ressources);
-        // TODO force refresh de l'affichage !!
     }
 
     getDateActuelle(){

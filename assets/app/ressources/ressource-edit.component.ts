@@ -33,7 +33,7 @@ export class RessourceEditComponent implements OnInit, OnChanges {
     ngOnChanges(changes){
         if(changes.myRessource.currentValue === null){
             this.estAjout = true;
-            this.myRessource = {ressourceId: null, nom: null};
+            this.myRessource = {ressourceId: null, nom: null, checked: false};
         }else{
             console.log(this.myRessource);
             this.estAjout = false;
