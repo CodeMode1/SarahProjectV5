@@ -28,13 +28,15 @@ declare  var $, kendo :any;
 })
 export class AgendaComponent implements OnInit {
     // avec service angular2, appel serveur, complete Init
-    // TODO Liste de toutes les ressources du système avec les propriétés suivantes:
+    //   Liste de toutes les ressources du système avec les propriétés suivantes:
     //      text: nom de la ressource
     //      value: ID mongoose 
     //      color: la couleur de cette ressource.
-    ressources: agendaRessource[]; 
+    ressources: agendaRessource[];
+    ressourcesFiltre: any[]; 
     constructor( private _agendaService: AgendaService, private _erreurService: ErreurService) {
         this.ressources = [];
+        this.ressourcesFiltre = [];
         this.ressources.push({text: "Patrick", value: "dff", color: "#f8a398"});
         this.ressources.push({text: "Daf", value: "rewrewr", color: "#51a0ed" });
         this.ressources.push({text: "Lapin", value: "rewrew", color: "#56ca85" });
@@ -49,6 +51,13 @@ export class AgendaComponent implements OnInit {
                 for(let i=0; i < this.ressources.length; i++){
                     console.log(this.ressources[i]);
                     console.log(this.ressources[i].text);
+
+                    let filtre = {
+                        field: "ownerId",
+                        operator: "eq",
+                        value: this.ressources[i].value
+                    };
+                    this.ressourcesFiltre.push(filtre);
                 }
                 this.agendaSettings();   
             },
@@ -58,12 +67,12 @@ export class AgendaComponent implements OnInit {
 
     ngOnInit() {
         this.getRessources();
-}
+    }
 
     agendaSettings(){
         $("#scheduler").kendoScheduler({
-            date: new Date("2013/6/13"),
-            startTime: new Date("2013/6/13 07:00 AM"),
+            //date: new Date("2013/6/13"),
+            //startTime: new Date("2013/6/13 07:00 AM"),
             height: 600,
             views: [
                 "day",
@@ -80,8 +89,10 @@ export class AgendaComponent implements OnInit {
                     read: {
                         // TODO Pour garder les choses simples pour le projet, on va aller
                         //   chercher TOUS les activités dans la BD.
-                        url: "//demos.telerik.com/kendo-ui/service/tasks",
-                        dataType: "jsonp"
+                        url: "http://localhost:3000/activite",
+                        dataType: "json"
+                        //url: "//demos.telerik.com/kendo-ui/service/tasks",
+                        //dataType: "jsonp"
                     },
                     parameterMap: function(options, operation) {
                         if (operation !== "read" && options.models) {
@@ -94,32 +105,23 @@ export class AgendaComponent implements OnInit {
                     model: {
                         id: "taskId",
                         fields: {
-                            // TODO Utiliser identifiant Mongoose de l'activité comme taskId, changer type pour string
-                            taskId: { from: "TaskID", type: "number" },
-                            // TODO Utiliser le nom de l'activité pour Title.
+                            //Utiliser identifiant Mongoose de l'activité comme taskId, changer type pour string
+                            taskId: { from: "TaskID", type: "string" },
+                            //Utiliser le nom de l'activité pour Title.
                             title: { from: "Title", defaultValue: "No title", validation: { required: true } },
                             start: { type: "date", from: "Start" },
                             end: { type: "date", from: "End" },
-                            //Canada/Eastern
-                            startTimezone: { from: "StartTimezone" },
-                            endTimezone: { from: "EndTimezone" },
-                            description: { from: "Description" },
-                            //recurrenceId: { from: "RecurrenceID" },
-                            //recurrenceRule: { from: "RecurrenceRule" },
-                            //recurrenceException: { from: "RecurrenceException" },
-                            // TODO Utiliser le ID Mongoose de la ressource, change le type pour string.
-                            ownerId: { from: "OwnerID" },
-                            isAllDay: { type: "boolean", from: "IsAllDay" }
+                            //Nom evx
+                            description: { from: "Description", type: "string" },
+                            //Utiliser le ID Mongoose de la ressource, change le type pour string.
+                            ownerId: { from: "OwnerID", type: "string" }
                         }
                     }
                 },
                 filter: {
                     /* TODO Il faut trouver une façon de faire un filtre par défaut qui affiche toutes les ressources lu du serveur... */
                     logic: "or",
-                    filters: [
-                        { field: "ownerId", operator: "eq", value: 1 },
-                        { field: "ownerId", operator: "eq", value: 2 }
-                    ]
+                    filters: this.ressourcesFiltre 
                 }
             },
             resources: [
@@ -127,16 +129,6 @@ export class AgendaComponent implements OnInit {
                     field: "ownerId",
                     title: "Owner",
                     dataSource: this.ressources 
-                    /*[
-                        // TODO Référer au array de ressources construites avec la couleur
-                        //      dans ce composant.
-                        //      text: nom de la ressource
-                        //      value: ID mongoose 
-                        //      color: la couleur de cette ressource.
-                        { text: "Alex", value: 1, color: "#f8a398" },
-                        { text: "Bob", value: 2, color: "#51a0ed" },
-                        { text: "Charlie", value: 3, color: "#56ca85" }
-                    ]*/
                 }
             ]
         });
@@ -146,7 +138,7 @@ export class AgendaComponent implements OnInit {
             // checked est un array contenant tous les ID's des ressources qui 
             //    sont sélectionnées par l'usager en utilisant les checkbox.
             var checked = $.map($("#checkRessource :checked"), function(checkbox) {
-                return parseInt($(checkbox).val());
+                return ($(checkbox).val());
             });
     
             var scheduler = $("#scheduler").data("kendoScheduler");

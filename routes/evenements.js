@@ -16,7 +16,8 @@ router.get('/', function (req, res, next) {
             dateCree: 'desc'
         })
         .populate('client_FK')
-        .limit(10)
+        // TODO Mettre du paging un jour ;-)
+        //.limit(10)
         .exec(function (err, results) {
             if (err) {
                 return res.status(404).json({
