@@ -10,7 +10,7 @@ import { AuthService } from '../auth/auth.service';
             </div>
             <nav class="col-md-12" *ngIf="estLogIn()">
                 <ul class="nav nav-pills">
-                    <li><a>Agenda</a></li>
+                    <li><a [routerLink]="['/agenda']" routerLinkActive="router-link-active">Agenda</a></li>
                     <li><a [routerLink]="['/clients']" routerLinkActive="router-link-active">Clients</a></li>
                     <li><a [routerLink]="['/evenements']" routerLinkActive="router-link-active">Évènements</a></li>
                     <li><a [routerLink]="['/ressources']" routerLinkActive="router-link-active">Ressources</a></li>

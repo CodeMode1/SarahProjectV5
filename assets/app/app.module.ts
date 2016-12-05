@@ -56,13 +56,18 @@ import { RessourceService } from './ressources/ressource.service';
 //services
 import { ServiceListComponent } from './services/service-list.component';
 
+//agenda
+import { AgendaComponent } from './agenda/agenda.component';
+import { AgendaService } from './agenda/agenda.service';
+
 @NgModule({
 declarations: [AppComponent, HeaderComponent, LogoComponent, LoginComponent, HomeComponent, SigninComponent, LogoutComponent, 
     SignupComponent, AuthComponent, ErreurComponent, ClientsComponent, EditClientComponent, ClientListComponent, NouvellesComponent,
     CapitalizePipe, NoClientPipe, EvenementsComponent, EvenementListComponent, EvenementEditComponent, NoEvenementPipe, ActiviteListComponent,
-    OrderByPipe, RessourceEditComponent, RessourceListComponent, ServiceListComponent], 
+    OrderByPipe, RessourceEditComponent, RessourceListComponent, ServiceListComponent, AgendaComponent], 
 imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, routing],
 bootstrap: [AppComponent],
-providers: [provide(LocationStrategy, {useClass: HashLocationStrategy}), AuthService, ErreurService, ClientService, EvenementService, RessourceService]
+providers: [provide(LocationStrategy, {useClass: HashLocationStrategy}), AuthService, ErreurService, ClientService, EvenementService, RessourceService,
+    AgendaService]
 })
 export class AppModule {}

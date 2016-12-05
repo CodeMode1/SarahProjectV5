@@ -16,6 +16,7 @@ var userRoutes = require('./routes/users');
 var clientRoutes = require('./routes/clients');
 var evenementRoutes = require('./routes/evenements');
 var ressourceRoutes = require('./routes/ressources');
+var activiteRoutes = require('./routes/activites');
 
 //Express framework.
 var app = express();
@@ -49,6 +50,7 @@ app.use('/user', userRoutes);
 app.use('/client', clientRoutes);
 app.use('/evenement', evenementRoutes);
 app.use('/ressource', ressourceRoutes);
+app.use('/activite', activiteRoutes);
 app.use('/', appRoutes);
 
 //catch 404 et passe au error handler.

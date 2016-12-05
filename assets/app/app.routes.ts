@@ -12,14 +12,15 @@ import { EVENEMENT_ROUTES } from './evenements/evenement.routes';
 
 import { RessourceListComponent } from './ressources/ressource-list.component';
 
-
+import { AgendaComponent } from './agenda/agenda.component';
 
 const routes: RouterConfig = ([
     { path: '', component: HomeComponent},
     { path: 'auth', component: AuthComponent, children: USER_ROUTES },
     { path: 'clients', component: ClientsComponent, children: CLIENT_ROUTES},
     { path: 'evenements', component: EvenementsComponent, children: EVENEMENT_ROUTES},
-    { path: 'ressources', component: RessourceListComponent }
+    { path: 'ressources', component: RessourceListComponent },
+    { path: 'agenda', component: AgendaComponent }
 ]);
 
 export const routing = RouterModule.forRoot(routes);

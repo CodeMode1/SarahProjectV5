@@ -1,0 +1,18 @@
+<div id="example">
+    <div id="listRessources">
+        <div id="checkRessource">
+            <!-- TODO ngFor afficher toutes les ressources.
+                 Par défaut, toutes les resssources sont sélectionnées, i.e. checked.
+                 id=Nom de la ressource
+                 value=identifiant Mongoose de la ressource.
+            -->
+            <div *ngFor="let ressource of ressources; let i = index">
+                <label><input checked type="checkbox" id="{{ressource.text}}" value="{{ressource.value}}">{{ressource.text}}</label>
+            </div>
+            <input checked type="checkbox" id="alex" value="1">
+            <input checked type="checkbox" id="bob" value="2">
+            <input type="checkbox" id="charlie" value="3">
+        </div>
+    </div>
+    <div id="scheduler"></div>
+</div>
