@@ -12,7 +12,7 @@ enum Colors{
     "be6c8d",
     "630e70",
     "87fbe4",
-    "e49c61"
+    "e49c61"    
 }
 
 @Injectable()
@@ -41,6 +41,4 @@ export class AgendaService {
             })
             .catch(error => Observable.throw(error.json() || 'erreur serveur'));
     }
-
-
 }
