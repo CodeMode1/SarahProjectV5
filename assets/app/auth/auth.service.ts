@@ -25,12 +25,12 @@ export class AuthService {
             .catch(error => Observable.throw(error.json()));
     }
 
-    //flush jeton et userId côté client
+    // Flush jeton et userId côté client
     logOut(){
         localStorage.clear();
     }
 
-    //si un user est loggé
+    // Si un user est loggé
     estLogIn(){
         return localStorage.getItem('token') !== null;
     }

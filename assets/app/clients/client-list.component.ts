@@ -15,9 +15,17 @@ import { NoClientPipe } from '../pipes/noClient.pipe';
             padding: 2% 0 0 0;
         }
 
-        td, th{
-            text-align: center;
-            font-size: 1vw;
+        td{
+            text-align: left;
+            padding-bottom: 0;
+            font-size: 0.8vw;
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+
+        th{
+            font-size: 0.7vw;
+            white-space: pre; 
         }
 
         thead > tr{
@@ -242,7 +250,6 @@ export class ClientListComponent implements OnInit {
         this._clientService.getClients().subscribe(
             data => {
                 this.clients = data;
-                //print données pour chaque client
                 for(let i=0; i < this.clients.length; i++){
                     console.log(this.clients[i]);
                 }
@@ -260,7 +267,6 @@ export class ClientListComponent implements OnInit {
         console.log(this.clientSelected);
         console.log(this.clientSelected.noClient);
         this.noClient = this.clientSelected.noClient;
-        //console.log("id mongo : " + this.clientSelected.clientId);
     }
 
     onDelete(){
@@ -269,18 +275,13 @@ export class ClientListComponent implements OnInit {
                 .subscribe(
                     data => {
                         console.log(data);
-                        //this.clients.splice(this.clients.indexOf(this.clientSelected), 1);
-                        //console.log('array des clients : ');
-                        //console.log(this.clients);
-                        //this._clientService.clients = this.clients;
-                        //console.log('array du service client : ');
-                        //console.log(this._clientService.clients);
                     },
                     error => this._erreurService.handleErreur(error)
                 );
         }
     }
 
+    // Search sur le numéro client
     onSearchNoClient(){
         this.boolSearchClient = false;
         console.log("contenu input: ");
@@ -291,13 +292,11 @@ export class ClientListComponent implements OnInit {
         }
         else if(isNaN(Number(this.noClientTextSearch))){
             this.erreurCodeClient = "Invalide. Code Client doit être un nombre.";
-            alert('pas un nombre');
             this.boolSearchClient = true;
             return;
         }
         else if(this.noClientTextSearch.toString().length > 10){
             this.erreurCodeClient = "Invalide. Code Client dépasse la longueur acceptée.";
-            alert('nombre trop gros');
             this.boolSearchClient = true;
             return;
         }
@@ -308,13 +307,13 @@ export class ClientListComponent implements OnInit {
                     console.log(this.noClientFiltreList);
                 },
                 error => {
-                    alert('code client invalide');
                     this.boolSearchClient = true;
                     this._erreurService.handleErreur(error)
                 }
             );
     }
 
+    // Full text search serveur sur le client (champs clients indexés)
     onSpecialSearch(){
         this.boolFullSearch = false;
         if(this.specialTextSearch === null  || (this.specialTextSearch).toString() === ""){
@@ -333,7 +332,6 @@ export class ClientListComponent implements OnInit {
                     console.log(this.clients);
                 },
                 error =>{
-                    alert('text search invalide');
                     this._erreurService.handleErreur(error)
                 }
             );
@@ -349,7 +347,6 @@ export class ClientListComponent implements OnInit {
                     console.log(this.noClientFiltreList);
                 },
                 error => {
-                    alert('code invalide');
                     this.boolSearchClient = true;
                     this._erreurService.handleErreur(error)
                 }

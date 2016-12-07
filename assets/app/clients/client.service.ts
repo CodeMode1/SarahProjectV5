@@ -29,7 +29,6 @@ export class ClientService {
     getClients(): Observable<Client[]>{
         return this._http.get('http://localhost:3000/client')
             .map((response: Response) => {
-                    //this.clients = data;
                     //console.log('les clients: ' + JSON.stringify(data));
                     const data = response.json().obj;
                     let objs: any[] = [];
@@ -41,7 +40,7 @@ export class ClientService {
                     objs.push(client);
                     console.log('les clients: ' + JSON.stringify(client));
                     };
-                    //mettre a jour le array de clients du service
+                    // Mettre a jour le array de clients du service.
                     this.clients = objs;
                     console.log(this.clients);
                     return objs;

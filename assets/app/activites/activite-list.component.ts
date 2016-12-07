@@ -97,7 +97,7 @@ export class ActiviteListComponent implements OnChanges, OnInit {
         if(inputRessource.checked == true){
             console.log("Mongo id ressource clicker : ");
             console.log(inputRessource.id);
-            //checker que la valeur nest pas deja dans le array.   
+            // Vérifier que la valeur nest pas deja dans le array.   
             if(indexRessource < 0){
                 this.selectedActivite.ressourcesCheck.push(inputRessource.id);
             } 
@@ -142,10 +142,10 @@ export class ActiviteListComponent implements OnChanges, OnInit {
      onUserChange($event){
          console.log("ACT-onUserChange: " + $event);
 
-         //Enable Enregistrer bouton.
+         // Enable Enregistrer bouton.
          this.boutonChanges.emit(true);
 
-         //Tag Activites avec le user et le timestamp du changement.
+         // Tag Activites avec le user et le timestamp du changement.
          if(!this.estNouveau){
              this.selectedActivite.modifie = this.getDateModif();
              this.selectedActivite.modifiePar = localStorage.getItem('userName');
@@ -168,7 +168,7 @@ export class ActiviteListComponent implements OnChanges, OnInit {
     }
 
     supprimeActivite(){
-        //supprime le dernier activiter de la liste.
+        // Supprime l'activité au index de l'activité sélectionnée.
         this.activites.splice(this.activites.indexOf(this.selectedActivite), 1);
     }
 

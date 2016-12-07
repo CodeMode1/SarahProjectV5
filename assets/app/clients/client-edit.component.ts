@@ -84,7 +84,6 @@ export class EditClientComponent implements OnInit, OnDestroy {
     modeSoumission: boolean;
     sauvegardeClient: boolean;
     myClient : Client;
-    clientId: string;
     subscription: Subscription;
     estNouveau: boolean;
     codeClient: number;
@@ -96,6 +95,8 @@ export class EditClientComponent implements OnInit, OnDestroy {
         this.gestion = "Gestion";
         this.myClient = new Client();
         this.modeSoumission = true;
+        this.formActualiser = true;
+        this.formCopie = true;
         this.urlCopie = this._router.url;
      }
 
@@ -111,8 +112,9 @@ export class EditClientComponent implements OnInit, OnDestroy {
                                 this.myClient = data;
                                 console.log("client a modif: ");
                                 console.log(this.myClient);
-                                //Si URL contient "copie", alors vide les champs du client copié.
+                                // Si URL contient "copie", alors vide les champs du client copié.
                                 if(this.urlCopie.includes("copie")){
+                                    this.formActualiser = false;
                                     this.copierClient();
                                 }
                                 console.log("client à copier vierge : ");
@@ -131,7 +133,7 @@ export class EditClientComponent implements OnInit, OnDestroy {
                 }
                 console.log("est ce que nouveau : ");
                 console.log(this.estNouveau);
-                //init form
+                // Init form
                 this.creerForm();
             }
         );      
@@ -139,7 +141,6 @@ export class EditClientComponent implements OnInit, OnDestroy {
     }
 
     creerForm(){
-        //creer
         let noClient = null;
         let prenom = '';
         let nom = '';
@@ -168,7 +169,7 @@ export class EditClientComponent implements OnInit, OnDestroy {
         let cree = null;
 
         if(!this.estNouveau){
-            //setter la valeur du client au form control
+            // Setter la valeur du client au form control.
             this.myClient.noClient = noClient;
             this.myClient.prenom = prenom;
             this.myClient.nom = nom;
@@ -197,7 +198,7 @@ export class EditClientComponent implements OnInit, OnDestroy {
             this.myClient.dateCree = cree;
         }
 
-        //cree le form avec des blancs ou les valeurs du client cherché.
+        // Creer le form avec des blancs ou les valeurs du client cherché.
          this.editClientForm = this._formBuilder.group({
             noClient: [noClient],
             prenom: [prenom],
@@ -238,60 +239,83 @@ export class EditClientComponent implements OnInit, OnDestroy {
         this.myClient.dateCree = null;
     }
 
-    ngOnDestroy(){
-        this.subscription.unsubscribe();
+    copieCeClient(){
+            this.copierClient();
+            this.formCopie = false;
+            this.modeSoumission = true;
     }
 
+    actualiserClient(){
+        if(this.myClient.noClient != null && (this.myClient.noClient).toString() != ""){
+            this._clientService.getClient(Number(this.myClient.noClient))
+            .subscribe(
+                data => {
+                    console.log(this.myClient.noClient);
+                    this.myClient = data;
+                },
+                error => {
+                    this._erreurService.handleErreur(error)
+                }
+            );
+        }
+    }
+
+    /* Réagir au changement usager, cet evenement est applique sur tous les inputs du form.
+         selon la syntax: (ngModelChange)="onUserChange($event)" */
+     onUserChange(){
+
+         // Enable Enregistrer bouton.
+         this.modeSoumission = true;
+     }
+
     formatCP(input){
-        //j'enleve les espaces, globalement.
+        // Enlever les espaces, globalement.
         var chaine = input.value.replace(/\s+/g, "");
-        //pour ajouter l'espace au 3eme carac.
+        // Ajouter l'espace au 3eme carac.
         if(chaine.length > 3){
-            //je place l'espace à la bonne place.
+            // Placer l'espace à la bonne place.
             chaine = chaine.substr(0,3) + " " + chaine.substr(3,3);
         }
-        //transformer le code Postal en majuscule.
+        // Transformer le code Postal en majuscule.
         input.value = chaine.toUpperCase();
     }
 
     formatTP(input){
-        // j'enleve tout ce qui n'est pas chiffre, globalement.
+        // Enlever tout ce qui n'est pas chiffre, globalement.
         var chaine = input.value.replace(/[^0-9]/g, "");
         console.log(chaine);
 
-        //au 11eme carac tapé, je reconstruis le tel avec ses bons chiffres.
+        // Au 11eme carac tapé, je reconstruis le tel avec ses bons chiffres.
         if(chaine.length > 10){
             chaine = chaine.substr(1,3) + chaine.substr(5,3) + chaine.substr(9,4);
         }
 
-        //au 10eme carac, je formatte selon (XXX)XXX-XXXX.
+        // Au 10eme carac, je formatte selon (XXX)XXX-XXXX.
         if(chaine.length === 10){
             chaine = "(" + chaine.substr(0,3) + ")" + chaine.substr(3,3) + "-" + chaine.substr(6,4);
         }
         
         /* si ces if sont inversés, chaine non-formattée.
            car au 10eme carac : 
-           chaine.length > 10 et donc la chaine revient non-formattée.
-        */
+           chaine.length > 10 et donc la chaine revient non-formattée. */
         input.value = chaine;
     }
 
     private estCodePostalOK(control: FormControl): ResultatValidation{
-        //validation a réussi: pas de valeur tapée
+        // Validation a réussi: pas de valeur tapée
         if(!control.value){
             return null;
         }
-        /*format regex canadien :
+        /* Format regex canadien :
             ^ : chaine commence, $ : fin séquence
             lettre : pas de D, F, I, O, Q U
-            1er lettre: pas de W, Z, chiffre: \d, lettre, blanc, chiffre, lettre, chiffre
-        */
+            1er lettre: pas de W, Z, chiffre: \d, lettre, blanc, chiffre, lettre, chiffre */
         var regexCP =  /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ][ ]\d[ABCEGHJKLMNPRSTVWXYZ]\d$/;
         if(!control.value.match(regexCP)){
             return {codePostalInvalide: true};
         }
 
-        //validation résussie
+        // Validation résussie
         return null;
     }
 
@@ -299,21 +323,20 @@ export class EditClientComponent implements OnInit, OnDestroy {
         if(!control.value){
             return null;
         }
-        /* format regex canadien:
+        /* Format regex canadien:
            ^ : sequence commence, $ : fin sequence
-           ( , chiffre(x3), ) , chiffre (x3), - , chiffre (x4)
-        */ 
+           ( , chiffre(x3), ) , chiffre (x3), - , chiffre (x4) */ 
         var regexTP = /^\u0028\d{3}\u0029\d{3}\u002D\d{4}$/;
         if(!control.value.match(regexTP)){
             return {telephoneInvalide: true};
         }
         
-        //validation réussie
+        // Validation réussie
         return null;
     }
 
 
-    //validation: retourne null si valide et un boolean si erreur.
+     // Validation: retourne null si valide et un boolean si erreur.
      private estCourrielOK(control: FormControl): ResultatValidation{
          if (control.value) {
             var regexCourriel = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
@@ -321,44 +344,40 @@ export class EditClientComponent implements OnInit, OnDestroy {
                 return {courrielInvalide: true};
          }
 
-         //validation réussie
+         // Validation réussie
          return null;
     }
 
     onSubmit(){
-        //change mode modification, enable bouton Acutaliser et Copier.
-        this.modeSoumission = false;
-        this.formActualiser = true;
-        this.formCopie = true;
         console.log("cree client : ");
         console.log(this.editClientForm.value);
-        //IF NOUVEAU, APPEL CRÉÉ, SINON APPEL UPDATE
-        if(this.estNouveau){
+        // IF NOUVEAU, APPEL CRÉÉ, SINON APPEL UPDATE
+        if(this.estNouveau || !this.formCopie){
             this._clientService.creerClient(this.myClient)
             .subscribe(
                 data => { 
                     console.log('data du serveur :');
                     console.log(data);
+                    // Sauver data du serveur dans myClient.
                     this.myClient = data;
-                    //sauver le _id qui revient dans le client créé par Mongo.
-                    this.clientId = data.clientId;
-                    console.log("id de "+ data.nom + " : " + this.clientId);
-                    console.log("no de client : " + data.noClient);
-                    //sauver le no de client (no de la sequence)
-                    this.myClient.noClient = data.noClient;
-                    //voir le message de sauvegarde succès
+                    // Voir le message de sauvegarde succès.
                     this.sauvegardeClient = true;
             },
                 error => this._erreurService.handleErreur(error)
             );
+            this.formCopie = true;
         } else{
             this._clientService.updateClient(this.myClient)
                 .subscribe(
                     data => console.log(data),
                     error => this._erreurService.handleErreur(error)
                 );
-                //this.myClient = null;
-        }   
+        }
+        this.modeSoumission = false;
+    }
+
+    ngOnDestroy(){
+        this.subscription.unsubscribe();
     }
 
     private testCP(){

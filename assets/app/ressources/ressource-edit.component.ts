@@ -71,7 +71,7 @@ export class RessourceEditComponent implements OnInit, OnChanges {
 
     onSubmit(ressource: Ressource){
         console.log(ressource);
-        // if nouveau, appel créé, sinon appel update
+        // If nouveau, appel créé, sinon appel update.
         if(ressource.nom !== null && ressource.nom !== ""){
             if(this.estAjout){
                 console.log("ressource a sauvegarder : ");
@@ -80,7 +80,7 @@ export class RessourceEditComponent implements OnInit, OnChanges {
                     .subscribe(
                         data => {
                             this._ressourceService.ressources.push(data);
-                            // message succes creation ressource
+                            // Message succes creation ressource.
                             this.etatUserMessage = true;
                             this.userMessage = "Ressource Crée: " + this.myRessource.nom;
                             this.myRessource.nom = "";

@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
     selector: 'my-home',
     template: `
         <div class="jumbotron col-md-12">
-            <h2>{{title}}</h2>
-            <p><a class="btn btn-primary btn-lg" role="button">Nouvelles</a></p>
+            <h2>{{titre}}</h2>
+            <p><a class="btn btn-primary btn-lg" role="button" (click)="showNouvelles()" >Nouvelles</a></p>
         </div>
         <section class="row col-md-12 icons">
             <div class="container col-md-4 icon">
@@ -22,7 +22,7 @@ import { Component, OnInit } from '@angular/core';
         </section>
         <article id="nouvelles" class="jumbotron col-md-12">
             <h3>{{nouvelles}}</h3>
-            <my-nouvelles></my-nouvelles>
+            <my-nouvelles *ngIf="this.estNouvelles" ></my-nouvelles>
         </article>
     `,
     styles: [`
@@ -58,12 +58,18 @@ import { Component, OnInit } from '@angular/core';
     `]
 })
 export class HomeComponent implements OnInit {
-    title: string;
+    titre: string;
     nouvelles: string;
+    estNouvelles: boolean;
     constructor() { 
-        this.title = "Système Abordable de Réservation et Agenda";
+        this.titre = "Système Abordable de Réservation et Agenda";
         this.nouvelles = "Nouvelles";
+        this.estNouvelles = false;
     }
 
     ngOnInit() { }
+
+    showNouvelles(){
+        this.estNouvelles = !this.estNouvelles;
+    }
 }

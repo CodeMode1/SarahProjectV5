@@ -24,7 +24,7 @@ export class EvenementService{
                         objs.push(evenement);  
                         console.log(data[i].client_FK);
                 };
-                // mettre a jour le array d'evx du service
+                // Mettre a jour le array d'evx du service.
                 this.evenements = objs;
                 console.log("array du service: " + JSON.stringify(this.evenements));
                 return objs;

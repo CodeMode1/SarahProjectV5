@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { agendaRessource } from './agendaRessource';
-import { agendaActivite } from './agendaActivite';
 import { ErreurService } from '../erreurs/erreur.service';
 import { AgendaService } from './agenda.service';
 declare  var $, kendo :any;
@@ -34,10 +33,10 @@ declare  var $, kendo :any;
     ]
 })
 export class AgendaComponent implements OnInit {
-    // Liste de toutes les ressources du système avec les propriétés suivantes:
-    //      text: nom de la ressource
-    //      value: ID mongoose 
-    //      color: la couleur de cette ressource.
+    /* Liste de toutes les ressources du système avec les propriétés suivantes:
+        text: nom de la ressource
+        value: ID mongoose 
+        color: la couleur de cette ressource. */
     ressources: agendaRessource[];
     ressourcesFiltre: any[]; 
     constructor( private _agendaService: AgendaService, private _erreurService: ErreurService) {

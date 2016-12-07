@@ -91,16 +91,16 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
     myEvenement: Evenement;
     formActualiser: boolean;
     formCopie: boolean;
-    // id de mongo du client sélect.
+    // Id de mongo du client sélect.
     clientId: string;
     subscription: Subscription;
     estNouveau: boolean;
     noEvenement: number;
-    // champ foreign key hidden
+    // Champ foreign key hidden.
     hiddenFK: boolean;
-    //user logue par défaut
+    // Contact du client.
     userLoggue: string;
-    //client array pour choix client
+    // Client array pour choix client.
     clients: Client[];
     clientSelectedList: Client;
     noClientSelectedList: number;
@@ -134,7 +134,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
                                 this.myEvenement = data;
                                 console.log("evx a modifié : ");
                                 console.log(this.myEvenement);
-                                //Si URL contient "copie", alors vide les champs du evx copié.
+                                // Si URL contient "copie", alors vide les champs du evx copié.
                                 if(this.urlCopie.includes("copie")){
                                     this.formActualiser = false;
                                     this.copierEvx();
@@ -152,7 +152,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
                     this.estNouveau = true;
                 }
                 console.log(this.estNouveau);
-                // init le form
+                // Init le form.
                 this.creerForm();
                 this.getRessources();
             }
@@ -180,7 +180,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
         let client_FK = null;
 
         if(!this.estNouveau){
-            // setter la valeur de l'evenement au form control
+            // Setter la valeur de l'evenement au form control.
             this.myEvenement.noEvenement = noEvenement;
             this.myEvenement.nom = nom;
             this.myEvenement.dateEvenement = dateEvenement;
@@ -201,7 +201,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
             this.myEvenement.client_FK = client_FK;
         }
 
-        // créer le form avec des blancs ou les valeurs de l'evenement cherché
+        // Créer le form avec des blancs ou les valeurs de l'evenement cherché.
         this.editEvenementForm = this._formBuilder.group({
             nom: [nom],
             dateEvenement: [dateEvenement],
@@ -237,7 +237,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
     onSubmit(){
         console.log("valeurs du form evx créé: " );
         console.log(this.editEvenementForm.value);
-        // if nouveau, appel créé, sinon appel update
+        // If nouveau, appel créé, sinon appel update.
         if(this.estNouveau || !this.formCopie){
             this._evenementService.creerEvenement(this.myEvenement)
                 .subscribe(
@@ -246,7 +246,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
                         console.log(data);
                         this.myEvenement = data;
                         console.log(this.myEvenement.dateEvenement);
-                        // message succes creation evx
+                        // Message succes creation evx.
                         this.sauvegardeEvenement = true;
                     },
                     error => this._erreurService.handleErreur(error)
@@ -272,10 +272,10 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
      onUserChange($event){
          console.log("EVX-onUserChange: " + $event);
 
-         //Enable Enregistrer bouton.
+         // Enable Enregistrer bouton.
          this.modeSoumission = true;
 
-         //Tag Activites avec le user et le timestamp du changement.
+         // Tag Activites avec le user et le timestamp du changement.
          if(!this.estNouveau){
              this.myEvenement.modif = new Date(this.getDateModif());
              this.myEvenement.modifPar = localStorage.getItem('userName');
@@ -304,7 +304,6 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
         this._ressourceService.getRessources().subscribe(
             data => {
                 this.ressources = data;
-                //print données pour chaque ressource
                 console.log("ressource du serveur pour afficher dans la liste : ");
                 for(let i=0; i < this.ressources.length; i++){
                     console.log(this.ressources[i]);
@@ -323,7 +322,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
         this.noClientSelectedList = client.noClient;
         console.log('no client selected List: ');
         console.log(this.noClientSelectedList);
-        //affichage client sélectionné dans la boite modale. (prenom est null sur l'objet et undefined en affichage)
+        // Affichage client sélectionné dans la boite modale. (prenom est null sur l'objet et undefined en affichage).
         if(this.clientSelectedList.prenom === null || this.clientSelectedList.prenom === "" || this.clientSelectedList.prenom === undefined){
             this.aucunPrenomClientSelected = true;
         }else{
@@ -333,12 +332,11 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
     }
 
     saveClientSelected(){
-        // save client
         console.log('client a saver : ');
         this.clientSelectedSave = this.clientSelectedList;
-        // id mongo du client selected :
+        // Id mongo du client selected :
         this.clientId = this.clientSelectedSave.clientId;
-        //sauver dans le form control hidden du form envoyé au serveur.
+        // Sauver dans le form control hidden du form envoyé au serveur.
         this.myEvenement.client_FK = this.clientId;
         console.log(this.clientSelectedSave.prenom);
         console.log('id mongo client selected : ');
@@ -347,7 +345,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
             this.myEvenement.client = this.clientSelectedSave.nom;
             return;
         }
-        // sauver le client selectionné dans le input client du form.
+        // Sauver le client selectionné dans le input client du form.
         this.myEvenement.client = this.clientSelectedSave.nom + ', ' + this.clientSelectedSave.prenom;    
     }
 

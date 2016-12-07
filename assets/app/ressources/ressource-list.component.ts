@@ -53,7 +53,6 @@ export class RessourceListComponent implements OnInit {
         this._ressourceService.getRessources().subscribe(
             data => {
                 this.ressources = data;
-                //print données pour chaque ressource
                 console.log("ressource du serveur pour afficher dans la liste : ");
                 for(let i=0; i < this.ressources.length; i++){
                     console.log(this.ressources[i]);

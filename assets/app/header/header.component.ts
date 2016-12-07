@@ -77,10 +77,8 @@ import { AuthService } from '../auth/auth.service';
     `]
 })
 export class HeaderComponent implements OnInit {
-    title: string;
 
     constructor(private _authService: AuthService){
-        this.title = "Système abordable de réservation et agenda";
     }
 
     ngOnInit(){

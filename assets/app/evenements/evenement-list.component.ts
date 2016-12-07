@@ -214,16 +214,16 @@ export class EvenementListComponent implements OnInit {
     evenements: Evenement[];
     evenementSelected: Evenement;
     noEvenement: number;
-    // search No Contrat
+    // Search No Contrat.
     boolSearchContrat: boolean;
     noContratTextSearch: string;
     noContratFiltreList: string;
     erreurNoContrat: string;
-    // search Full Text
+    // Search Full Text.
     boolFullSearch: boolean;
     specialTextSearch: string;
     erreurSpecialSearch: string;
-    // fenêtre modal
+    // Fenêtre modal.
     titreModal: string;
     constructor( private _erreurService: ErreurService, private _evenementService: EvenementService) {
         this.titre = "Liste des Évènements";
@@ -237,17 +237,14 @@ export class EvenementListComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log("dans on init");
-        // get evenements du service this.getEvenements()
+        // Get evenements du service.
         this.getEvenements();
      }
 
     getEvenements(){
-        // appelle methode service, subscribe
         this._evenementService.getEvenements().subscribe(
             data => {
                 this.evenements = data;
-                //print données :
                 for(let i=0; i < this.evenements.length; i++){
                     console.log('evenement du service : ');
                     console.log(this.evenements[i]);
@@ -259,9 +256,7 @@ export class EvenementListComponent implements OnInit {
 
     evenementSelect(evenement: Evenement){
         this.evenementSelected = evenement;
-        console.log(this.evenementSelected);
-        console.log('no evenement : ');
-        console.log(this.evenementSelected.noEvenement);
+        console.log("evx select : " + this.evenementSelected);
         this.noEvenement = this.evenementSelected.noEvenement;
     }
 

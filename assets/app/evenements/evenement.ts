@@ -51,6 +51,6 @@ export class Evenement{
         }else{
             this.activites = activites;
         }
-        //test : this.activites.push(new Activite("TestPat", "2016-11-09", "2016-11-10", "Soumission"));
+        //test : this.activites.push(new Activite("TestDaf", "2016-11-09", "2016-11-10", "Soumission"));
     }
 }

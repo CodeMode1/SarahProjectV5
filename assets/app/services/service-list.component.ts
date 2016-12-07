@@ -87,23 +87,23 @@ export class ServiceListComponent implements OnChanges {
      onUserChange($event){
          console.log("ACT-onUserChange: " + $event);
 
-         //Enable Enregistrer bouton.
+         // Enable Enregistrer bouton.
          this.enableSave.emit(true);
 
-         //Tag Activites avec le user et le timestamp du changement.
+         // Tag Activites avec le user et le timestamp du changement.
          if(!this.estNouveau){
              this.selectedService.modifie = this.getDateModif();
              this.selectedService.modifiePar = localStorage.getItem('userName');
          }
      }
 
-     //Change event sur tous les inputs qui affectent le total.
+     // Change event sur tous les inputs qui affectent le total.
      onCalcChange($event){
          this.calculServices();
 
          this.onUserChange($event);
 
-         //Fire event emitter pour trigger la recalculation dans Activite parent.
+         // Fire event emitter pour trigger la recalculation dans Activite parent.
          this.recalcTrigger.emit(true);
      }
 

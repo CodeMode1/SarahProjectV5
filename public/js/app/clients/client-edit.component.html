@@ -15,81 +15,93 @@
                 </div>
                 <div class="col-md-6 form-group">
                     <label for="noCompte">No Compte</label>
-                    <input type="text" id="noCompte" class="form-control" formControlName="noCompte" placeholder="account #" [(ngModel)]="this.myClient.noCompte">
+                    <input type="text" id="noCompte" class="form-control" formControlName="noCompte" placeholder="account #" [(ngModel)]="this.myClient.noCompte"
+                        (ngModelChange)="onUserChange()">
                 </div>
             </div>
             <div class="col-md-12 outer">
                 <div class="col-md-6 form-group">
                     <label for="prenom">Prénom</label>
-                    <input type="text" id="prenom" class="form-control" formControlName="prenom" placeholder="firstname" [(ngModel)]="this.myClient.prenom">
+                    <input type="text" id="prenom" class="form-control" formControlName="prenom" placeholder="firstname" [(ngModel)]="this.myClient.prenom"
+                        (ngModelChange)="onUserChange()">
                 </div>
                 <div class="col-md-6 form-group">
                     <label for="nom">Nom</label>
-                    <input type="text" id="nom" class="form-control" formControlName="nom" placeholder="name" [(ngModel)]="this.myClient.nom">
+                    <input type="text" id="nom" class="form-control" formControlName="nom" placeholder="name" [(ngModel)]="this.myClient.nom"
+                        (ngModelChange)="onUserChange()">
                 </div>
             </div>
             <div class="col-md-12 outer">
                 <div class="col-md-6 form-group">
                     <label for="telPrincipal">Tél. Principal</label>
                     <input type="text" #inputTP (input)="formatTP(inputTP)" id="telPrincipal" class="form-control" formControlName="telPrincipal"
-                        placeholder="main #" [(ngModel)]="this.myClient.telPrincipal">
+                        placeholder="main #" [(ngModel)]="this.myClient.telPrincipal" (ngModelChange)="onUserChange()">
                     <p class="text-danger" [hidden]="editClientForm.controls.telPrincipal.valid || (editClientForm.controls.telPrincipal.pristine)">
                         Invalide. Tél à 10 chiffres. Example: (514)123-4567.
                     </p>
                 </div>
                 <div class="col-md-6 form-group">
                     <label for="telSecondaire">Tél. Secondaire</label>
-                    <input type="text" id="telSecondaire" class="form-control" formControlName="telSecondaire" placeholder="second #" [(ngModel)]="this.myClient.telSecondaire">
+                    <input type="text" id="telSecondaire" class="form-control" formControlName="telSecondaire" placeholder="second #" [(ngModel)]="this.myClient.telSecondaire"
+                        (ngModelChange)="onUserChange()">
                 </div>
             </div>
             <div class="col-md-12 outer">
                 <div class="col-md-6 form-group">
                     <label for="cell">Cellulaire</label>
-                    <input type="text" id="cell" class="form-control" formControlName="cell" placeholder="cell #" [(ngModel)]="this.myClient.cell">
+                    <input type="text" id="cell" class="form-control" formControlName="cell" placeholder="cell #" [(ngModel)]="this.myClient.cell"
+                        (ngModelChange)="onUserChange()">
                 </div>
                 <div class="col-md-6 form-group">
                     <label for="courriel">Courriel</label>
-                    <input type="email" id="courriel" class="form-control" placeholder="my@email.com" formControlName="courriel" [(ngModel)]="this.myClient.courriel">
+                    <input type="email" id="courriel" class="form-control" placeholder="my@email.com" formControlName="courriel" [(ngModel)]="this.myClient.courriel"
+                        (ngModelChange)="onUserChange()">
                 </div>
             </div>
             <div class="col-md-12 outer">
                 <div class="col-md-6 form-group">
                     <label for="fax">Fax</label>
-                    <input type="text" id="fax" class="form-control" formControlName="fax" placeholder="fax #" [(ngModel)]="this.myClient.fax">
+                    <input type="text" id="fax" class="form-control" formControlName="fax" placeholder="fax #" [(ngModel)]="this.myClient.fax"
+                        (ngModelChange)="onUserChange()">
                 </div>
                 <div class="col-md-6 form-group">
                     <label for="compagnie">Compagnie</label>
-                    <input type="text" id="compagnie" class="form-control" formControlName="compagnie" placeholder="business" [(ngModel)]="this.myClient.compagnie">
+                    <input type="text" id="compagnie" class="form-control" formControlName="compagnie" placeholder="business" [(ngModel)]="this.myClient.compagnie"
+                        (ngModelChange)="onUserChange()">
                 </div>
             </div>
             <div class="col-md-12 outer">
                 <div class="col-md-12 form-group">
                     <label for="adresse">Adresse</label>
-                    <input type="text" id="adresse" class="form-control" formControlName="adresse" placeholder="adress" [(ngModel)]="this.myClient.adresse">
+                    <input type="text" id="adresse" class="form-control" formControlName="adresse" placeholder="adress" [(ngModel)]="this.myClient.adresse"
+                        (ngModelChange)="onUserChange()">
                 </div>
             </div>
             <div class="col-md-12 outer">
                 <div class="col-md-6 form-group">
                     <label for="ville">Ville</label>
-                    <input type="text" id="ville" class="form-control" formControlName="ville" placeholder="city" [(ngModel)]="this.myClient.ville">
+                    <input type="text" id="ville" class="form-control" formControlName="ville" placeholder="city" [(ngModel)]="this.myClient.ville"
+                        (ngModelChange)="onUserChange()">
                 </div>
                 <div class="col-md-6 form-group">
                     <label for="province">Province</label>
-                    <input type="text" id="province" class="form-control" formControlName="province" placeholder="province" [(ngModel)]="this.myClient.province">
+                    <input type="text" id="province" class="form-control" formControlName="province" placeholder="province" [(ngModel)]="this.myClient.province"
+                        (ngModelChange)="onUserChange()">
                 </div>
             </div>
             <div class="col-md-12 outer">
                 <div class="col-md-6 form-group">
                     <label for="codePostal">Code Postal</label>
                     <input type="text" #inputCP (input)="formatCP(inputCP)" id="codePostal" class="form-control" formControlName="codePostal"
-                        placeholder="postal code" [(ngModel)]="this.myClient.codePostal">
+                        placeholder="postal code" [(ngModel)]="this.myClient.codePostal" (ngModelChange)="onUserChange()">
                     <p class="text-danger" [hidden]="editClientForm.controls.codePostal.valid || (editClientForm.controls.codePostal.pristine)">
                         Invalide. D, F, I, O, Q, U, W, Z Invalide. Example: H2S 0B5.
                     </p>
                 </div>
                 <div class="col-md-6 form-group">
                     <label for="pays">Pays</label>
-                    <input type="text" id="pays" class="form-control" formControlName="pays" placeholder="country" [(ngModel)]="this.myClient.pays">
+                    <input type="text" id="pays" class="form-control" formControlName="pays" placeholder="country" [(ngModel)]="this.myClient.pays"
+                        (ngModelChange)="onUserChange()">
                 </div>
             </div>
         </section>
@@ -102,25 +114,29 @@
             <div class="col-md-6 outer">
                 <div class="col-md-12 memo">
                     <label for="labelMemo">Mémo</label>
-                    <textarea id="labelMemo" class="form-control" rows="10" formControlName="memo" [(ngModel)]="this.myClient.memo"></textarea>
+                    <textarea id="labelMemo" class="form-control" maxlength="140" rows="10" formControlName="memo" [(ngModel)]="this.myClient.memo"
+                        (ngModelChange)="onUserChange()"></textarea>
                 </div>
                 <div class="col-md-12 memo">
                     <label for="labelMess">Message important pour évènement à venir</label>
-                    <textarea id="labelMess" class="form-control" rows="10" formControlName="memoAVenir" [(ngModel)]="this.myClient.memoAVenir"></textarea>
+                    <textarea id="labelMess" class="form-control" maxlength="140" rows="10" formControlName="memoAVenir" [(ngModel)]="this.myClient.memoAVenir"
+                        (ngModelChange)="onUserChange()"></textarea>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="col-md-12 gestionInputs">
                     <label for="noExTaxeProv">No exemption taxe provinciale</label>
-                    <input type="text" id="noExTaxeProv" class="form-control" formControlName="noExTaxeProv" [(ngModel)]="this.myClient.noExTaxeProv">
+                    <input type="text" id="noExTaxeProv" class="form-control" formControlName="noExTaxeProv" [(ngModel)]="this.myClient.noExTaxeProv"
+                        (ngModelChange)="onUserChange()">
                 </div>
                 <div class="col-md-12 gestionInputs">
                     <label for="noExTaxeFed">No exemption taxe fédérale</label>
-                    <input type="text" id="noExTaxeFed" class="form-control" formControlName="noExTaxeFed" [(ngModel)]="this.myClient.noExTaxeFed">
+                    <input type="text" id="noExTaxeFed" class="form-control" formControlName="noExTaxeFed" [(ngModel)]="this.myClient.noExTaxeFed"
+                        (ngModelChange)="onUserChange()">
                 </div>
                 <div class="col-md-12 gestionInputs">
                     <label for="selectStatut">Satut du client</label>
-                    <select class="form-control" id="selectStatut" formControlName="selectStatut" [(ngModel)]="this.myClient.selectStatut">
+                    <select class="form-control" id="selectStatut" formControlName="selectStatut" [(ngModel)]="this.myClient.selectStatut" (ngModelChange)="onUserChange()">
                             <option>Client passé</option>
                             <option>Client actuel</option>
                             <option>Client récurrent</option>
@@ -131,7 +147,7 @@
                 </div>
                 <div class="col-md-12 gestionInputs">
                     <label for="selectSource">Source</label>
-                    <select class="form-control" id="selectSource" formControlName="selectSource" [(ngModel)]="this.myClient.selectSource">
+                    <select class="form-control" id="selectSource" formControlName="selectSource" [(ngModel)]="this.myClient.selectSource" (ngModelChange)="onUserChange()">
                             <option>Internet</option>
                             <option>Bouche-à-oreille</option>
                             <option>Journaux et Magazines</option>
@@ -164,7 +180,7 @@
         </section>
         <div class="col-md-12 footer space">
             <div class="col-md-4 divFooter">
-                <button type="button" class="btn btn-primary" [disabled]="!formActualiser">
+                <button type="button" class="btn btn-primary" [disabled]="!formActualiser" (click)="actualiserClient()">
                         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                         Actualiser
                     </button>
@@ -176,7 +192,7 @@
                     </button>
             </div>
             <div class="col-md-4 divFooter">
-                <button type="button" class="btn btn-primary" [disabled]="!formCopie">
+                <button type="button" class="btn btn-primary" [disabled]="!formCopie" (click)="copieCeClient()">
                         <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
                         Copie Client
                     </button>

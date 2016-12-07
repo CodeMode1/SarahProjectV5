@@ -22,7 +22,7 @@ export class RessourceService {
                         objs.push(ressource);  
                         console.log(data[i].nom);
                 };
-                // mettre a jour le array de ressources du service
+                // Mettre a jour le array de ressources du service.
                 this.ressources = objs;
                 console.log("array du service: " + JSON.stringify(this.ressources));
                 return objs;

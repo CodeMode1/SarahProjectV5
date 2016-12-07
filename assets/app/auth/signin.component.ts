@@ -37,8 +37,7 @@ export class SigninComponent implements OnInit {
     }
 
     /* retourne 1 juste quand le courriel est valide 
-       reg exp fiable à 99.9%
-    */
+       reg exp fiable à 99.9% */
     private estCourrielOK(control: FormControl): {[chaine: string]: boolean}{
         if(!control.value.match("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"))
             return {courrielInvalide: true};
@@ -54,8 +53,7 @@ export class SigninComponent implements OnInit {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('userId', data.userId);
                     localStorage.setItem('userName', data.userName);
-                    //id du logged in user : console.log(localStorage.getItem('userId'));
-                    //this._router.navigateByUrl('/');
+                    // id du logged in user : console.log(localStorage.getItem('userId'));
                 },
                 error => this._erreurService.handleErreur(error)
             );

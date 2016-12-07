@@ -6,7 +6,7 @@ import { Activite } from '../activites/activite';
     pure: false
 })
 
-//pipe qui ordre DESC par la date début.
+// Pipe qui ordre DESC par la date début.
 export class OrderByPipe implements PipeTransform {
     transform( activites: Activite[], dateDebut: string): Activite[] {
         activites.sort( function ( a, b ){

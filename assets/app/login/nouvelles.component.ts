@@ -12,8 +12,6 @@ import { Component, OnInit } from '@angular/core';
     ]
 })
 export class NouvellesComponent implements OnInit {
-    //setter un boolean dans home lorsque le boton est clique et par un input passer le boolean ici pour quON affiche les nouvelles Ngif quelques
-    //a  peser sur el bouton
     constructor() { }
 
     ngOnInit() { }
