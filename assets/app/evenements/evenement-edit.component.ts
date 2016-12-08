@@ -176,7 +176,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
         let creerPar = '';
         let dateCree = null;
         let modifPar = '';
-        let modif = null;
+        let modif = "";
         let client_FK = null;
 
         if(!this.estNouveau){
@@ -277,7 +277,8 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
 
          // Tag Activites avec le user et le timestamp du changement.
          if(!this.estNouveau){
-             this.myEvenement.modif = new Date(this.getDateModif());
+             this.myEvenement.modif = this.getDateModif();
+             console.log(this.myEvenement.modif);
              this.myEvenement.modifPar = localStorage.getItem('userName');
          }
      }
@@ -383,7 +384,7 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
     }
 
     getDateActuelle(){
-       var date = new Date().toLocaleDateString();
+       var date = new Date().toLocaleString();
        var yyyy = date.substring(6,10);
        var mm = date.substring(3,5);
        var dd = date.substring(0,2);
@@ -393,12 +394,12 @@ export class EvenementEditComponent implements OnInit, OnDestroy {
     getDateModif(){
        var date = new Date().toLocaleString();
        var yyyy = date.substring(6,10);
-       var mm = date.substring(3,5);
+       var MM = date.substring(3,5);
        var dd = date.substring(0,2);
        var hh = date.substring(12,14);
        var mm = date.substring(15,17);
        var ss = date.substring(18,20);
-       return (yyyy + "-" + mm + "-" + dd + " " + hh + ":" + mm + ":" + ss);
+       return (yyyy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss);
     }   
 
     ngOnDestroy(){

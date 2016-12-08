@@ -60,12 +60,15 @@ import { ServiceListComponent } from './services/service-list.component';
 import { AgendaComponent } from './agenda/agenda.component';
 import { AgendaService } from './agenda/agenda.service';
 
+//ng2 datetime picker
+import { Ng2DatetimePickerModule } from 'ng2-datetime-picker';
+
 @NgModule({
 declarations: [AppComponent, HeaderComponent, LogoComponent, LoginComponent, HomeComponent, SigninComponent, LogoutComponent, 
     SignupComponent, AuthComponent, ErreurComponent, ClientsComponent, EditClientComponent, ClientListComponent, NouvellesComponent,
     CapitalizePipe, NoClientPipe, EvenementsComponent, EvenementListComponent, EvenementEditComponent, NoEvenementPipe, ActiviteListComponent,
     OrderByPipe, RessourceEditComponent, RessourceListComponent, ServiceListComponent, AgendaComponent], 
-imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, routing],
+imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, routing, Ng2DatetimePickerModule],
 bootstrap: [AppComponent],
 providers: [provide(LocationStrategy, {useClass: HashLocationStrategy}), AuthService, ErreurService, ClientService, EvenementService, RessourceService,
     AgendaService]

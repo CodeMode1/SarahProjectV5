@@ -141,7 +141,7 @@ var evenementSchema = new Schema({
         type: String
     },
     modif: {
-        type: Date
+        type: String
     },
     client_FK: {
         type: Schema.Types.ObjectId,

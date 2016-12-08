@@ -18,7 +18,7 @@ export class Evenement{
     creerPar: string;
     dateCree: Date;
     modifPar: string;
-    modif: Date;
+    modif: string;
     client_FK: string;
     activites: Activite[];
 
@@ -26,7 +26,7 @@ export class Evenement{
     contact?: string, client?: string, selectEtat?: string, dateSoumission?: string,
     dateConfirmation?: string, dateFacturation?: string, dateNonRetenu?: string, 
     dateAnnulation?: string, notes?: string, validationTache?: boolean, creerPar?: string,
-    dateCree?: Date, modifPar?: string, modif?: Date, client_FK?: string, activites?: Activite[]){
+    dateCree?: Date, modifPar?: string, modif?: string, client_FK?: string, activites?: Activite[]){
         this.evenementId = evenementId;
         this.noEvenement = noEvenement;
         this.nom = nom;

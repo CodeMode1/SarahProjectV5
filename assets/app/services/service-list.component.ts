@@ -71,7 +71,7 @@ export class ServiceListComponent implements OnChanges {
         this.titre = "Services";
         this.services = [];
         this.selectedService = new Service();
-        this.selectedService.modifie = "";
+        this.selectedService.modifie = null;
         this.selectedService.modifiePar = "";
         this.selectedService.total = 0;
     }
@@ -125,22 +125,24 @@ export class ServiceListComponent implements OnChanges {
     }
 
     getDateActuelle(){
-        var date = new Date().toLocaleDateString();
+        var date = new Date().toLocaleString();
         var yyyy = date.substring(6,10);
-        var mm = date.substring(3,5);
+        var MM = date.substring(3,5);
         var dd = date.substring(0,2);
-        return (yyyy + "-" + mm + "-" + dd);     
+        var hh = date.substring(12,14);
+        var mm = date.substring(15,17);
+        return (yyyy + "-" + MM + "-" + dd + "T" + hh + ":" + mm);     
     }
 
     getDateModif(){
         var date = new Date().toLocaleString();
         var yyyy = date.substring(6,10);
-        var mm = date.substring(3,5);
+        var MM = date.substring(3,5);
         var dd = date.substring(0,2);
         var hh = date.substring(12,14);
         var mm = date.substring(15,17);
         var ss = date.substring(18,20);
-        return (yyyy + "-" + mm + "-" + dd + " " + hh + ":" + mm + ":" + ss);
+        return (yyyy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss);
     }
 
     calculServices(){

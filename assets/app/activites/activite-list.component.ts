@@ -72,7 +72,7 @@ export class ActiviteListComponent implements OnChanges, OnInit {
         this.titre = "Activités";
         this.activites = [];
         this.selectedActivite = new Activite();
-        this.selectedActivite.modifie = "";
+        this.selectedActivite.modifie = null;
         this.selectedActivite.modifiePar = "";
         this.selectedActivite.serviceTotal = 0;
         this.selectedActivite.fraisServiceTotal = 0;
@@ -136,7 +136,7 @@ export class ActiviteListComponent implements OnChanges, OnInit {
             this.selectedActivite.fraisServiceTotal = this.calculFraisServiceTotal();
         }
     }
-    
+
      /* Réagir au changement usager, cet evenement est applique sur tous les inputs du form.
          selon la syntax: (ngModelChange)="onUserChange($event)" */
      onUserChange($event){
@@ -189,21 +189,25 @@ export class ActiviteListComponent implements OnChanges, OnInit {
     }
 
     getDateActuelle(){
-       var date = new Date().toLocaleDateString();
-       var yyyy = date.substring(6,10);
-       var mm = date.substring(3,5);
+       var date = new Date().toLocaleString();
+       var yyyy= date.substring(6,10);
+       var MM = date.substring(3,5);
        var dd = date.substring(0,2);
-       return (yyyy + "-" + mm + "-" + dd);     
+       var hh = date.substring(12,14);
+       var mm = date.substring(15,17);
+       console.log("format désirable : ");
+       console.log(date);
+       return (yyyy + "-" + MM + "-" + dd + "T" + hh + ":" + mm);     
     }
 
     getDateModif(){
        var date = new Date().toLocaleString();
        var yyyy = date.substring(6,10);
-       var mm = date.substring(3,5);
+       var MM = date.substring(3,5);
        var dd = date.substring(0,2);
        var hh = date.substring(12,14);
        var mm = date.substring(15,17);
        var ss = date.substring(18,20);
-       return (yyyy + "-" + mm + "-" + dd + " " + hh + ":" + mm + ":" + ss);
+       return (yyyy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss);
     }      
 }

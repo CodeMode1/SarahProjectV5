@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Angular2 Npm Package Example</title>
+  <script src="moment-with-locales.min.js"></script>
+  <style> #my-div .datetime-picker { background: #fff; } </style>
+</head>
+
+<body>
+<my-app>Loading...</my-app>
+<script>
+  document.write('<base href="' + document.location + '" />');
+
+  var script = document.createElement("script");
+  script.src = location.pathname.replace('index.html', '') + 'build/app.js';
+  (document.body).appendChild(script);
+</script>
+</body>
+</html>

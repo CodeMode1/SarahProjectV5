@@ -12,8 +12,8 @@
                 </div>
                 <div class="col-md-12 outer">
                     <label for="dateEvenement">Date Évènement</label>
-                    <input type="date" id="dateEvenement" class="form-control" formControlName="dateEvenement" placeholder="event date" [(ngModel)]="this.myEvenement.dateEvenement"
-                        (ngModelChange)="onUserChange($event)">
+                    <input type="date" id="dateEvenement" class="form-control" formControlName="dateEvenement" placeholder="select event date"
+                        [(ngModel)]="this.myEvenement.dateEvenement" (ngModelChange)="onUserChange($event)">
                 </div>
                 <div class="col-md-12 outer">
                     <label for="contact">Contact</label>
@@ -95,7 +95,7 @@
                         <label>Modifié par</label>
                         <input type="text" id="modifPar" class="form-control" formControlName="modifPar" readonly [(ngModel)]="this.myEvenement.modifPar">
                         <label>Modifié</label>
-                        <input type="text" id="modifPar" class="form-control" formControlName="modif" readonly [(ngModel)]="this.myEvenement.modif">
+                        <input type="text" readonly id="modif" class="form-control" formControlName="modif" [(ngModel)]="this.myEvenement.modif">
                     </div>
                     <input type="text" id="client_FK" formControlName="client_FK" [(ngModel)]="this.myEvenement.client_FK" [hidden]="hiddenFK">
                 </div>

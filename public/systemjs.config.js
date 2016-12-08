@@ -4,7 +4,8 @@
     var map = {
         'app': 'js/app',
         'rxjs': 'js/vendor/rxjs',
-        '@angular': 'js/vendor/@angular'
+        '@angular': 'js/vendor/@angular',
+        'ng2-datetime-picker': 'js/vendor/ng2-datetime-picker/dist'
     };
 
     //packages dit au sys loader comment loader quand pas nom fichier ou/et pas extension.
@@ -16,6 +17,10 @@
         'rxjs': {
             defaultExtension: 'js'
         },
+        'ng2-datetime-picker': {
+            main: 'ng2-datetime-picker.umd.js',
+            defaultExtension: 'js'
+        }
     };
 
     var packageNames = [

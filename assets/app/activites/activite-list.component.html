@@ -34,12 +34,13 @@
     </div>
     <div class="col-md-12 outer">
         <label for="debut">Début</label>
-        <input type="date" id="debut" class="form-control" placeholder="activity start" [(ngModel)]="this.selectedActivite.debut"
+        <input type="datetime-local" id="debut" class="form-control" placeholder="activity start" [(ngModel)]="this.selectedActivite.debut"
             (ngModelChange)="onUserChange($event)">
     </div>
     <div class="col-md-12 outer">
         <label for="fin">Fin</label>
-        <input type="date" id="fin" class="form-control" placeholder="activity end" [(ngModel)]="this.selectedActivite.fin" (ngModelChange)="onUserChange($event)">
+        <input type="datetime-local" id="fin" class="form-control" placeholder="activity end" [(ngModel)]="this.selectedActivite.fin"
+            (ngModelChange)="onUserChange($event)">
     </div>
     <div class="col-md-12 outer">
         <label for="etat">État: Confirmation</label>
