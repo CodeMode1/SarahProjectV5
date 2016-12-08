@@ -14,11 +14,10 @@ export class RessourceService {
         return this._http.get('http://localhost:3000/ressource')
             .map((response: Response) => {
                 const data = response.json().obj;
-                console.log("fucking ressource a mar de de tabarnak : ");
                 console.log(data);
                 let objs: any[] = [];
                 for(let i=0; i < data.length; i++){
-                    let ressource = new Ressource(data[i]._id, data[i].nom);
+                    let ressource = new Ressource(data[i]._id, data[i].nom, data[i].couleur);
                         objs.push(ressource);  
                         console.log(data[i].nom);
                 };
@@ -39,7 +38,7 @@ export class RessourceService {
         return this._http.post('http://localhost:3000/ressource' + token, body, {headers:header})
             .map((response: Response) => {
                 const data = response.json().obj;
-                let ressource = new Ressource(data._id, data.nom);
+                let ressource = new Ressource(data._id, data.nom, data.couleur);
                 return ressource;  
             })
             .catch(error => Observable.throw(error.json() || 'erreur serveur'));

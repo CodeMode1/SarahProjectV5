@@ -49,7 +49,8 @@ router.post('/', function (req, res, next) {
             });
         }
         var ressource = new Ressource({
-            nom: req.body.nom
+            nom: req.body.nom,
+            couleur: req.body.couleur
         });
         ressource.save(function (err, result) {
             if (err) {
@@ -87,7 +88,8 @@ router.put('/:id', function (req, res, next) {
                 })
             }
             var update = {
-                nom: req.body.nom
+                nom: req.body.nom,
+                couleur: req.body.couleur
             };
             Ressource.findByIdAndUpdate(req.params.id, update, function (err, result) {
                 if (err) {

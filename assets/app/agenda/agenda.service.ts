@@ -4,6 +4,7 @@ import { agendaRessource } from './agendaRessource';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 
+/*
 enum Colors{
     "b000ff",
     "56a996",
@@ -14,6 +15,7 @@ enum Colors{
     "87fbe4",
     "e49c61"    
 }
+*/
 
 @Injectable()
 export class AgendaService {
@@ -29,10 +31,9 @@ export class AgendaService {
                 console.log(data);
                 let objs: any[] = [];
                 for(let i=0; i < data.length; i++){
-                    let ressource = new agendaRessource(data[i].nom, data[i]._id,
-                        "#" + Colors[i]);
+                    let ressource = new agendaRessource(data[i].nom, data[i]._id, data[i].couleur);
                         objs.push(ressource);  
-                        console.log(data[i].nom);
+                        console.log(data[i].nom + data[i].couleur);
                 };
                 // mettre a jour le array de ressources du service
                 this.ressources = objs;

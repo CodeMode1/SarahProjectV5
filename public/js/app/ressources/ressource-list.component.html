@@ -11,11 +11,13 @@
                 <thead>
                     <tr>
                         <th>NOM</th>
+                        <th class="col-md-2">COULEUR</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let ressource of ressources" (click)="selectRessource(ressource)" [class.estSelectRange]="this.idSelected === ressource.ressourceId">
                         <td>{{ressource?.nom}}</td>
+                        <td [style.background]="ressource?.couleur" class="col-md-2"></td>
                     </tr>
                     <tr *ngIf="!ressources || !ressources.length">
                         <td class="bg-danger" colspan="14">Aucunes ressources</td>

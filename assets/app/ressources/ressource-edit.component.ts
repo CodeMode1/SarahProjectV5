@@ -17,12 +17,15 @@ export class RessourceEditComponent implements OnInit, OnChanges {
     estAjout: boolean;
     @Input() myRessource: Ressource;
     @Output() vider = new EventEmitter<any>();
-    etatUserMessage: boolean;
+    succesUserMessage: boolean;
+    erreurUserMessage: boolean;
     userMessage: string;
+    erreurMessage: string;
     activeBoutons: boolean;
 
     constructor(private _ressourceService: RessourceService, private _erreurService: ErreurService) { 
-            this.etatUserMessage = false;
+            this.succesUserMessage = false;
+            this.erreurUserMessage = false;
             this.estAjout = true;
             this.activeBoutons = false;
         }
@@ -33,11 +36,11 @@ export class RessourceEditComponent implements OnInit, OnChanges {
     ngOnChanges(changes){
         if(changes.myRessource.currentValue === null){
             this.estAjout = true;
-            this.myRessource = {ressourceId: null, nom: null, checked: false};
+            this.myRessource = {ressourceId: null, nom: null, couleur: null, checked: false};
         }else{
             console.log(this.myRessource);
             this.estAjout = false;
-            this.etatUserMessage = false;
+            this.succesUserMessage = false;
         }
     }
 
@@ -46,9 +49,10 @@ export class RessourceEditComponent implements OnInit, OnChanges {
             this._ressourceService.deleteRessource(this.myRessource)
                 .subscribe(
                     data => {
-                        this.etatUserMessage = true;
-                        this.userMessage = "Ressource Supprimée: " + this.myRessource.nom;
+                        this.succesUserMessage = true;
+                        this.userMessage = "Ressource Supprimée: " + this.myRessource.nom + this.myRessource.couleur;
                         this.myRessource.nom = "";
+                        this.myRessource.couleur = "";
                         console.log(data);
                     },
                     error => this._erreurService.handleErreur(error)
@@ -61,12 +65,23 @@ export class RessourceEditComponent implements OnInit, OnChanges {
         this.vider.emit(null);
     }
 
-    nomInput(item){
-        if(item.value.length > 0){
+    inputChange($event){
+        if($event.length > 0){
             this.activeBoutons = true;
         }else{
             this.activeBoutons = false;
         }
+    }
+
+    couleurChange($event){
+        if($event !== "#ffffff" && $event !== "#000000"){
+            this.activeBoutons = true;
+        }else{
+            this.activeBoutons = false;
+            this.erreurUserMessage = true;
+            this.erreurMessage = "Choissisez une couleur autre que blanc/noir";
+        }
+        
     }
 
     onSubmit(ressource: Ressource){
@@ -81,9 +96,10 @@ export class RessourceEditComponent implements OnInit, OnChanges {
                         data => {
                             this._ressourceService.ressources.push(data);
                             // Message succes creation ressource.
-                            this.etatUserMessage = true;
-                            this.userMessage = "Ressource Crée: " + this.myRessource.nom;
+                            this.succesUserMessage = true;
+                            this.userMessage = "Ressource Crée: " + this.myRessource.nom + this.myRessource.couleur;
                             this.myRessource.nom = "";
+                            this.myRessource.couleur = "";
                         },
                         error => this._erreurService.handleErreur(error)
                     );
@@ -93,8 +109,8 @@ export class RessourceEditComponent implements OnInit, OnChanges {
                         data => {
                             console.log("edit SUCCES : ");
                             console.log(data);
-                            this.etatUserMessage = true;
-                            this.userMessage = "Ressource Sauvegardée: " + this.myRessource.nom;
+                            this.succesUserMessage = true;
+                            this.userMessage = "Ressource Sauvegardée: " + this.myRessource.nom + this.myRessource.couleur;
                             this.viderRessource();
                         },
                         error => this._erreurService.handleErreur(error)

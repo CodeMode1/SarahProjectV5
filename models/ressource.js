@@ -4,6 +4,9 @@ var Schema = mongoose.Schema;
 var ressourceSchema = new Schema({
     nom: {
         type: String
+    },
+    couleur: {
+        type: String
     }
 });
 

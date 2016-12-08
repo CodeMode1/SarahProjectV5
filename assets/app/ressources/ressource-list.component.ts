@@ -13,6 +13,9 @@ import { ErreurService } from '../erreurs/erreur.service';
             color: #519BDB;
         }
 
+        table{
+        }
+
         td, th{
             text-align: center;
             font-size: 1vw;
@@ -57,6 +60,7 @@ export class RessourceListComponent implements OnInit {
                 for(let i=0; i < this.ressources.length; i++){
                     console.log(this.ressources[i]);
                     console.log(this.ressources[i].nom);
+                    console.log(this.ressources[i].couleur);
                 }
             },
             error => this._erreurService.handleErreur(error)
