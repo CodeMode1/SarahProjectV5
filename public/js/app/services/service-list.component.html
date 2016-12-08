@@ -17,10 +17,10 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let service of services; let i=index" (click)="selectService(service)" [class.estSelectRange]="this.selectedService.nom === service.nom">
-                        <td>{{ service?.temps}}</td>
-                        <td>{{ service?.nom}}</td>
-                        <td>{{ service?.categorie}}</td>
-                        <td>{{ service?.total}}</td>
+                        <td>{{ service?.temps }}</td>
+                        <td>{{ service?.nom }}</td>
+                        <td>{{ service?.categorie }}</td>
+                        <td>{{ service?.total }}</td>
                     </tr>
                 </tbody>
             </table>
