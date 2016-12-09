@@ -4,19 +4,6 @@ import { agendaRessource } from './agendaRessource';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 
-/*
-enum Colors{
-    "b000ff",
-    "56a996",
-    "305bf8",
-    "f8cd30",
-    "be6c8d",
-    "630e70",
-    "87fbe4",
-    "e49c61"    
-}
-*/
-
 @Injectable()
 export class AgendaService {
     ressources: agendaRessource[] = [];

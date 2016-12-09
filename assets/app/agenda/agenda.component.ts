@@ -77,6 +77,7 @@ export class AgendaComponent implements OnInit {
     agendaInit(){
         $("#scheduler").kendoScheduler({
             height: 600,
+            editable: false,
             views: [
                 "day",
                 "week",

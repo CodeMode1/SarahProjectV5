@@ -41,6 +41,7 @@ export class RessourceEditComponent implements OnInit, OnChanges {
             console.log(this.myRessource);
             this.estAjout = false;
             this.succesUserMessage = false;
+            this.activeBoutons = false;
         }
     }
 
@@ -57,6 +58,7 @@ export class RessourceEditComponent implements OnInit, OnChanges {
                     },
                     error => this._erreurService.handleErreur(error)
                 );
+                this.estAjout = true;
         }
     }
 
@@ -66,20 +68,21 @@ export class RessourceEditComponent implements OnInit, OnChanges {
     }
 
     inputChange($event){
-        if($event.length > 0){
-            this.activeBoutons = true;
-        }else{
+        if($event == "" || $event == null){
             this.activeBoutons = false;
+        }else{
+            this.activeBoutons = true;
         }
     }
 
     couleurChange($event){
-        if($event !== "#ffffff" && $event !== "#000000"){
-            this.activeBoutons = true;
-        }else{
+        if($event == "#ffffff" || $event == "#000000" || $event == "" || $event == null){
             this.activeBoutons = false;
             this.erreurUserMessage = true;
             this.erreurMessage = "Choissisez une couleur autre que blanc/noir";
+        }else{ 
+            this.activeBoutons = true;
+            this.erreurUserMessage = false;
         }
         
     }
@@ -87,7 +90,7 @@ export class RessourceEditComponent implements OnInit, OnChanges {
     onSubmit(ressource: Ressource){
         console.log(ressource);
         // If nouveau, appel créé, sinon appel update.
-        if(ressource.nom !== null && ressource.nom !== ""){
+        if((ressource.nom !== null && ressource.nom !== "") && (ressource.couleur !== "" && ressource.couleur !== null)){
             if(this.estAjout){
                 console.log("ressource a sauvegarder : ");
                 this.myRessource = ressource;
@@ -97,9 +100,9 @@ export class RessourceEditComponent implements OnInit, OnChanges {
                             this._ressourceService.ressources.push(data);
                             // Message succes creation ressource.
                             this.succesUserMessage = true;
-                            this.userMessage = "Ressource Crée: " + this.myRessource.nom + this.myRessource.couleur;
+                            this.userMessage = "Ressource Crée: " + this.myRessource.nom;
                             this.myRessource.nom = "";
-                            this.myRessource.couleur = "";
+                            this.myRessource.couleur = null;
                         },
                         error => this._erreurService.handleErreur(error)
                     );
@@ -110,7 +113,7 @@ export class RessourceEditComponent implements OnInit, OnChanges {
                             console.log("edit SUCCES : ");
                             console.log(data);
                             this.succesUserMessage = true;
-                            this.userMessage = "Ressource Sauvegardée: " + this.myRessource.nom + this.myRessource.couleur;
+                            this.userMessage = "Ressource Sauvegardée: " + this.myRessource.nom;
                             this.viderRessource();
                         },
                         error => this._erreurService.handleErreur(error)
