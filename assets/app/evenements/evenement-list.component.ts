@@ -17,13 +17,13 @@ import { NoEvenementPipe } from '../pipes/noEvenement.pipe';
         td{
             text-align: left;
             padding-bottom: 0;
-            font-size: 0.8vw;
+            font-size: 14px;
             max-width: 300px;
             word-wrap: break-word;
         }
 
         th{
-            font-size: 0.7vw;
+            font-size: 14px;
             white-space: pre; 
         }
 
@@ -43,12 +43,12 @@ import { NoEvenementPipe } from '../pipes/noEvenement.pipe';
 
         .estSelectRange{
              background-color: #519BDB;
-         }
+        }
 
-         h3{
+        h3{
             padding: 0.5% 0 0.5% 0;
             margin:0;
-            font-size: 1.5vw;
+            font-size: 1.3vw;
         }
 
         .panel-heading{
@@ -165,25 +165,25 @@ import { NoEvenementPipe } from '../pipes/noEvenement.pipe';
         }
 
         @-moz-keyframes moveTooltip {
-    0% {
-        -moz-transform: scale(0,0);
-        opacity: 0;
-    }
-
-    45% {
-        -moz-transform: scale(0.4,0.4);
-        opacity: 0.7;
-    }
-
-    75% {
-        -moz-transform: scale(1.3,1.3);
-        opacity: 0.4;
-    }
-
-    100% {
-        -moz-transform: scale(1,1);
-        opacity: 1;
-    };
+            0% {
+                -moz-transform: scale(0,0);
+                opacity: 0;
+            }
+        
+            45% {
+                -moz-transform: scale(0.4,0.4);
+                opacity: 0.7;
+            }
+        
+            75% {
+                -moz-transform: scale(1.3,1.3);
+                opacity: 0.4;
+            }
+        
+            100% {
+                -moz-transform: scale(1,1);
+                opacity: 1;
+            };
 }
 
 @-webkit-keyframes moveTooltip {

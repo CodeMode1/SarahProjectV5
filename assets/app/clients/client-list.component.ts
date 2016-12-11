@@ -11,6 +11,10 @@ import { NoClientPipe } from '../pipes/noClient.pipe';
     selector: 'my-client-list',
     templateUrl: 'client-list.component.html',
     styles: [`
+        #pagerClient{
+            text-align: center;
+        }
+
         section{
             padding: 2% 0 0 0;
         }
@@ -18,13 +22,13 @@ import { NoClientPipe } from '../pipes/noClient.pipe';
         td{
             text-align: left;
             padding-bottom: 0;
-            font-size: 0.8vw;
+            font-size: 14px;
             max-width: 300px;
             word-wrap: break-word;
         }
 
         th{
-            font-size: 0.7vw;
+            font-size: 14px;
             white-space: pre; 
         }
 
@@ -49,7 +53,7 @@ import { NoClientPipe } from '../pipes/noClient.pipe';
         h3{
             padding: 0.5% 0 0.5% 0;
             margin:0;
-            font-size: 1.5vw;
+            font-size: 1.3vw;
         }
 
         .panel-heading{
@@ -169,25 +173,25 @@ import { NoClientPipe } from '../pipes/noClient.pipe';
         }
 
         @-moz-keyframes moveTooltip {
-    0% {
-        -moz-transform: scale(0,0);
-        opacity: 0;
-    }
-
-    45% {
-        -moz-transform: scale(0.4,0.4);
-        opacity: 0.7;
-    }
-
-    75% {
-        -moz-transform: scale(1.3,1.3);
-        opacity: 0.4;
-    }
-
-    100% {
-        -moz-transform: scale(1,1);
-        opacity: 1;
-    };
+            0% {
+                -moz-transform: scale(0,0);
+                opacity: 0;
+            }
+        
+            45% {
+                -moz-transform: scale(0.4,0.4);
+                opacity: 0.7;
+            }
+        
+            75% {
+                -moz-transform: scale(1.3,1.3);
+                opacity: 0.4;
+            }
+        
+            100% {
+                -moz-transform: scale(1,1);
+                opacity: 1;
+            };
 }
 
 @-webkit-keyframes moveTooltip {

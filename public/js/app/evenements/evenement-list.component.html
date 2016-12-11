@@ -83,7 +83,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let evenement of evenements |noEvenementPipe:noContratFiltreList; let i=index" (click)="evenementSelect(evenement)"
+                    <tr *ngFor="let evenement of evenements | noEvenementPipe:noContratFiltreList; let i=index" (click)="evenementSelect(evenement)"
                         [class.estSelectRange]="this.noEvenement == evenement.noEvenement">
                         <td>{{evenement?.noEvenement}}</td>
                         <td>{{evenement?.nom}}</td>

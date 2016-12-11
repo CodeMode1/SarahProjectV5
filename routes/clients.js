@@ -12,7 +12,6 @@ router.get('/', function (req, res, next) {
     getClients.sort({
             dateCree: 'desc'
         })
-        .limit(10)
         .exec(function (err, results) {
             if (err) {
                 return res.status(404).json({

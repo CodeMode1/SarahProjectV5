@@ -30,7 +30,7 @@ import { Ressource } from '../ressources/ressource';
 
          td, th{
             text-align: center;
-            font-size: 1vw;
+            font-size: 14px;
         }
 
         thead > tr{

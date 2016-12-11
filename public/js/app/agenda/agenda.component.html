@@ -2,7 +2,11 @@
     <div id="listRessources">
         <div id="checkRessource">
             <div *ngFor="let ressource of ressources; let i = index" class="inlineInputs">
-                <label><input #filtreCheckbox checked type="checkbox" id="{{ressource.text}}" value="{{ressource.value}}" (change)="filtreChange(filtreCheckbox)">{{ressource.text}}</label>
+                <label>
+                    <div id="colorPicker" [style.background]="ressource.color"></div>
+                    <input #filtreCheckbox checked type="checkbox" id="{{ressource.text}}" value="{{ressource.value}}" (change)="filtreChange(filtreCheckbox)">
+                    {{ressource.text}}
+                </label>
             </div>
         </div>
     </div>

@@ -18,7 +18,7 @@ import { ErreurService } from '../erreurs/erreur.service';
 
         td, th{
             text-align: center;
-            font-size: 1vw;
+            font-size: 14px;
         }
 
         thead > tr{

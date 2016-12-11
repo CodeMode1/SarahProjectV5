@@ -29,6 +29,11 @@ declare  var $, kendo :any;
             margin: 1%;
         }
 
+        #colorPicker{
+            width: 20px;
+            height: 20px;
+        }
+
     `
     ]
 })

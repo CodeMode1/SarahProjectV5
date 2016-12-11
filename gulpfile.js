@@ -61,6 +61,10 @@ gulp.task('vendor', function () {
     gulp.src('./node_modules/ng2-bootstrap/**')
         .pipe(gulp.dest(vendor + '/ng2-bootstrap/'));
 
+    //pagination
+    gulp.src('./node_modules/ng2-pagination/**')
+        .pipe(gulp.dest(vendor + '/ng2-pagination/'));
+
     //ng2 datepicker
     gulp.src('./node_modules/ng2-datetime-picker/**')
         .pipe(gulp.dest(vendor + '/ng2-datetime-picker/'));

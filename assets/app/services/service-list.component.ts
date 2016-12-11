@@ -24,6 +24,7 @@ import { Service } from './service';
             clear:both;
             padding: 0 0 1% 0;
         }
+
         h2{
             color: #337ab7;
         }
@@ -32,9 +33,9 @@ import { Service } from './service';
             margin: 0 1% 0 1%;
         }
     
-            td, th{
+        td, th{
             text-align: center;
-            font-size: 1vw;
+            font-size: 14px;
         }
     
         thead > tr{
@@ -52,8 +53,8 @@ import { Service } from './service';
         }
     
         .estSelectRange{
-                background-color: #519BDB;
-            }       
+            background-color: #519BDB;
+        }       
     `
     ]
 })
