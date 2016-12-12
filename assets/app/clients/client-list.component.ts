@@ -5,6 +5,7 @@ import { ClientService } from './client.service';
 import { ErreurService } from '../erreurs/erreur.service';
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
 import { NoClientPipe } from '../pipes/noClient.pipe';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
     moduleId: module.id,
@@ -234,6 +235,11 @@ export class ClientListComponent implements OnInit {
     boolFullSearch: boolean;
     erreurSpecialSearch: string;
     
+    //spinner
+    estRequete: boolean;
+    delai: number;
+    currentTimeout: number;
+    
     constructor(private _clientService: ClientService, private _erreurService: ErreurService) { 
         this.titre = "Liste des Clients";
         this.noClientTextSearch = "";
@@ -243,6 +249,11 @@ export class ClientListComponent implements OnInit {
         this.specialTextSearch = "";
         this.erreurSpecialSearch = "";
         this.boolFullSearch = false;
+
+        //suggere faire apparaitre spinner apres 300 msm ici fait disparaitre apres un multiple du temps
+        // de la requete ca requete trop rapide en general.
+        this.delai = 500;
+        this.estRequete = false;
     }
 
     ngOnInit() {
@@ -287,19 +298,24 @@ export class ClientListComponent implements OnInit {
 
     // Search sur le numéro client
     onSearchNoClient(){
+        this.estRequete = true;
+        var start = new Date().getTime();
         this.boolSearchClient = false;
         console.log("contenu input: ");
         console.log(this.noClientTextSearch);
         if(this.noClientTextSearch === null || (this.noClientTextSearch).toString() === ""){
+            this.estRequete = false;
             this.noClientFiltreList = "";
             return;
         }
         else if(isNaN(Number(this.noClientTextSearch))){
+            this.estRequete = false;
             this.erreurCodeClient = "Invalide. Code Client doit être un nombre.";
             this.boolSearchClient = true;
             return;
         }
         else if(this.noClientTextSearch.toString().length > 10){
+            this.estRequete = false;
             this.erreurCodeClient = "Invalide. Code Client dépasse la longueur acceptée.";
             this.boolSearchClient = true;
             return;
@@ -309,6 +325,9 @@ export class ClientListComponent implements OnInit {
                 data => {
                     this.noClientFiltreList = (data.noClient).toString();
                     console.log(this.noClientFiltreList);
+                    var end = new Date().getTime();
+                    this.delai = this.getDelai(start, end);
+                    this.setTimeOut();
                 },
                 error => {
                     this.boolSearchClient = true;
@@ -317,14 +336,42 @@ export class ClientListComponent implements OnInit {
             );
     }
 
+     cancelTime(){
+            console.log("in cancel time");
+            this.estRequete = false;
+            clearTimeout(this.currentTimeout);
+            this.currentTimeout = undefined;
+            console.log(this.currentTimeout);
+    }
+    
+    setTimeOut(){
+        this.currentTimeout = setTimeout(() => {
+            this.cancelTime();
+        }, this.delai);
+    }
+
+    getDelai(start: number, end: number, diff2?: number): number{
+        var diff = end - start;
+        diff *= 15;
+        console.log(diff);
+        if(diff2){
+            return diff2 *= 5;
+        }
+        return diff;
+    }
+
     // Full text search serveur sur le client (champs clients indexés)
     onSpecialSearch(){
+        this.estRequete = true;
+        var start = new Date().getTime();
         this.boolFullSearch = false;
         if(this.specialTextSearch === null  || (this.specialTextSearch).toString() === ""){
+            this.estRequete = false;
             this.getClients();
             return;
         }
         else if(this.specialTextSearch.toString().length > 150){
+            this.estRequete = false;
             this.erreurSpecialSearch = "Invalide. Ne pas dépasser 150 caractères.";
             this.boolFullSearch = true;
             return;
@@ -334,6 +381,9 @@ export class ClientListComponent implements OnInit {
                 data => {
                     this.clients = data;
                     console.log(this.clients);
+                    var end = new Date().getTime();
+                    this.delai = this.getDelai(start, end);
+                    this.setTimeOut();
                 },
                 error =>{
                     this._erreurService.handleErreur(error)
@@ -343,12 +393,19 @@ export class ClientListComponent implements OnInit {
     }
 
     actualiser(){
+        this.estRequete = true;
+        this.boolSearchClient = false;
+        var start = new Date().getTime();
         if(this.noClientTextSearch !== null && (this.noClientTextSearch).toString() !== ""){
             this._clientService.getClient(Number(this.noClientTextSearch))
             .subscribe(
                 data => {
                     this.noClientFiltreList = (data.noClient).toString();
                     console.log(this.noClientFiltreList);
+                    var end = new Date().getTime();
+                    this.delai = this.getDelai(start, end);
+                    console.log(this.delai);
+                    this.setTimeOut();
                 },
                 error => {
                     this.boolSearchClient = true;
@@ -359,6 +416,10 @@ export class ClientListComponent implements OnInit {
         }else{
             this.noClientFiltreList = "";
             this.getClients();
+            var end = new Date().getTime();
+            this.delai = this.getDelai(start, end, 100);
+            console.log(this.delai);
+            this.setTimeOut();
         }
         
     }

@@ -4,6 +4,7 @@ import { Evenement } from './evenement';
 import { ErreurService } from '../erreurs/erreur.service';
 import { EvenementService } from './evenement.service';
 import { NoEvenementPipe } from '../pipes/noEvenement.pipe';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
     moduleId: module.id,
@@ -225,6 +226,12 @@ export class EvenementListComponent implements OnInit {
     erreurSpecialSearch: string;
     // Fenêtre modal.
     titreModal: string;
+
+    //spinner
+    estRequete: boolean;
+    delai: number;
+    currentTimeout: number;
+
     constructor( private _erreurService: ErreurService, private _evenementService: EvenementService) {
         this.titre = "Liste des Évènements";
         this.noContratTextSearch = "";
@@ -234,6 +241,11 @@ export class EvenementListComponent implements OnInit {
         this.specialTextSearch = "";
         this.erreurSpecialSearch = "";
         this.boolFullSearch = false;
+
+        //suggere faire apparaitre spinner apres 300 msm ici fait disparaitre apres un multiple du temps
+        // de la requete ca requete trop rapide en general.
+        this.delai = 500;
+        this.estRequete = false;
     }
 
     ngOnInit() {
@@ -261,17 +273,22 @@ export class EvenementListComponent implements OnInit {
     }
 
     onSearchNoContrat(){
+        this.estRequete = true;
+        var start = new Date().getTime();
         this.boolSearchContrat = false;
         if(this.noContratTextSearch === null || (this.noContratTextSearch).toString() === ""){
+            this.estRequete = false;
             this.noContratFiltreList = "";
             return;
         }
         else if(isNaN(Number(this.noContratTextSearch))){
+            this.estRequete = false;
             this.erreurNoContrat = "Invalide. No Contrat doit être un nombre.";
             this.boolSearchContrat = true;
             return;
         }
         else if(this.noContratTextSearch.toString().length > 10){
+            this.estRequete = false;
             this.erreurNoContrat = "Invalide. No Contrat dépasse la longueur acceptée.";
             this.boolSearchContrat = true;
             return;
@@ -281,12 +298,39 @@ export class EvenementListComponent implements OnInit {
                 data => {
                     this.noContratFiltreList = (data.noEvenement).toString();
                     console.log(this.noContratFiltreList);
+                    var end = new Date().getTime();
+                    this.delai = this.getDelai(start, end);
+                    this.setTimeOut();
                 },
                 error => {
                     this.boolSearchContrat = true;
                     this._erreurService.handleErreur(error)
                 }
             );
+    }
+
+    cancelTime(){
+            console.log("in cancel time");
+            this.estRequete = false;
+            clearTimeout(this.currentTimeout);
+            this.currentTimeout = undefined;
+            console.log(this.currentTimeout);
+    }
+    
+    setTimeOut(){
+        this.currentTimeout = setTimeout(() => {
+            this.cancelTime();
+        }, this.delai);
+    }
+
+    getDelai(start: number, end: number, diff2?: number): number{
+        var diff = end - start;
+        diff *= 15;
+        console.log(diff);
+        if(diff2){
+            return diff2 *= 5;
+        }
+        return diff;
     }
 
     logInput(value){
@@ -298,13 +342,18 @@ export class EvenementListComponent implements OnInit {
     }
 
     onSpecialSearch(){
+        this.estRequete = true;
+        var start = new Date().getTime();
         this.boolFullSearch = false;
         if(this.specialTextSearch === null || (this.specialTextSearch).toString() === ""){
+            this.estRequete = false;
             this.getEvenements();
             return;
         }
         else if(this.specialTextSearch.toString().length > 150){
+            this.estRequete = false;
             this.erreurSpecialSearch = "Invalide. Ne pas dépasser 150 caractères.";
+            this.boolFullSearch = true;
             return;
         }
         this._evenementService.getEvenementsSpecialSearch(this.specialTextSearch)
@@ -313,6 +362,9 @@ export class EvenementListComponent implements OnInit {
                     this.evenements = data;
                     console.log('evx affiche table : ');
                     console.log(this.evenements);
+                    var end = new Date().getTime();
+                    this.delai = this.getDelai(start, end);
+                    this.setTimeOut();
                 },
                 error =>{
                     this._erreurService.handleErreur(error)
@@ -321,6 +373,9 @@ export class EvenementListComponent implements OnInit {
     }
 
     actualiser(){
+        this.estRequete = true;
+        this.boolSearchContrat = false;
+        var start = new Date().getTime();
         if(this.noContratTextSearch !== null && (this.noContratTextSearch).toString() !== ""){
             this._evenementService.getEvenement(Number(this.noContratTextSearch))
                 .subscribe(
@@ -328,6 +383,10 @@ export class EvenementListComponent implements OnInit {
                         this.noContratFiltreList = (data.noEvenement).toString();
                         console.log('filtre table no contrat');
                         console.log(this.noContratFiltreList);
+                        var end = new Date().getTime();
+                        this.delai = this.getDelai(start, end);
+                        console.log(this.delai);
+                        this.setTimeOut();
                     },
                     error => {
                         this.boolSearchContrat = true;
@@ -338,6 +397,10 @@ export class EvenementListComponent implements OnInit {
         } else{
             this.noContratFiltreList = "";
             this.getEvenements();
+            var end = new Date().getTime();
+            this.delai = this.getDelai(start, end, 100);
+            console.log(this.delai);
+            this.setTimeOut();
         }
     }
 

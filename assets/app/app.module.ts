@@ -66,11 +66,14 @@ import { Ng2DatetimePickerModule } from 'ng2-datetime-picker';
 //pagination
 import {Ng2PaginationModule} from 'ng2-pagination';
 
+//spinner
+import { SpinnerComponent } from './spinner/spinner.component';
+
 @NgModule({
 declarations: [AppComponent, HeaderComponent, LogoComponent, LoginComponent, HomeComponent, SigninComponent, LogoutComponent, 
     SignupComponent, AuthComponent, ErreurComponent, ClientsComponent, EditClientComponent, ClientListComponent, NouvellesComponent,
     CapitalizePipe, NoClientPipe, EvenementsComponent, EvenementListComponent, EvenementEditComponent, NoEvenementPipe, ActiviteListComponent,
-    OrderByPipe, RessourceEditComponent, RessourceListComponent, ServiceListComponent, AgendaComponent], 
+    OrderByPipe, RessourceEditComponent, RessourceListComponent, ServiceListComponent, AgendaComponent, SpinnerComponent], 
 imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, routing, Ng2DatetimePickerModule, Ng2PaginationModule],
 bootstrap: [AppComponent],
 providers: [provide(LocationStrategy, {useClass: HashLocationStrategy}), AuthService, ErreurService, ClientService, EvenementService, RessourceService,
