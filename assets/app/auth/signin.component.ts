@@ -16,7 +16,7 @@ import { ErreurService } from '../erreurs/erreur.service';
                     <input type="email" id="courriel" class="form-control" formControlName="courriel" placeholder="my@email.com">
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Mot De Passe</label>
                     <input type="password" id="password" class="form-control" formControlName="password" placeholder="password">
                 </div>
                 <button type="submit" class="btn btn-primary" [disabled]="!signinForm.valid">Sign In</button>

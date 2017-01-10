@@ -6,15 +6,12 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { NgModule } from '@angular/core';
-import { COMMON_DIRECTIVES } from './common_directives';
+import { COMMON_DIRECTIVES } from './directives/index';
 import { NgLocaleLocalization, NgLocalization } from './localization';
-import { COMMON_PIPES } from './pipes/common_pipes';
-// Note: This does not contain the location providers,
-// as they need some platform specific implementations to work.
+import { COMMON_PIPES } from './pipes/index';
 /**
- * The module that includes all the basic Angular directives like {@link NgIf}, ${link NgFor}, ...
- *
- * @stable
+ *  The module that includes all the basic Angular directives like {@link NgIf}, {@link NgFor}, ...
+  * *
  */
 export var CommonModule = (function () {
     function CommonModule() {
@@ -29,7 +26,16 @@ export var CommonModule = (function () {
                 },] },
     ];
     /** @nocollapse */
-    CommonModule.ctorParameters = [];
+    CommonModule.ctorParameters = function () { return []; };
     return CommonModule;
 }());
+function CommonModule_tsickle_Closure_declarations() {
+    /** @type {?} */
+    CommonModule.decorators;
+    /**
+     * @nocollapse
+     * @type {?}
+     */
+    CommonModule.ctorParameters;
+}
 //# sourceMappingURL=common_module.js.map

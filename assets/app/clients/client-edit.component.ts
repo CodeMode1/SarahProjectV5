@@ -114,6 +114,7 @@ export class EditClientComponent implements OnInit, OnDestroy {
                                 console.log(this.myClient);
                                 // Si URL contient "copie", alors vide les champs du client copié.
                                 if(this.urlCopie.includes("copie")){
+                                    //dans mode copie peut pas actualisé par no client, car no clien strippe pour en créer un nouveau.
                                     this.formActualiser = false;
                                     this.copierClient();
                                 }

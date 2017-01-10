@@ -8,25 +8,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var LogoComponent = (function () {
     function LogoComponent() {
         this.alt = "Sarah logo";
         this.path = "./img/sarah-logo.png";
     }
     LogoComponent.prototype.ngOnInit = function () { };
-    LogoComponent = __decorate([
-        core_1.Component({
-            moduleId: module.id,
-            selector: 'my-logo',
-            template: "\n    <div>\n        <img [src]=\"path\" alt=\"{{alt}}\" id=\"sarahLogo\">\n    </div>\n    ",
-            styles: ["\n        img {\n            max-width:100%;\n            height:auto;\n            display:inline-block;\n            padding:20%;\n        }\n\n        div{\n            display:block;\n            float:left;\n            background-color: #e7edf5;\n            width:15%;\n            text-align:center;\n        }\n    "
-            ]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], LogoComponent);
     return LogoComponent;
 }());
+LogoComponent = __decorate([
+    core_1.Component({
+        moduleId: module.id,
+        selector: 'my-logo',
+        template: "\n    <div>\n        <img [src]=\"path\" alt=\"{{alt}}\" id=\"sarahLogo\">\n    </div>\n    ",
+        styles: ["\n        img {\n            max-width:100%;\n            height:auto;\n            display:inline-block;\n            padding:20%;\n        }\n\n        div{\n            display:block;\n            float:left;\n            background-color: #e7edf5;\n            width:15%;\n            text-align:center;\n        }\n    "
+        ]
+    }),
+    __metadata("design:paramtypes", [])
+], LogoComponent);
 exports.LogoComponent = LogoComponent;
 
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImhlYWRlci9oZWFkZXIubG9nby5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHFCQUFrQyxlQUFlLENBQUMsQ0FBQTtBQTRCbEQ7SUFHSTtRQUNJLElBQUksQ0FBQyxHQUFHLEdBQUcsWUFBWSxDQUFDO1FBQ3hCLElBQUksQ0FBQyxJQUFJLEdBQUcsc0JBQXNCLENBQUM7SUFDdEMsQ0FBQztJQUVGLGdDQUFRLEdBQVIsY0FBYSxDQUFDO0lBbENsQjtRQUFDLGdCQUFTLENBQUM7WUFDUCxRQUFRLEVBQUUsTUFBTSxDQUFDLEVBQUU7WUFDbkIsUUFBUSxFQUFFLFNBQVM7WUFDbkIsUUFBUSxFQUFFLDhGQUlUO1lBQ0QsTUFBTSxFQUFFLENBQUMsc1VBZVI7YUFDQTtTQUNKLENBQUM7O3FCQUFBO0lBVUYsb0JBQUM7QUFBRCxDQVRBLEFBU0MsSUFBQTtBQVRZLHFCQUFhLGdCQVN6QixDQUFBIiwiZmlsZSI6ImhlYWRlci9oZWFkZXIubG9nby5jb21wb25lbnQuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQsIE9uSW5pdCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xyXG5cclxuQENvbXBvbmVudCh7XHJcbiAgICBtb2R1bGVJZDogbW9kdWxlLmlkLFxyXG4gICAgc2VsZWN0b3I6ICdteS1sb2dvJyxcclxuICAgIHRlbXBsYXRlOiBgXHJcbiAgICA8ZGl2PlxyXG4gICAgICAgIDxpbWcgW3NyY109XCJwYXRoXCIgYWx0PVwie3thbHR9fVwiIGlkPVwic2FyYWhMb2dvXCI+XHJcbiAgICA8L2Rpdj5cclxuICAgIGAsXHJcbiAgICBzdHlsZXM6IFtgXHJcbiAgICAgICAgaW1nIHtcclxuICAgICAgICAgICAgbWF4LXdpZHRoOjEwMCU7XHJcbiAgICAgICAgICAgIGhlaWdodDphdXRvO1xyXG4gICAgICAgICAgICBkaXNwbGF5OmlubGluZS1ibG9jaztcclxuICAgICAgICAgICAgcGFkZGluZzoyMCU7XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICBkaXZ7XHJcbiAgICAgICAgICAgIGRpc3BsYXk6YmxvY2s7XHJcbiAgICAgICAgICAgIGZsb2F0OmxlZnQ7XHJcbiAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNlN2VkZjU7XHJcbiAgICAgICAgICAgIHdpZHRoOjE1JTtcclxuICAgICAgICAgICAgdGV4dC1hbGlnbjpjZW50ZXI7XHJcbiAgICAgICAgfVxyXG4gICAgYFxyXG4gICAgXVxyXG59KVxyXG5leHBvcnQgY2xhc3MgTG9nb0NvbXBvbmVudCBpbXBsZW1lbnRzIE9uSW5pdCB7XHJcbiAgICBhbHQ6IHN0cmluZztcclxuICAgIHBhdGg6IHN0cmluZztcclxuICAgIGNvbnN0cnVjdG9yKCkge1xyXG4gICAgICAgIHRoaXMuYWx0ID0gXCJTYXJhaCBsb2dvXCI7XHJcbiAgICAgICAgdGhpcy5wYXRoID0gXCIuL2ltZy9zYXJhaC1sb2dvLnBuZ1wiO1xyXG4gICAgIH1cclxuXHJcbiAgICBuZ09uSW5pdCgpIHsgfVxyXG59Il19
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NwcmludDJ2Mi4wL2Fzc2V0cy9hcHAvaGVhZGVyL2hlYWRlci5sb2dvLmNvbXBvbmVudC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7O0FBQUEsc0NBQWtEO0FBNEJsRCxJQUFhLGFBQWE7SUFHdEI7UUFDSSxJQUFJLENBQUMsR0FBRyxHQUFHLFlBQVksQ0FBQztRQUN4QixJQUFJLENBQUMsSUFBSSxHQUFHLHNCQUFzQixDQUFDO0lBQ3RDLENBQUM7SUFFRixnQ0FBUSxHQUFSLGNBQWEsQ0FBQztJQUNsQixvQkFBQztBQUFELENBVEEsQUFTQyxJQUFBO0FBVFksYUFBYTtJQTFCekIsZ0JBQVMsQ0FBQztRQUNQLFFBQVEsRUFBRSxNQUFNLENBQUMsRUFBRTtRQUNuQixRQUFRLEVBQUUsU0FBUztRQUNuQixRQUFRLEVBQUUsOEZBSVQ7UUFDRCxNQUFNLEVBQUUsQ0FBQyxzVUFlUjtTQUNBO0tBQ0osQ0FBQzs7R0FDVyxhQUFhLENBU3pCO0FBVFksc0NBQWEiLCJmaWxlIjoiaGVhZGVyL2hlYWRlci5sb2dvLmNvbXBvbmVudC5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCwgT25Jbml0IH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XHJcblxyXG5AQ29tcG9uZW50KHtcclxuICAgIG1vZHVsZUlkOiBtb2R1bGUuaWQsXHJcbiAgICBzZWxlY3RvcjogJ215LWxvZ28nLFxyXG4gICAgdGVtcGxhdGU6IGBcclxuICAgIDxkaXY+XHJcbiAgICAgICAgPGltZyBbc3JjXT1cInBhdGhcIiBhbHQ9XCJ7e2FsdH19XCIgaWQ9XCJzYXJhaExvZ29cIj5cclxuICAgIDwvZGl2PlxyXG4gICAgYCxcclxuICAgIHN0eWxlczogW2BcclxuICAgICAgICBpbWcge1xyXG4gICAgICAgICAgICBtYXgtd2lkdGg6MTAwJTtcclxuICAgICAgICAgICAgaGVpZ2h0OmF1dG87XHJcbiAgICAgICAgICAgIGRpc3BsYXk6aW5saW5lLWJsb2NrO1xyXG4gICAgICAgICAgICBwYWRkaW5nOjIwJTtcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgIGRpdntcclxuICAgICAgICAgICAgZGlzcGxheTpibG9jaztcclxuICAgICAgICAgICAgZmxvYXQ6bGVmdDtcclxuICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2U3ZWRmNTtcclxuICAgICAgICAgICAgd2lkdGg6MTUlO1xyXG4gICAgICAgICAgICB0ZXh0LWFsaWduOmNlbnRlcjtcclxuICAgICAgICB9XHJcbiAgICBgXHJcbiAgICBdXHJcbn0pXHJcbmV4cG9ydCBjbGFzcyBMb2dvQ29tcG9uZW50IGltcGxlbWVudHMgT25Jbml0IHtcclxuICAgIGFsdDogc3RyaW5nO1xyXG4gICAgcGF0aDogc3RyaW5nO1xyXG4gICAgY29uc3RydWN0b3IoKSB7XHJcbiAgICAgICAgdGhpcy5hbHQgPSBcIlNhcmFoIGxvZ29cIjtcclxuICAgICAgICB0aGlzLnBhdGggPSBcIi4vaW1nL3NhcmFoLWxvZ28ucG5nXCI7XHJcbiAgICAgfVxyXG5cclxuICAgIG5nT25Jbml0KCkgeyB9XHJcbn0iXX0=

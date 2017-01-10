@@ -14,14 +14,13 @@
     ]
   ],
   "_from": "ng2-datetime-picker@latest",
-  "_id": "ng2-datetime-picker@0.11.3",
+  "_id": "ng2-datetime-picker@0.12.1",
   "_inCache": true,
-  "_installable": true,
   "_location": "/ng2-datetime-picker",
   "_nodeVersion": "6.9.0",
   "_npmOperationalInternal": {
     "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/ng2-datetime-picker-0.11.3.tgz_1481036865767_0.469541238155216"
+    "tmp": "tmp/ng2-datetime-picker-0.12.1.tgz_1482951033054_0.04245218727737665"
   },
   "_npmUser": {
     "name": "allenkim",
@@ -42,8 +41,8 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/ng2-datetime-picker/-/ng2-datetime-picker-0.11.3.tgz",
-  "_shasum": "04687a41ed53f9b28889dc838d45927f14a0a821",
+  "_resolved": "https://registry.npmjs.org/ng2-datetime-picker/-/ng2-datetime-picker-0.12.1.tgz",
+  "_shasum": "c3e09982ef472fb1e6d009bc44e8ba9bd023abb8",
   "_shrinkwrap": null,
   "_spec": "ng2-datetime-picker",
   "_where": "C:\\sprint2v1.0\\sprint2v2.0",
@@ -80,16 +79,15 @@
     "ts-loader": "^0.8.2",
     "typescript": "2.0.10",
     "webpack": "^1.13.3",
-    "webpack-dashboard": "^0.2.0",
     "webpack-dev-server": "^1.16.2",
     "zone.js": "^0.6.21"
   },
   "directories": {},
   "dist": {
-    "shasum": "04687a41ed53f9b28889dc838d45927f14a0a821",
-    "tarball": "https://registry.npmjs.org/ng2-datetime-picker/-/ng2-datetime-picker-0.11.3.tgz"
+    "shasum": "c3e09982ef472fb1e6d009bc44e8ba9bd023abb8",
+    "tarball": "https://registry.npmjs.org/ng2-datetime-picker/-/ng2-datetime-picker-0.12.1.tgz"
   },
-  "gitHead": "a0f2f5f980718ec5a1e2d8d933355a39dbe15e7f",
+  "gitHead": "6af63fcd0dcae8224eb0a8f4202cb1d6c6b68f93",
   "homepage": "https://github.com/ng2-ui/ng2-datetime-picker#readme",
   "license": "ISC",
   "main": "dist/ng2-datetime-picker.umd.js",
@@ -114,8 +112,12 @@
     "build:umd": "NODE_ENV=prod webpack",
     "clean": "rimraf dist",
     "lint": "tslint 'src/**/*.ts' 'app/**/*.ts'",
-    "start": "NODE_ENV=dev node node_modules/.bin/webpack-dashboard --tilte dev -- node_modules/.bin/webpack-dev-server --quiet --port 9002 --content-base app --config app/webpack.config --open"
+    "start": "webpack-dev-server --quiet --port 9002 --content-base app --config app/webpack.config --open",
+    "test": "npm-run-all --serial test:start test:webtest test:stop",
+    "test:start": "forever start --silent node_modules/.bin/webpack-dev-server --quiet --port 9002 --content-base app --config app/webpack.config",
+    "test:stop": "forever stop node_modules/.bin/webpack-dev-server --quiet --port 9002 --content-base app --config app/webpack.config",
+    "test:webtest": "webtest ng2-datetime-picker.webtest.txt"
   },
   "typings": "dist/index.d.ts",
-  "version": "0.11.3"
+  "version": "0.12.1"
 }

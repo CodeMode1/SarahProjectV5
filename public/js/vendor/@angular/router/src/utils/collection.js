@@ -5,31 +5,42 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-"use strict";
-require('rxjs/add/operator/concatAll');
-require('rxjs/add/operator/last');
-var Observable_1 = require('rxjs/Observable');
-var fromPromise_1 = require('rxjs/observable/fromPromise');
-var of_1 = require('rxjs/observable/of');
-var shared_1 = require('../shared');
-function shallowEqualArrays(a, b) {
+import { Observable } from 'rxjs/Observable';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+import { of } from 'rxjs/observable/of';
+import { concatAll } from 'rxjs/operator/concatAll';
+import { every } from 'rxjs/operator/every';
+import * as l from 'rxjs/operator/last';
+import { map } from 'rxjs/operator/map';
+import { mergeAll } from 'rxjs/operator/mergeAll';
+import { PRIMARY_OUTLET } from '../shared';
+/**
+ * @param {?} a
+ * @param {?} b
+ * @return {?}
+ */
+export function shallowEqualArrays(a, b) {
     if (a.length !== b.length)
         return false;
-    for (var i = 0; i < a.length; ++i) {
+    for (var /** @type {?} */ i = 0; i < a.length; ++i) {
         if (!shallowEqual(a[i], b[i]))
             return false;
     }
     return true;
 }
-exports.shallowEqualArrays = shallowEqualArrays;
-function shallowEqual(a, b) {
-    var k1 = Object.keys(a);
-    var k2 = Object.keys(b);
+/**
+ * @param {?} a
+ * @param {?} b
+ * @return {?}
+ */
+export function shallowEqual(a, b) {
+    var /** @type {?} */ k1 = Object.keys(a);
+    var /** @type {?} */ k2 = Object.keys(b);
     if (k1.length != k2.length) {
         return false;
     }
-    var key;
-    for (var i = 0; i < k1.length; i++) {
+    var /** @type {?} */ key;
+    for (var /** @type {?} */ i = 0; i < k1.length; i++) {
         key = k1[i];
         if (a[key] !== b[key]) {
             return false;
@@ -37,31 +48,47 @@ function shallowEqual(a, b) {
     }
     return true;
 }
-exports.shallowEqual = shallowEqual;
-function flatten(a) {
-    var target = [];
-    for (var i = 0; i < a.length; ++i) {
-        for (var j = 0; j < a[i].length; ++j) {
+/**
+ * @param {?} a
+ * @return {?}
+ */
+export function flatten(a) {
+    var /** @type {?} */ target = [];
+    for (var /** @type {?} */ i = 0; i < a.length; ++i) {
+        for (var /** @type {?} */ j = 0; j < a[i].length; ++j) {
             target.push(a[i][j]);
         }
     }
     return target;
 }
-exports.flatten = flatten;
-function first(a) {
+/**
+ * @param {?} a
+ * @return {?}
+ */
+export function first(a) {
     return a.length > 0 ? a[0] : null;
 }
-exports.first = first;
-function last(a) {
+/**
+ * @param {?} a
+ * @return {?}
+ */
+export function last(a) {
     return a.length > 0 ? a[a.length - 1] : null;
 }
-exports.last = last;
-function and(bools) {
-    return bools.reduce(function (a, b) { return a && b; }, true);
+/**
+ * @param {?} bools
+ * @return {?}
+ */
+export function and(bools) {
+    return !bools.some(function (v) { return !v; });
 }
-exports.and = and;
-function merge(m1, m2) {
-    var m = {};
+/**
+ * @param {?} m1
+ * @param {?} m2
+ * @return {?}
+ */
+export function merge(m1, m2) {
+    var /** @type {?} */ m = {};
     for (var attr in m1) {
         if (m1.hasOwnProperty(attr)) {
             m[attr] = m1[attr];
@@ -74,56 +101,68 @@ function merge(m1, m2) {
     }
     return m;
 }
-exports.merge = merge;
-function forEach(map, callback) {
+/**
+ * @param {?} map
+ * @param {?} callback
+ * @return {?}
+ */
+export function forEach(map, callback) {
     for (var prop in map) {
         if (map.hasOwnProperty(prop)) {
             callback(map[prop], prop);
         }
     }
 }
-exports.forEach = forEach;
-function waitForMap(obj, fn) {
-    var waitFor = [];
-    var res = {};
+/**
+ * @param {?} obj
+ * @param {?} fn
+ * @return {?}
+ */
+export function waitForMap(obj, fn) {
+    var /** @type {?} */ waitFor = [];
+    var /** @type {?} */ res = {};
     forEach(obj, function (a, k) {
-        if (k === shared_1.PRIMARY_OUTLET) {
-            waitFor.push(fn(k, a).map(function (_) {
+        if (k === PRIMARY_OUTLET) {
+            waitFor.push(map.call(fn(k, a), function (_) {
                 res[k] = _;
                 return _;
             }));
         }
     });
     forEach(obj, function (a, k) {
-        if (k !== shared_1.PRIMARY_OUTLET) {
-            waitFor.push(fn(k, a).map(function (_) {
+        if (k !== PRIMARY_OUTLET) {
+            waitFor.push(map.call(fn(k, a), function (_) {
                 res[k] = _;
                 return _;
             }));
         }
     });
     if (waitFor.length > 0) {
-        return of_1.of.apply(void 0, waitFor).concatAll().last().map(function (last) { return res; });
+        var /** @type {?} */ concatted$ = concatAll.call(of.apply(void 0, waitFor));
+        var /** @type {?} */ last$ = l.last.call(concatted$);
+        return map.call(last$, function () { return res; });
     }
-    else {
-        return of_1.of(res);
-    }
+    return of(res);
 }
-exports.waitForMap = waitForMap;
-function andObservables(observables) {
-    return observables.mergeAll().every(function (result) { return result === true; });
+/**
+ * @param {?} observables
+ * @return {?}
+ */
+export function andObservables(observables) {
+    var /** @type {?} */ merged$ = mergeAll.call(observables);
+    return every.call(merged$, function (result) { return result === true; });
 }
-exports.andObservables = andObservables;
-function wrapIntoObservable(value) {
-    if (value instanceof Observable_1.Observable) {
+/**
+ * @param {?} value
+ * @return {?}
+ */
+export function wrapIntoObservable(value) {
+    if (value instanceof Observable) {
         return value;
     }
-    else if (value instanceof Promise) {
-        return fromPromise_1.fromPromise(value);
+    if (value instanceof Promise) {
+        return fromPromise(value);
     }
-    else {
-        return of_1.of(value);
-    }
+    return of(value);
 }
-exports.wrapIntoObservable = wrapIntoObservable;
 //# sourceMappingURL=collection.js.map

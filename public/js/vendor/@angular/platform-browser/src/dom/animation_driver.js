@@ -5,24 +5,52 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-"use strict";
-var core_private_1 = require('../../core_private');
-var _NoOpAnimationDriver = (function () {
-    function _NoOpAnimationDriver() {
-    }
-    _NoOpAnimationDriver.prototype.animate = function (element, startingStyles, keyframes, duration, delay, easing) {
-        return new core_private_1.NoOpAnimationPlayer();
-    };
-    return _NoOpAnimationDriver;
-}());
+import { NoOpAnimationPlayer } from '../private_import_core';
 /**
  * @experimental
  */
-var AnimationDriver = (function () {
+export var NoOpAnimationDriver = (function () {
+    function NoOpAnimationDriver() {
+    }
+    /**
+     * @param {?} element
+     * @param {?} startingStyles
+     * @param {?} keyframes
+     * @param {?} duration
+     * @param {?} delay
+     * @param {?} easing
+     * @param {?=} previousPlayers
+     * @return {?}
+     */
+    NoOpAnimationDriver.prototype.animate = function (element, startingStyles, keyframes, duration, delay, easing, previousPlayers) {
+        if (previousPlayers === void 0) { previousPlayers = []; }
+        return new NoOpAnimationPlayer();
+    };
+    return NoOpAnimationDriver;
+}());
+/**
+ * @abstract
+ */
+export var AnimationDriver = (function () {
     function AnimationDriver() {
     }
-    AnimationDriver.NOOP = new _NoOpAnimationDriver();
+    /**
+     * @abstract
+     * @param {?} element
+     * @param {?} startingStyles
+     * @param {?} keyframes
+     * @param {?} duration
+     * @param {?} delay
+     * @param {?} easing
+     * @param {?=} previousPlayers
+     * @return {?}
+     */
+    AnimationDriver.prototype.animate = function (element, startingStyles, keyframes, duration, delay, easing, previousPlayers) { };
+    AnimationDriver.NOOP = new NoOpAnimationDriver();
     return AnimationDriver;
 }());
-exports.AnimationDriver = AnimationDriver;
+function AnimationDriver_tsickle_Closure_declarations() {
+    /** @type {?} */
+    AnimationDriver.NOOP;
+}
 //# sourceMappingURL=animation_driver.js.map

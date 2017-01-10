@@ -1,4 +1,4 @@
-import { RouterConfig, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './login/home.component';
 
 import { AuthComponent } from './auth/auth.component';
@@ -14,13 +14,13 @@ import { RessourceListComponent } from './ressources/ressource-list.component';
 
 import { AgendaComponent } from './agenda/agenda.component';
 
-const routes: RouterConfig = ([
+const routes: Routes = [
     { path: '', component: HomeComponent},
     { path: 'auth', component: AuthComponent, children: USER_ROUTES },
     { path: 'clients', component: ClientsComponent, children: CLIENT_ROUTES},
     { path: 'evenements', component: EvenementsComponent, children: EVENEMENT_ROUTES},
     { path: 'ressources', component: RessourceListComponent },
     { path: 'agenda', component: AgendaComponent }
-]);
+];
 
 export const routing = RouterModule.forRoot(routes);

@@ -6,7 +6,24 @@
         'rxjs': 'js/vendor/rxjs',
         '@angular': 'js/vendor/@angular',
         'ng2-datetime-picker': 'js/vendor/ng2-datetime-picker/dist',
-        'ng2-pagination': 'js/vendor/ng2-pagination'
+        'ng2-pagination': 'js/vendor/ng2-pagination',
+
+        '@angular/core': 'js/vendor/@angular/core/bundles/core.umd.js',
+        '@angular/common': 'js/vendor/@angular/common/bundles/common.umd.js',
+        '@angular/compiler': 'js/vendor/@angular/compiler/bundles/compiler.umd.js',
+        '@angular/platform-browser': 'js/vendor/@angular/platform-browser/bundles/platform-browser.umd.js',
+        '@angular/platform-browser-dynamic': 'js/vendor/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+        '@angular/http': 'js/vendor/@angular/http/bundles/http.umd.js',
+        '@angular/router': 'js/vendor/@angular/router/bundles/router.umd.js',
+        '@angular/forms': 'js/vendor/@angular/forms/bundles/forms.umd.js',
+
+        '@angular/core/testing': 'js/vendor/@angular/core/bundles/core-testing.umd.js',
+        '@angular/common/testing': 'js/vendor/@angular/common/bundles/common-testing.umd.js',
+        '@angular/compiler/testing': 'js/vendor/@angular/compiler/bundles/compiler-testing.umd.js',
+        '@angular/http/testing': 'js/vendor/@angular/http/bundles/http-testing.umd.js',
+        '@angular/platform-browser/testing': 'js/vendor/@angular/platform-browser/bundles/platform-browser-testing.umd.js',
+        '@angular/platform-browser-dynamic/testing': 'js/vendor/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
+        '@angular/router/testing': 'js/vendor/@angular/router/bundles/router-testing.umd.js'
     };
 
     //packages dit au sys loader comment loader quand pas nom fichier ou/et pas extension.
@@ -27,27 +44,6 @@
             defaultExtension: 'js'
         }
     };
-
-    var packageNames = [
-        '@angular/common',
-        '@angular/compiler',
-        '@angular/core',
-        '@angular/forms',
-        '@angular/http',
-        '@angular/platform-browser',
-        '@angular/platform-browser-dynamic',
-        '@angular/router',
-        '@angular/testing',
-        '@angular/upgrade'
-    ];
-
-    //ajouter entrées packages Angular sous la forme: '@angular/common': { main: 'index.js', defaultExtension: 'js' }
-    packageNames.forEach(function (pkgName) {
-        packages[pkgName] = {
-            main: 'index.js',
-            defaultExtension: 'js'
-        };
-    });
 
     var config = {
         map: map,

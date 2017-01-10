@@ -5,52 +5,74 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-"use strict";
-var application_init_1 = require('./application_init');
-var application_ref_1 = require('./application_ref');
-var application_tokens_1 = require('./application_tokens');
-var change_detection_1 = require('./change_detection/change_detection');
-var compiler_1 = require('./linker/compiler');
-var component_resolver_1 = require('./linker/component_resolver');
-var dynamic_component_loader_1 = require('./linker/dynamic_component_loader');
-var view_utils_1 = require('./linker/view_utils');
-var metadata_1 = require('./metadata');
-function _iterableDiffersFactory() {
-    return change_detection_1.defaultIterableDiffers;
-}
-exports._iterableDiffersFactory = _iterableDiffersFactory;
-function _keyValueDiffersFactory() {
-    return change_detection_1.defaultKeyValueDiffers;
-}
-exports._keyValueDiffersFactory = _keyValueDiffersFactory;
+import { AnimationQueue } from './animation/animation_queue';
+import { ApplicationInitStatus } from './application_init';
+import { ApplicationRef, ApplicationRef_ } from './application_ref';
+import { APP_ID_RANDOM_PROVIDER } from './application_tokens';
+import { IterableDiffers, KeyValueDiffers, defaultIterableDiffers, defaultKeyValueDiffers } from './change_detection/change_detection';
+import { Inject, Optional, SkipSelf } from './di/metadata';
+import { LOCALE_ID } from './i18n/tokens';
+import { Compiler } from './linker/compiler';
+import { ViewUtils } from './linker/view_utils';
+import { NgModule } from './metadata';
 /**
- * A default set of providers which should be included in any Angular
- * application, regardless of the platform it runs onto.
- *
- * @deprecated Include `ApplicationModule` instead.
+ * @return {?}
  */
-exports.APPLICATION_COMMON_PROVIDERS = [];
-var ApplicationModule = (function () {
+export function _iterableDiffersFactory() {
+    return defaultIterableDiffers;
+}
+/**
+ * @return {?}
+ */
+export function _keyValueDiffersFactory() {
+    return defaultKeyValueDiffers;
+}
+/**
+ * @param {?=} locale
+ * @return {?}
+ */
+export function _localeFactory(locale) {
+    return locale || 'en-US';
+}
+/**
+ *  This module includes the providers of @angular/core that are needed
+  * to bootstrap components via `ApplicationRef`.
+  * *
+ */
+export var ApplicationModule = (function () {
     function ApplicationModule() {
     }
-    /** @nocollapse */
     ApplicationModule.decorators = [
-        { type: metadata_1.NgModule, args: [{
+        { type: NgModule, args: [{
                     providers: [
-                        application_ref_1.ApplicationRef_,
-                        { provide: application_ref_1.ApplicationRef, useExisting: application_ref_1.ApplicationRef_ },
-                        application_init_1.ApplicationInitStatus,
-                        compiler_1.Compiler,
-                        { provide: component_resolver_1.ComponentResolver, useExisting: compiler_1.Compiler },
-                        application_tokens_1.APP_ID_RANDOM_PROVIDER,
-                        view_utils_1.ViewUtils,
-                        { provide: change_detection_1.IterableDiffers, useFactory: _iterableDiffersFactory },
-                        { provide: change_detection_1.KeyValueDiffers, useFactory: _keyValueDiffersFactory },
-                        { provide: dynamic_component_loader_1.DynamicComponentLoader, useClass: dynamic_component_loader_1.DynamicComponentLoader_ },
+                        ApplicationRef_,
+                        { provide: ApplicationRef, useExisting: ApplicationRef_ },
+                        ApplicationInitStatus,
+                        Compiler,
+                        APP_ID_RANDOM_PROVIDER,
+                        ViewUtils,
+                        AnimationQueue,
+                        { provide: IterableDiffers, useFactory: _iterableDiffersFactory },
+                        { provide: KeyValueDiffers, useFactory: _keyValueDiffersFactory },
+                        {
+                            provide: LOCALE_ID,
+                            useFactory: _localeFactory,
+                            deps: [[new Inject(LOCALE_ID), new Optional(), new SkipSelf()]]
+                        },
                     ]
                 },] },
     ];
+    /** @nocollapse */
+    ApplicationModule.ctorParameters = function () { return []; };
     return ApplicationModule;
 }());
-exports.ApplicationModule = ApplicationModule;
+function ApplicationModule_tsickle_Closure_declarations() {
+    /** @type {?} */
+    ApplicationModule.decorators;
+    /**
+     * @nocollapse
+     * @type {?}
+     */
+    ApplicationModule.ctorParameters;
+}
 //# sourceMappingURL=application_module.js.map

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule  } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { provide } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent }   from './app.component';
@@ -76,7 +75,7 @@ declarations: [AppComponent, HeaderComponent, LogoComponent, LoginComponent, Hom
     OrderByPipe, RessourceEditComponent, RessourceListComponent, ServiceListComponent, AgendaComponent, SpinnerComponent], 
 imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, routing, Ng2DatetimePickerModule, Ng2PaginationModule],
 bootstrap: [AppComponent],
-providers: [provide(LocationStrategy, {useClass: HashLocationStrategy}), AuthService, ErreurService, ClientService, EvenementService, RessourceService,
+providers: [ {provide: LocationStrategy, useClass: HashLocationStrategy }, AuthService, ErreurService, ClientService, EvenementService, RessourceService,
     AgendaService]
 })
 export class AppModule {}

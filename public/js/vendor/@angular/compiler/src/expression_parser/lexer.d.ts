@@ -22,7 +22,6 @@ export declare class Token {
     isOperator(operater: string): boolean;
     isIdentifier(): boolean;
     isKeyword(): boolean;
-    isKeywordDeprecatedVar(): boolean;
     isKeywordLet(): boolean;
     isKeywordNull(): boolean;
     isKeywordUndefined(): boolean;
@@ -33,6 +32,6 @@ export declare class Token {
     toNumber(): number;
     toString(): string;
 }
-export declare var EOF: Token;
+export declare const EOF: Token;
 export declare function isIdentifier(input: string): boolean;
 export declare function isQuote(code: number): boolean;

@@ -5,12 +5,16 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-"use strict";
-var wtf_impl_1 = require('./wtf_impl');
+import { createScope, detectWTF, endTimeRange, leave, startTimeRange } from './wtf_impl';
 /**
  * True if WTF is enabled.
  */
-exports.wtfEnabled = wtf_impl_1.detectWTF();
+export var /** @type {?} */ wtfEnabled = detectWTF();
+/**
+ * @param {?=} arg0
+ * @param {?=} arg1
+ * @return {?}
+ */
 function noopScope(arg0, arg1) {
     return null;
 }
@@ -44,7 +48,7 @@ function noopScope(arg0, arg1) {
  *
  * @experimental
  */
-exports.wtfCreateScope = exports.wtfEnabled ? wtf_impl_1.createScope : function (signature, flags) { return noopScope; };
+export var /** @type {?} */ wtfCreateScope = wtfEnabled ? createScope : function (signature, flags) { return noopScope; };
 /**
  * Used to mark end of Scope.
  *
@@ -54,7 +58,7 @@ exports.wtfCreateScope = exports.wtfEnabled ? wtf_impl_1.createScope : function 
  * Returns the `returnValue for easy chaining.
  * @experimental
  */
-exports.wtfLeave = exports.wtfEnabled ? wtf_impl_1.leave : function (s, r) { return r; };
+export var /** @type {?} */ wtfLeave = wtfEnabled ? leave : function (s, r) { return r; };
 /**
  * Used to mark Async start. Async are similar to scope but they don't have to be strictly nested.
  * The return value is used in the call to [endAsync]. Async ranges only work if WTF has been
@@ -68,12 +72,12 @@ exports.wtfLeave = exports.wtfEnabled ? wtf_impl_1.leave : function (s, r) { ret
  *     }
  * @experimental
  */
-exports.wtfStartTimeRange = exports.wtfEnabled ? wtf_impl_1.startTimeRange : function (rangeType, action) { return null; };
+export var /** @type {?} */ wtfStartTimeRange = wtfEnabled ? startTimeRange : function (rangeType, action) { return null; };
 /**
  * Ends a async time range operation.
  * [range] is the return value from [wtfStartTimeRange] Async ranges only work if WTF has been
  * enabled.
  * @experimental
  */
-exports.wtfEndTimeRange = exports.wtfEnabled ? wtf_impl_1.endTimeRange : function (r) { return null; };
+export var /** @type {?} */ wtfEndTimeRange = wtfEnabled ? endTimeRange : function (r) { return null; };
 //# sourceMappingURL=profile.js.map

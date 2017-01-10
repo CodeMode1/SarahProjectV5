@@ -5,26 +5,47 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-"use strict";
-var core_1 = require('@angular/core');
-var lang_1 = require('../facade/lang');
-var invalid_pipe_argument_exception_1 = require('./invalid_pipe_argument_exception');
-var LowerCasePipe = (function () {
+import { Pipe } from '@angular/core';
+import { isBlank } from '../facade/lang';
+import { InvalidPipeArgumentError } from './invalid_pipe_argument_error';
+/**
+ *  *
+  * Converts value into a lowercase string using `String.prototype.toLowerCase()`.
+  * *
+  * ### Example
+  * *
+  * {@example common/pipes/ts/lowerupper_pipe.ts region='LowerUpperPipe'}
+  * *
+ */
+export var LowerCasePipe = (function () {
     function LowerCasePipe() {
     }
+    /**
+     * @param {?} value
+     * @return {?}
+     */
     LowerCasePipe.prototype.transform = function (value) {
-        if (lang_1.isBlank(value))
+        if (isBlank(value))
             return value;
-        if (!lang_1.isString(value)) {
-            throw new invalid_pipe_argument_exception_1.InvalidPipeArgumentException(LowerCasePipe, value);
+        if (typeof value !== 'string') {
+            throw new InvalidPipeArgumentError(LowerCasePipe, value);
         }
         return value.toLowerCase();
     };
-    /** @nocollapse */
     LowerCasePipe.decorators = [
-        { type: core_1.Pipe, args: [{ name: 'lowercase' },] },
+        { type: Pipe, args: [{ name: 'lowercase' },] },
     ];
+    /** @nocollapse */
+    LowerCasePipe.ctorParameters = function () { return []; };
     return LowerCasePipe;
 }());
-exports.LowerCasePipe = LowerCasePipe;
+function LowerCasePipe_tsickle_Closure_declarations() {
+    /** @type {?} */
+    LowerCasePipe.decorators;
+    /**
+     * @nocollapse
+     * @type {?}
+     */
+    LowerCasePipe.ctorParameters;
+}
 //# sourceMappingURL=lowercase_pipe.js.map

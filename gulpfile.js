@@ -20,7 +20,8 @@ var tsconfig = gulpTypescript.createProject('tsconfig.json');
 gulp.task('build-ts', function () {
     return gulp.src(appDev + '/**/*.ts')
         .pipe(gulpSourcemaps.init())
-        .pipe(gulpTypescript(tsconfig))
+        //.pipe(gulpTypescript(tsconfig))
+        .pipe(tsconfig())
         .pipe(gulpSourcemaps.write())
         .pipe(gulp.dest(appProd));
 });

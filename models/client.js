@@ -95,15 +95,15 @@ clientSchema.pre('save', function (next) {
     });
 });
 
-/*
+/* delete cascade les evenements du client qui est supprime. */
 clientSchema.pre('remove', function (next) {
     var doc = this;
     Evenement.remove({
-        client_FK: doc_id
+        client_FK: doc._id
     }).exec();
     next();
 });
-*/
+
 
 
 module.exports = mongoose.model('Client', clientSchema);

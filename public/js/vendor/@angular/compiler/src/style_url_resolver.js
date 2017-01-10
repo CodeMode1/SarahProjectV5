@@ -5,33 +5,49 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-"use strict";
-// Some of the code comes from WebComponents.JS
-// https://github.com/webcomponents/webcomponentsjs/blob/master/src/HTMLImports/path.js
-var lang_1 = require('./facade/lang');
-var StyleWithImports = (function () {
+export var StyleWithImports = (function () {
+    /**
+     * @param {?} style
+     * @param {?} styleUrls
+     */
     function StyleWithImports(style, styleUrls) {
         this.style = style;
         this.styleUrls = styleUrls;
     }
     return StyleWithImports;
 }());
-exports.StyleWithImports = StyleWithImports;
-function isStyleUrlResolvable(url) {
-    if (lang_1.isBlank(url) || url.length === 0 || url[0] == '/')
+function StyleWithImports_tsickle_Closure_declarations() {
+    /** @type {?} */
+    StyleWithImports.prototype.style;
+    /** @type {?} */
+    StyleWithImports.prototype.styleUrls;
+}
+/**
+ * @param {?} url
+ * @return {?}
+ */
+export function isStyleUrlResolvable(url) {
+    if (url == null || url.length === 0 || url[0] == '/')
         return false;
-    var schemeMatch = url.match(_urlWithSchemaRe);
+    var /** @type {?} */ schemeMatch = url.match(URL_WITH_SCHEMA_REGEXP);
     return schemeMatch === null || schemeMatch[1] == 'package' || schemeMatch[1] == 'asset';
 }
-exports.isStyleUrlResolvable = isStyleUrlResolvable;
 /**
- * Rewrites stylesheets by resolving and removing the @import urls that
- * are either relative or don't have a `package:` scheme
+ *  Rewrites stylesheets by resolving and removing the @import urls that
+  * are either relative or don't have a `package:` scheme
+ * @param {?} resolver
+ * @param {?} baseUrl
+ * @param {?} cssText
+ * @return {?}
  */
-function extractStyleUrls(resolver, baseUrl, cssText) {
-    var foundUrls = [];
-    var modifiedCssText = lang_1.StringWrapper.replaceAllMapped(cssText, _cssImportRe, function (m) {
-        var url = lang_1.isPresent(m[1]) ? m[1] : m[2];
+export function extractStyleUrls(resolver, baseUrl, cssText) {
+    var /** @type {?} */ foundUrls = [];
+    var /** @type {?} */ modifiedCssText = cssText.replace(CSS_COMMENT_REGEXP, '').replace(CSS_IMPORT_REGEXP, function () {
+        var m = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            m[_i - 0] = arguments[_i];
+        }
+        var /** @type {?} */ url = m[1] || m[2];
         if (!isStyleUrlResolvable(url)) {
             // Do not attempt to resolve non-package absolute URLs with URI scheme
             return m[0];
@@ -41,7 +57,7 @@ function extractStyleUrls(resolver, baseUrl, cssText) {
     });
     return new StyleWithImports(modifiedCssText, foundUrls);
 }
-exports.extractStyleUrls = extractStyleUrls;
-var _cssImportRe = /@import\s+(?:url\()?\s*(?:(?:['"]([^'"]*))|([^;\)\s]*))[^;]*;?/g;
-var _urlWithSchemaRe = /^([^:/?#]+):/;
+var /** @type {?} */ CSS_IMPORT_REGEXP = /@import\s+(?:url\()?\s*(?:(?:['"]([^'"]*))|([^;\)\s]*))[^;]*;?/g;
+var /** @type {?} */ CSS_COMMENT_REGEXP = /\/\*.+?\*\//g;
+var /** @type {?} */ URL_WITH_SCHEMA_REGEXP = /^([^:/?#]+):/;
 //# sourceMappingURL=style_url_resolver.js.map

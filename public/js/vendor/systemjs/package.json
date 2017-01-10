@@ -2,49 +2,48 @@
   "_args": [
     [
       {
-        "raw": "systemjs@0.19.26",
+        "raw": "systemjs@0.19.40",
         "scope": null,
         "escapedName": "systemjs",
         "name": "systemjs",
-        "rawSpec": "0.19.26",
-        "spec": "0.19.26",
+        "rawSpec": "0.19.40",
+        "spec": "0.19.40",
         "type": "version"
       },
       "C:\\sprint2v1.0\\sprint2v2.0"
     ]
   ],
-  "_from": "systemjs@0.19.26",
-  "_id": "systemjs@0.19.26",
+  "_from": "systemjs@0.19.40",
+  "_id": "systemjs@0.19.40",
   "_inCache": true,
-  "_installable": true,
   "_location": "/systemjs",
-  "_nodeVersion": "4.4.1",
+  "_nodeVersion": "6.6.0",
   "_npmOperationalInternal": {
-    "host": "packages-16-east.internal.npmjs.com",
-    "tmp": "tmp/systemjs-0.19.26.tgz_1460370205811_0.15223072795197368"
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/systemjs-0.19.40.tgz_1477399572911_0.7748872055672109"
   },
   "_npmUser": {
     "name": "guybedford",
     "email": "guybedford@gmail.com"
   },
-  "_npmVersion": "2.14.20",
+  "_npmVersion": "3.10.3",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "systemjs@0.19.26",
+    "raw": "systemjs@0.19.40",
     "scope": null,
     "escapedName": "systemjs",
     "name": "systemjs",
-    "rawSpec": "0.19.26",
-    "spec": "0.19.26",
+    "rawSpec": "0.19.40",
+    "spec": "0.19.40",
     "type": "version"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/systemjs/-/systemjs-0.19.26.tgz",
-  "_shasum": "6cc3e6e08c60ab07a32eb23616d14ab5c96a43e1",
+  "_resolved": "https://registry.npmjs.org/systemjs/-/systemjs-0.19.40.tgz",
+  "_shasum": "158f64a9f4ef541a7fda6b40e527ee46b6c54cd0",
   "_shrinkwrap": null,
-  "_spec": "systemjs@0.19.26",
+  "_spec": "systemjs@0.19.40",
   "_where": "C:\\sprint2v1.0\\sprint2v2.0",
   "author": {
     "name": "Guy Bedford"
@@ -58,7 +57,6 @@
   "description": "Universal dynamic module loader",
   "devDependencies": {
     "babel-core": "^5.8.22",
-    "es6-module-loader": "^0.17.11",
     "qunit": "^0.6.2",
     "traceur": "0.0.105",
     "typescript": "^1.6.2",
@@ -66,10 +64,14 @@
   },
   "directories": {},
   "dist": {
-    "shasum": "6cc3e6e08c60ab07a32eb23616d14ab5c96a43e1",
-    "tarball": "https://registry.npmjs.org/systemjs/-/systemjs-0.19.26.tgz"
+    "shasum": "158f64a9f4ef541a7fda6b40e527ee46b6c54cd0",
+    "tarball": "https://registry.npmjs.org/systemjs/-/systemjs-0.19.40.tgz"
   },
-  "gitHead": "8703bf0f93c20a6e6a7ad976a5a49a0c4cedc2ec",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "gitHead": "9ae69b905f93df449357310b0b53de8c3e919e17",
   "homepage": "https://github.com/systemjs/systemjs#readme",
   "license": "MIT",
   "maintainers": [
@@ -87,11 +89,12 @@
   },
   "scripts": {
     "build": "make",
+    "perf": "node bench/normalize-perf.js",
     "test": "npm run test:babel && npm run test:traceur && npm run test:typescript",
     "test:babel": "qunit -c s:./index.js -t ./test/test-babel.js",
     "test:browser": "make test",
     "test:traceur": "qunit -c s:./index.js -t ./test/test-traceur.js",
     "test:typescript": "qunit -c s:./index.js -t ./test/test-typescript.js"
   },
-  "version": "0.19.26"
+  "version": "0.19.40"
 }

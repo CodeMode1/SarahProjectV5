@@ -1,20 +1,28 @@
-import { ConcreteType, Type } from '../facade/lang';
+import { Type } from '../type';
 import { PlatformReflectionCapabilities } from './platform_reflection_capabilities';
 import { GetterFn, MethodFn, SetterFn } from './types';
+/**
+ * Attention: This regex has to hold even if the code is minified!
+ */
+export declare const DELEGATE_CTOR: RegExp;
 export declare class ReflectionCapabilities implements PlatformReflectionCapabilities {
     private _reflect;
     constructor(reflect?: any);
     isReflectionEnabled(): boolean;
-    factory(t: ConcreteType<any>): Function;
-    parameters(typeOrFunc: Type): any[][];
-    annotations(typeOrFunc: Type): any[];
+    factory<T>(t: Type<T>): (args: any[]) => T;
+    private _ownParameters(type, parentCtor);
+    parameters(type: Type<any>): any[][];
+    private _ownAnnotations(typeOrFunc, parentCtor);
+    annotations(typeOrFunc: Type<any>): any[];
+    private _ownPropMetadata(typeOrFunc, parentCtor);
     propMetadata(typeOrFunc: any): {
         [key: string]: any[];
     };
-    interfaces(type: Type): any[];
-    hasLifecycleHook(type: any, lcInterface: Type, lcProperty: string): boolean;
+    hasLifecycleHook(type: any, lcProperty: string): boolean;
     getter(name: string): GetterFn;
     setter(name: string): SetterFn;
     method(name: string): MethodFn;
     importUri(type: any): string;
+    resolveIdentifier(name: string, moduleUrl: string, runtime: any): any;
+    resolveEnum(enumIdentifier: any, name: string): any;
 }

@@ -1,9 +1,9 @@
-import { Observable, ObservableInput } from '../Observable';
-import { Scheduler } from '../Scheduler';
-import { isScheduler } from '../util/isScheduler';
-import { isArray } from '../util/isArray';
-import { ArrayObservable } from './ArrayObservable';
-import { CombineLatestOperator } from '../operator/combineLatest';
+import {  Observable, ObservableInput  } from '../Observable';
+import {  Scheduler  } from '../Scheduler';
+import {  isScheduler  } from '../util/isScheduler';
+import {  isArray  } from '../util/isArray';
+import {  ArrayObservable  } from './ArrayObservable';
+import {  CombineLatestOperator  } from '../operator/combineLatest';
 
 /* tslint:disable:max-line-length */
 export function combineLatest<T, T2>(v1: ObservableInput<T>, v2: ObservableInput<T2>, scheduler?: Scheduler): Observable<[T, T2]>;
@@ -51,6 +51,11 @@ export function combineLatest<R>(...observables: Array<ObservableInput<any> | ((
  * var height = Rx.Observable.of(1.76, 1.77, 1.78);
  * var bmi = Rx.Observable.combineLatest(weight, height, (w, h) => w / (h * h));
  * bmi.subscribe(x => console.log('BMI is ' + x));
+ *
+ * // With output to console:
+ * // BMI is 24.212293388429753
+ * // BMI is 23.93948099205209
+ * // BMI is 23.671253629592222
  *
  * @see {@link combineAll}
  * @see {@link merge}

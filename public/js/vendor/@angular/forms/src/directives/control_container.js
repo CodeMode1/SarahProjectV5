@@ -5,28 +5,27 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var abstract_control_directive_1 = require('./abstract_control_directive');
+import { AbstractControlDirective } from './abstract_control_directive';
 /**
- * A directive that contains multiple {@link NgControl}s.
- *
- * Only used by the forms module.
- *
- * @experimental
+ *  A directive that contains multiple {@link NgControl}s.
+  * *
+  * Only used by the forms module.
+  * *
  */
-var ControlContainer = (function (_super) {
+export var ControlContainer = (function (_super) {
     __extends(ControlContainer, _super);
     function ControlContainer() {
         _super.apply(this, arguments);
     }
     Object.defineProperty(ControlContainer.prototype, "formDirective", {
         /**
-         * Get the form to which this container belongs.
+         *  Get the form to which this container belongs.
+         * @return {?}
          */
         get: function () { return null; },
         enumerable: true,
@@ -34,13 +33,17 @@ var ControlContainer = (function (_super) {
     });
     Object.defineProperty(ControlContainer.prototype, "path", {
         /**
-         * Get the path to this container.
+         *  Get the path to this container.
+         * @return {?}
          */
         get: function () { return null; },
         enumerable: true,
         configurable: true
     });
     return ControlContainer;
-}(abstract_control_directive_1.AbstractControlDirective));
-exports.ControlContainer = ControlContainer;
+}(AbstractControlDirective));
+function ControlContainer_tsickle_Closure_declarations() {
+    /** @type {?} */
+    ControlContainer.prototype.name;
+}
 //# sourceMappingURL=control_container.js.map

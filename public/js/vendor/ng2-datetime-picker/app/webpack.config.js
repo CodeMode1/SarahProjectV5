@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const DashboardPlugin = require('webpack-dashboard/plugin');
 
 const config = {
   resolve: {
@@ -24,15 +23,10 @@ const config = {
     path: `${__dirname}/build/`,
     publicPath: '/build/',
     filename: 'app.js'
-  },
-  compilerOptions: {
-    declaration: false
   }
 };
 
-if (process.env.NODE_ENV !== 'prod') {
-  config.plugins = [new DashboardPlugin()];
-} else {
+if (process.env.NODE_ENV === 'prod') {
   config.plugins = [
     new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
   ];

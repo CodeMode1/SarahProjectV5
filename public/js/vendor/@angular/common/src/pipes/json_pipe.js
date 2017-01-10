@@ -5,18 +5,37 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-"use strict";
-var core_1 = require('@angular/core');
-var lang_1 = require('../facade/lang');
-var JsonPipe = (function () {
+import { Pipe } from '@angular/core';
+/**
+ *  *
+  * Converts value into string using `JSON.stringify`. Useful for debugging.
+  * *
+  * ### Example
+  * {@example common/pipes/ts/json_pipe.ts region='JsonPipe'}
+  * *
+ */
+export var JsonPipe = (function () {
     function JsonPipe() {
     }
-    JsonPipe.prototype.transform = function (value) { return lang_1.Json.stringify(value); };
-    /** @nocollapse */
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    JsonPipe.prototype.transform = function (value) { return JSON.stringify(value, null, 2); };
     JsonPipe.decorators = [
-        { type: core_1.Pipe, args: [{ name: 'json', pure: false },] },
+        { type: Pipe, args: [{ name: 'json', pure: false },] },
     ];
+    /** @nocollapse */
+    JsonPipe.ctorParameters = function () { return []; };
     return JsonPipe;
 }());
-exports.JsonPipe = JsonPipe;
+function JsonPipe_tsickle_Closure_declarations() {
+    /** @type {?} */
+    JsonPipe.decorators;
+    /**
+     * @nocollapse
+     * @type {?}
+     */
+    JsonPipe.ctorParameters;
+}
 //# sourceMappingURL=json_pipe.js.map

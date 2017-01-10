@@ -3,15 +3,18 @@ export declare class AnimationSequencePlayer implements AnimationPlayer {
     private _players;
     private _currentIndex;
     private _activePlayer;
-    private _subscriptions;
+    private _onDoneFns;
+    private _onStartFns;
     private _finished;
     private _started;
+    private _destroyed;
     parentPlayer: AnimationPlayer;
     constructor(_players: AnimationPlayer[]);
     private _onNext(start);
     private _onFinish();
     init(): void;
-    onDone(fn: Function): void;
+    onStart(fn: () => void): void;
+    onDone(fn: () => void): void;
     hasStarted(): boolean;
     play(): void;
     pause(): void;
@@ -19,6 +22,7 @@ export declare class AnimationSequencePlayer implements AnimationPlayer {
     reset(): void;
     finish(): void;
     destroy(): void;
-    setPosition(p: any): void;
+    setPosition(p: number): void;
     getPosition(): number;
+    players: AnimationPlayer[];
 }

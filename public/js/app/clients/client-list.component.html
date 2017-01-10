@@ -82,7 +82,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let client of clients | paginate: {itemsPerPage: 10, currentPage: page, id: 'pagerClient' } | noClientPipe:noClientFiltreList; let i=index"
+                    <tr *ngFor="let client of clients | paginate: {itemsPerPage: 5, currentPage: page, id: 'pagerClient' } | noClientPipe:noClientFiltreList; let i=index"
                         (click)="clientSelect(client)" [class.estSelectRange]="this.noClient == client.noClient">
                         <td>{{client?.noClient}}</td>
                         <td>{{client?.noCompte}}</td>
@@ -105,7 +105,7 @@
                 </tbody>
             </table>
         </div>
-        <pagination-controls (pageChange)="page = $event" id="pagerClient" maxSize="10" directionLinks="true">
+        <pagination-controls (pageChange)="page = $event" id="pagerClient" maxSize="20" directionLinks="true">
         </pagination-controls>
     </div>
 </section>

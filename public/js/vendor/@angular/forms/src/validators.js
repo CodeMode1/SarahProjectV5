@@ -5,11 +5,19 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-"use strict";
-var core_1 = require('@angular/core');
-var toPromise_1 = require('rxjs/operator/toPromise');
-var collection_1 = require('./facade/collection');
-var lang_1 = require('./facade/lang');
+import { OpaqueToken } from '@angular/core';
+import { toPromise } from 'rxjs/operator/toPromise';
+import { StringMapWrapper } from './facade/collection';
+import { isPresent } from './facade/lang';
+import { isPromise } from './private_import_core';
+/**
+ * @param {?} value
+ * @return {?}
+ */
+function isEmptyInputValue(value) {
+    // we don't check for string here so it also works with arrays
+    return value == null || value.length === 0;
+}
 /**
  * Providers for validators to be used for {@link FormControl}s in a form.
  *
@@ -18,9 +26,9 @@ var lang_1 = require('./facade/lang');
  * ### Example
  *
  * {@example core/forms/ts/ng_validators/ng_validators.ts region='ng_validators'}
- * @experimental
+ * @stable
  */
-exports.NG_VALIDATORS = new core_1.OpaqueToken('NgValidators');
+export var /** @type {?} */ NG_VALIDATORS = new OpaqueToken('NgValidators');
 /**
  * Providers for asynchronous validators to be used for {@link FormControl}s
  * in a form.
@@ -29,118 +37,167 @@ exports.NG_VALIDATORS = new core_1.OpaqueToken('NgValidators');
  *
  * See {@link NG_VALIDATORS} for more details.
  *
- * @experimental
+ * @stable
  */
-exports.NG_ASYNC_VALIDATORS = new core_1.OpaqueToken('NgAsyncValidators');
+export var /** @type {?} */ NG_ASYNC_VALIDATORS = new OpaqueToken('NgAsyncValidators');
 /**
- * Provides a set of validators used by form controls.
- *
- * A validator is a function that processes a {@link FormControl} or collection of
- * controls and returns a map of errors. A null map means that validation has passed.
- *
- * ### Example
- *
- * ```typescript
- * var loginControl = new FormControl("", Validators.required)
- * ```
- *
- * @experimental
+ *  Provides a set of validators used by form controls.
+  * *
+  * A validator is a function that processes a {@link FormControl} or collection of
+  * controls and returns a map of errors. A null map means that validation has passed.
+  * *
+  * ### Example
+  * *
+  * ```typescript
+  * var loginControl = new FormControl("", Validators.required)
+  * ```
+  * *
  */
-var Validators = (function () {
+export var Validators = (function () {
     function Validators() {
     }
     /**
-     * Validator that requires controls to have a non-empty value.
+     *  Validator that requires controls to have a non-empty value.
+     * @param {?} control
+     * @return {?}
      */
     Validators.required = function (control) {
-        return lang_1.isBlank(control.value) || (lang_1.isString(control.value) && control.value == '') ?
-            { 'required': true } :
-            null;
+        return isEmptyInputValue(control.value) ? { 'required': true } : null;
     };
     /**
-     * Validator that requires controls to have a value of a minimum length.
+     *  Validator that requires control value to be true.
+     * @param {?} control
+     * @return {?}
+     */
+    Validators.requiredTrue = function (control) {
+        return control.value === true ? null : { 'required': true };
+    };
+    /**
+     *  Validator that requires controls to have a value of a minimum length.
+     * @param {?} minLength
+     * @return {?}
      */
     Validators.minLength = function (minLength) {
         return function (control) {
-            if (lang_1.isPresent(Validators.required(control)))
-                return null;
-            var v = control.value;
-            return v.length < minLength ?
-                { 'minlength': { 'requiredLength': minLength, 'actualLength': v.length } } :
+            if (isEmptyInputValue(control.value)) {
+                return null; // don't validate empty values to allow optional controls
+            }
+            var /** @type {?} */ length = control.value ? control.value.length : 0;
+            return length < minLength ?
+                { 'minlength': { 'requiredLength': minLength, 'actualLength': length } } :
                 null;
         };
     };
     /**
-     * Validator that requires controls to have a value of a maximum length.
+     *  Validator that requires controls to have a value of a maximum length.
+     * @param {?} maxLength
+     * @return {?}
      */
     Validators.maxLength = function (maxLength) {
         return function (control) {
-            if (lang_1.isPresent(Validators.required(control)))
-                return null;
-            var v = control.value;
-            return v.length > maxLength ?
-                { 'maxlength': { 'requiredLength': maxLength, 'actualLength': v.length } } :
+            var /** @type {?} */ length = control.value ? control.value.length : 0;
+            return length > maxLength ?
+                { 'maxlength': { 'requiredLength': maxLength, 'actualLength': length } } :
                 null;
         };
     };
     /**
-     * Validator that requires a control to match a regex to its value.
+     *  Validator that requires a control to match a regex to its value.
+     * @param {?} pattern
+     * @return {?}
      */
     Validators.pattern = function (pattern) {
+        if (!pattern)
+            return Validators.nullValidator;
+        var /** @type {?} */ regex;
+        var /** @type {?} */ regexStr;
+        if (typeof pattern === 'string') {
+            regexStr = "^" + pattern + "$";
+            regex = new RegExp(regexStr);
+        }
+        else {
+            regexStr = pattern.toString();
+            regex = pattern;
+        }
         return function (control) {
-            if (lang_1.isPresent(Validators.required(control)))
-                return null;
-            var regex = new RegExp("^" + pattern + "$");
-            var v = control.value;
-            return regex.test(v) ? null :
-                { 'pattern': { 'requiredPattern': "^" + pattern + "$", 'actualValue': v } };
+            if (isEmptyInputValue(control.value)) {
+                return null; // don't validate empty values to allow optional controls
+            }
+            var /** @type {?} */ value = control.value;
+            return regex.test(value) ? null :
+                { 'pattern': { 'requiredPattern': regexStr, 'actualValue': value } };
         };
     };
     /**
-     * No-op validator.
+     *  No-op validator.
+     * @param {?} c
+     * @return {?}
      */
     Validators.nullValidator = function (c) { return null; };
     /**
-     * Compose multiple validators into a single function that returns the union
-     * of the individual error maps.
+     *  Compose multiple validators into a single function that returns the union
+      * of the individual error maps.
+     * @param {?} validators
+     * @return {?}
      */
     Validators.compose = function (validators) {
-        if (lang_1.isBlank(validators))
+        if (!validators)
             return null;
-        var presentValidators = validators.filter(lang_1.isPresent);
+        var /** @type {?} */ presentValidators = validators.filter(isPresent);
         if (presentValidators.length == 0)
             return null;
         return function (control) {
             return _mergeErrors(_executeValidators(control, presentValidators));
         };
     };
+    /**
+     * @param {?} validators
+     * @return {?}
+     */
     Validators.composeAsync = function (validators) {
-        if (lang_1.isBlank(validators))
+        if (!validators)
             return null;
-        var presentValidators = validators.filter(lang_1.isPresent);
+        var /** @type {?} */ presentValidators = validators.filter(isPresent);
         if (presentValidators.length == 0)
             return null;
         return function (control) {
-            var promises = _executeAsyncValidators(control, presentValidators).map(_convertToPromise);
+            var /** @type {?} */ promises = _executeAsyncValidators(control, presentValidators).map(_convertToPromise);
             return Promise.all(promises).then(_mergeErrors);
         };
     };
     return Validators;
 }());
-exports.Validators = Validators;
+/**
+ * @param {?} obj
+ * @return {?}
+ */
 function _convertToPromise(obj) {
-    return lang_1.isPromise(obj) ? obj : toPromise_1.toPromise.call(obj);
+    return isPromise(obj) ? obj : toPromise.call(obj);
 }
+/**
+ * @param {?} control
+ * @param {?} validators
+ * @return {?}
+ */
 function _executeValidators(control, validators) {
     return validators.map(function (v) { return v(control); });
 }
+/**
+ * @param {?} control
+ * @param {?} validators
+ * @return {?}
+ */
 function _executeAsyncValidators(control, validators) {
     return validators.map(function (v) { return v(control); });
 }
+/**
+ * @param {?} arrayOfErrors
+ * @return {?}
+ */
 function _mergeErrors(arrayOfErrors) {
-    var res = arrayOfErrors.reduce(function (res, errors) {
-        return lang_1.isPresent(errors) ? collection_1.StringMapWrapper.merge(res, errors) : res;
+    var /** @type {?} */ res = arrayOfErrors.reduce(function (res, errors) {
+        return isPresent(errors) ? StringMapWrapper.merge(res, errors) : res;
     }, {});
-    return collection_1.StringMapWrapper.isEmpty(res) ? null : res;
+    return Object.keys(res).length === 0 ? null : res;
 }
 //# sourceMappingURL=validators.js.map

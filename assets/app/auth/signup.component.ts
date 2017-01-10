@@ -27,7 +27,7 @@ import { Router } from '@angular/router';
                     <input type="email" id="courriel" class="form-control" formControlName="courriel" placeholder="my@email.com">
                 </div>
                 <div class="form-group">
-                    <label for="password">Mot de Passe</label>
+                    <label for="password">Mot De Passe</label>
                     <input type="password" id="password" class="form-control" formControlName="password" placeholder="password">
                 </div>
                 <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Sign Up</button>
@@ -55,6 +55,8 @@ export class SignupComponent implements OnInit {
         });
      }
 
+    /* retourne 1 juste quand le courriel est valide 
+       reg exp fiable à 99.9% */
      private estCourrielOK(control: FormControl): {[chaine: string]: boolean}{
          if(!control.value.match("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"))
              return { courrielInvalide: true};

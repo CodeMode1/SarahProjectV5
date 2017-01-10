@@ -16,7 +16,7 @@ import { AbstractControl } from './model';
  * ### Example
  *
  * {@example core/forms/ts/ng_validators/ng_validators.ts region='ng_validators'}
- * @experimental
+ * @stable
  */
 export declare const NG_VALIDATORS: OpaqueToken;
 /**
@@ -27,7 +27,7 @@ export declare const NG_VALIDATORS: OpaqueToken;
  *
  * See {@link NG_VALIDATORS} for more details.
  *
- * @experimental
+ * @stable
  */
 export declare const NG_ASYNC_VALIDATORS: OpaqueToken;
 /**
@@ -42,13 +42,19 @@ export declare const NG_ASYNC_VALIDATORS: OpaqueToken;
  * var loginControl = new FormControl("", Validators.required)
  * ```
  *
- * @experimental
+ * @stable
  */
 export declare class Validators {
     /**
      * Validator that requires controls to have a non-empty value.
      */
     static required(control: AbstractControl): {
+        [key: string]: boolean;
+    };
+    /**
+     * Validator that requires control value to be true.
+     */
+    static requiredTrue(control: AbstractControl): {
         [key: string]: boolean;
     };
     /**
@@ -62,7 +68,7 @@ export declare class Validators {
     /**
      * Validator that requires a control to match a regex to its value.
      */
-    static pattern(pattern: string): ValidatorFn;
+    static pattern(pattern: string | RegExp): ValidatorFn;
     /**
      * No-op validator.
      */

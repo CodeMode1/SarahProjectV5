@@ -5,24 +5,51 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-"use strict";
-var tags_1 = require('./tags');
-var XmlTagDefinition = (function () {
+import { TagContentType } from './tags';
+export var XmlTagDefinition = (function () {
     function XmlTagDefinition() {
         this.closedByParent = false;
-        this.contentType = tags_1.TagContentType.PARSABLE_DATA;
+        this.contentType = TagContentType.PARSABLE_DATA;
         this.isVoid = false;
         this.ignoreFirstLf = false;
         this.canSelfClose = true;
     }
+    /**
+     * @param {?} currentParent
+     * @return {?}
+     */
     XmlTagDefinition.prototype.requireExtraParent = function (currentParent) { return false; };
+    /**
+     * @param {?} name
+     * @return {?}
+     */
     XmlTagDefinition.prototype.isClosedByChild = function (name) { return false; };
     return XmlTagDefinition;
 }());
-exports.XmlTagDefinition = XmlTagDefinition;
-var _TAG_DEFINITION = new XmlTagDefinition();
-function getXmlTagDefinition(tagName) {
+function XmlTagDefinition_tsickle_Closure_declarations() {
+    /** @type {?} */
+    XmlTagDefinition.prototype.closedByParent;
+    /** @type {?} */
+    XmlTagDefinition.prototype.requiredParents;
+    /** @type {?} */
+    XmlTagDefinition.prototype.parentToAdd;
+    /** @type {?} */
+    XmlTagDefinition.prototype.implicitNamespacePrefix;
+    /** @type {?} */
+    XmlTagDefinition.prototype.contentType;
+    /** @type {?} */
+    XmlTagDefinition.prototype.isVoid;
+    /** @type {?} */
+    XmlTagDefinition.prototype.ignoreFirstLf;
+    /** @type {?} */
+    XmlTagDefinition.prototype.canSelfClose;
+}
+var /** @type {?} */ _TAG_DEFINITION = new XmlTagDefinition();
+/**
+ * @param {?} tagName
+ * @return {?}
+ */
+export function getXmlTagDefinition(tagName) {
     return _TAG_DEFINITION;
 }
-exports.getXmlTagDefinition = getXmlTagDefinition;
 //# sourceMappingURL=xml_tags.js.map

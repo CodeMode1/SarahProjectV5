@@ -5,41 +5,57 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-"use strict";
 /**
- * Abstract class from which real backends are derived.
- *
- * The primary purpose of a `ConnectionBackend` is to create new connections to fulfill a given
- * {@link Request}.
- *
- * @experimental
+ *  Abstract class from which real backends are derived.
+  * *
+  * The primary purpose of a `ConnectionBackend` is to create new connections to fulfill a given
+  * {@link Request}.
+  * *
+ * @abstract
  */
-var ConnectionBackend = (function () {
+export var ConnectionBackend = (function () {
     function ConnectionBackend() {
     }
+    /**
+     * @abstract
+     * @param {?} request
+     * @return {?}
+     */
+    ConnectionBackend.prototype.createConnection = function (request) { };
     return ConnectionBackend;
 }());
-exports.ConnectionBackend = ConnectionBackend;
 /**
- * Abstract class from which real connections are derived.
- *
- * @experimental
+ *  Abstract class from which real connections are derived.
+  * *
+ * @abstract
  */
-var Connection = (function () {
+export var Connection = (function () {
     function Connection() {
     }
     return Connection;
 }());
-exports.Connection = Connection;
+function Connection_tsickle_Closure_declarations() {
+    /** @type {?} */
+    Connection.prototype.readyState;
+    /** @type {?} */
+    Connection.prototype.request;
+    /** @type {?} */
+    Connection.prototype.response;
+}
 /**
- * An XSRFStrategy configures XSRF protection (e.g. via headers) on an HTTP request.
- *
- * @experimental
+ *  An XSRFStrategy configures XSRF protection (e.g. via headers) on an HTTP request.
+  * *
+ * @abstract
  */
-var XSRFStrategy = (function () {
+export var XSRFStrategy = (function () {
     function XSRFStrategy() {
     }
+    /**
+     * @abstract
+     * @param {?} req
+     * @return {?}
+     */
+    XSRFStrategy.prototype.configureRequest = function (req) { };
     return XSRFStrategy;
 }());
-exports.XSRFStrategy = XSRFStrategy;
 //# sourceMappingURL=interfaces.js.map

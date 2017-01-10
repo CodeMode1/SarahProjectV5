@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
     moduleId: module.id,
     selector: 'my-nouvelles',
     template: `
-        <h4>Une nouvelle</h4>
+        <h4>Bienvenue sur Sarah 2.0</h4>
     `,
     styles: [`
        

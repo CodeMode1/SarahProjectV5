@@ -1,6 +1,7 @@
 import { LocationStrategy } from './location_strategy';
 /**
- * `Location` is a service that applications can use to interact with a browser's URL.
+ * @whatItDoes `Location` is a service that applications can use to interact with a browser's URL.
+ * @description
  * Depending on which {@link LocationStrategy} is used, `Location` will either persist
  * to the URL's path or the URL's hash segment.
  *
@@ -16,29 +17,7 @@ import { LocationStrategy } from './location_strategy';
  * - `/my/app/user/123/` **is not** normalized
  *
  * ### Example
- *
- * ```
- * import {Component} from '@angular/core';
- * import {Location} from '@angular/common';
- * import {
- *   ROUTER_DIRECTIVES,
- *   ROUTER_PROVIDERS,
- *   RouteConfig
- * } from '@angular/router';
- *
- * @Component({directives: [ROUTER_DIRECTIVES]})
- * @RouteConfig([
- *  {...},
- * ])
- * class AppCmp {
- *   constructor(location: Location) {
- *     location.go('/foo');
- *   }
- * }
- *
- * bootstrap(AppCmp, [ROUTER_PROVIDERS]);
- * ```
- *
+ * {@example common/location/ts/path_location_component.ts region='LocationComponent'}
  * @stable
  */
 export declare class Location {
@@ -53,7 +32,7 @@ export declare class Location {
     isCurrentPathEqualTo(path: string, query?: string): boolean;
     /**
      * Given a string representing a URL, returns the normalized URL path without leading or
-     * trailing slashes
+     * trailing slashes.
      */
     normalize(url: string): string;
     /**
